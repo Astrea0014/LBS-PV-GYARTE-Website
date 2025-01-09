@@ -11,6 +11,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        buttonDark: "var(--primary)",
+        buttonLight: "var(--secondary)",
+        buttonYl: "var(--complementary)",
       },
     },
   },
