@@ -11,49 +11,47 @@ export default function Navigation() {
   
   const toggleNavMenu = () => { 
     setIsOpen(prev => !prev)
-  }
+  };
 
   return (
-    <div>
-      <nav className="xl:w-1/2 flex items-center">
-        <button
-          onClick={toggleNavMenu}
-          className="xl:hidden text-2xl"
-          aria-label="Toggle Menu"
-          aria-expanded={isOpen}
-        >
-          {isOpen ? <FaTimes/> : <FaBars />}
-        </button>
+    <div className="w-full flex justify-end">
+      <button
+        onClick={toggleNavMenu}
+        className="xl:hidden text-2xl"
+        aria-label="Toggle Menu"
+        aria-expanded={isOpen}
+      >
+        {isOpen ? <FaTimes/> : <FaBars />}
+      </button>
 
+      <nav className="xl:w-4/6 flex items-center">
         <div className="hidden xl:flex justify-around w-full">
           <Link
             href="/"
-            className={`text-2xl ${pathname === "/" ? "font-bold" : ""}`}
+            className={`text-xl ${pathname === "/" ? "font-bold" : ""}`}
           >
             Startsida
           </Link>
           <Link
             href="/teknikprogramen"
-            className={`text-2xl ${pathname === "/teknikprogramen" ? "font-bold" : ""}`}
+            className={`text-xl ${pathname === "/teknikprogramen" ? "font-bold" : ""}`}
           >
             Teknikprogramen
           </Link>
           <Link
             href="/estetprogramen"
-            className={`text-2xl ${pathname === "/estetprogramen" ? "font-bold" : ""}`}
+            className={`text-xl ${pathname === "/estetprogramen" ? "font-bold" : ""}`}
           >
             Estetprogramen
           </Link>
           <Link
             href="/projektveckorna"
-            className={`text-2xl ${pathname === "/projektveckorna" ? "font-bold" : ""}`}
+            className={`text-xl ${pathname === "/projektveckorna" ? "font-bold" : ""}`}
           >
             Projektveckorna
           </Link>
         </div>
-      </nav>
-      
-      <div>
+
         {isOpen && (
           <div className={`absolute right-0 top-32 h-screen w-1/2 bg-navbar flex flex-col items-center xl:hidden`}>
             <Link
@@ -86,7 +84,8 @@ export default function Navigation() {
             </Link>
           </div>
         )}
-      </div>
+
+      </nav>
     </div>
   );
 }
