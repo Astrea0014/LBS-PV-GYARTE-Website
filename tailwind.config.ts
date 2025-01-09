@@ -11,6 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        footer: "var(--footer-bg)",
+        navbar: "var(--nav-bg)",
+        light: "var(--text-light)",
+        dark: "var(--text-dark)",
       },
     },
   },
