@@ -11,6 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        complementary: "var(--complementary)",
+        footer: "var(--footer-bg)",
+        textLight: "var(--text-light)",
+        textDark: "var(--text-dark)",
       },
     },
   },
