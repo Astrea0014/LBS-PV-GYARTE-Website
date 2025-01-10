@@ -1,10 +1,7 @@
-import Image from "next/image";
-import Footer from "./components/general/Footer"
-
-export default function Home() {
+export default function Startsida() {
   return (
-    <div>
-      <Footer/>
-    </div>
+    <section>
+
+    </section>
   );
 }
