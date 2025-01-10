@@ -3,15 +3,14 @@ import Link from "next/link"
 interface ButtonProps {
   link: string;
   text: string;
-  color: string;
-  hColor: string;
+  customClasses: string;
 }
 
-export default function Button({ link, text, color, hColor }: ButtonProps ){
+export default function Button({ link, text, customClasses }: ButtonProps ){
   return (
     <Link
     href={link}
-    className={`${color} flex justify-center text-center p-2 w-28 rounded-full ${hColor} transition`}
+    className={`${customClasses} flex justify-center text-center p-2 w-28 rounded-full transition`}
     >
     {text}
     </Link>
