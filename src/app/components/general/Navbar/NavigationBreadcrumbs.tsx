@@ -21,7 +21,7 @@ export default function NavigationBreadcrumbs({homeElement, separator, container
 
     return (
         <div>
-            <ul className={`${containerClasses} bg-white text-navbar p-3 rounded-br-xl`}>
+            <ul className={`${containerClasses} bg-white text-navbar rounded-br-xl`}>
                 <li className={listClasses}><Link href={'/'}>{homeElement}</Link></li>
                 {pathNames.length > 0 && separator}
             {
