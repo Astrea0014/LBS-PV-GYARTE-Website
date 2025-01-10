@@ -1,10 +1,11 @@
+"use client";
 import Navigation from "./Navigation";
 import NavigationBreadcrumbs from "./NavigationBreadcrumbs";
 
 export default function Navbar() {
   return (
     <>
-      <header className="bg-navbar w-full flex justify-between items-center h-32 text-white top-0 sticky z-40 box-border px-4">
+      <header className="bg-navbar w-full flex justify-between items-center h-24 text-white top-0 sticky z-40 box-border px-4">
         <img className="w-64" src="https://lbs.se/wp-content/uploads/2023/04/lbs-logo-white2.gif" alt="LBS"/>
         <Navigation />
       </header>

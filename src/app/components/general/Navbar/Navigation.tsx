@@ -2,22 +2,34 @@
 import { usePathname } from "next/navigation";
 import { FaTimes, FaBars } from "react-icons/fa"
 import { useState } from "react";
+import LinkHeader from "./LinkHeader";
 import Link from "next/link";
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const pathname: string = usePathname();
   
-  const toggleNavMenu = () => { 
-    setIsOpen(prev => !prev)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  const toggleNavMenu = () => {
+    if (isOpen) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIsOpen(false);
+        setIsAnimating(false);
+      }, 500);
+    } else {
+      setIsOpen(true);
+    }
   };
-
+  
   return (
     <div className="w-full flex justify-end">
+      {/* Hamburgarmeny-knappen */}
       <button
         onClick={toggleNavMenu}
-        className="xl:hidden text-2xl"
+        className="xl:hidden text-4xl"
         aria-label="Toggle Menu"
         aria-expanded={isOpen}
       >
@@ -25,6 +37,7 @@ export default function Navigation() {
       </button>
 
       <nav className="xl:w-4/6 flex items-center">
+        {/* Laptop */}
         <div className="hidden xl:flex justify-around w-full">
           <Link
             href="/"
@@ -52,39 +65,43 @@ export default function Navigation() {
           </Link>
         </div>
 
-        {isOpen && (
-          <div className={`absolute right-0 top-32 h-screen w-1/2 bg-navbar flex flex-col items-center xl:hidden`}>
-            <Link
-              href="/"
-              className={`text-2xl p-4 ${pathname === "/" ? "font-bold" : ""}`} 
-              onClick={() => setIsOpen(false)}
-            >
-              Startsida
-            </Link>
-            <Link
-              href="/teknikprogramen"
-              className={`text-2xl p-4 ${pathname === "/teknikprogramen" ? "font-bold" : ""}`}
-              onClick={() => setIsOpen(false)}
-            >
-              Teknikprogramen
-            </Link>
-            <Link
-              href="/estetprogramen"
-              className={`text-2xl p-4 ${pathname === "/estetprogramen" ? "font-bold" : ""}`}
-              onClick={() => setIsOpen(false)}
-            >
-              Estetprogramen
-            </Link>
-            <Link
-              href="/projektveckorna"
-              className={`text-2xl p-4 ${pathname === "/projektveckorna" ? "font-bold" : ""}`}
-              onClick={() => setIsOpen(false)}
-            >
-              Projektveckorna
-            </Link>
-          </div>
-        )}
+        {/* Mobil/Tablet - Hamburgarmeny */}
+          <div   className={`absolute right-0 top-24 h-screen w-full md:w-3/6 lg:w-2/6 bg-navbar flex flex-col gap-5 items-center xl:hidden ${isOpen ? (isAnimating ? "animate-slideOut" : "animate-slideIn") : "hidden"}`}>
+            {/* Teknik */}
+            <div className="w-9/12 flex justify-end">
+              <div className="flex flex-col items-end w-full">
+                <LinkHeader title={"Teknikprogram"} toPath="/teknikprogram" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"App-och Webbutveckling"} toPath="/teknikprogram/appochwebb" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"AI och Utveckling"} toPath="/teknikprogram/aiutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Spelutveckling"} toPath="/teknikprogram/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+              </div>
+            </div>
 
+            {/* Estet */}
+            <div className="w-9/12 flex justify-end">
+              <div className="flex flex-col items-end w-full">
+                <LinkHeader title={"Estetprogram"} toPath="/estetprogram" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Grafisk Design"} toPath="/teknikprogram/appochwebb" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Foto och Film"} toPath="/teknikprogram/aiutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Media-Beteende"} toPath="/teknikprogram/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Spelgrafik"} toPath="/teknikprogram/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+              </div>
+            </div>
+
+            {/* Programveckor */}
+            <div className="w-9/12 flex justify-end">
+              <div className="flex flex-col items-end w-full">
+                <LinkHeader title={"Programveckor"} toPath="/programveckor" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
+              </div>
+            </div>
+
+            {/* Startsida */}
+            <div className="w-9/12 flex justify-end">
+              <div className="flex flex-col items-end w-full">
+                <LinkHeader title={"Startsida"} toPath="/" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
+              </div>
+            </div>
+          </div>
       </nav>
     </div>
   );

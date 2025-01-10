@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useState, useEffect } from 'react'
+import React, { ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
@@ -13,6 +13,7 @@ interface TBreadCrumbProps {
     capitalizeLinks?: boolean;
 }
 
+// https://medium.com/@kcabading/creating-a-breadcrumb-component-in-a-next-js-app-router-a0ea24cdb91a
 export default function NavigationBreadcrumbs({homeElement, separator, containerClasses, listClasses, activeClasses, capitalizeLinks}: TBreadCrumbProps) {
 
     const paths = usePathname();
