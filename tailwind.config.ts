@@ -15,6 +15,9 @@ export default {
         navbar: "var(--nav-bg)",
         light: "var(--text-light)",
         dark: "var(--text-dark)",
+        buttonDark: "var(--primary)",
+        buttonLight: "var(--secondary)",
+        buttonYl: "var(--complementary)",
       },
       keyframes: {
         slideIn: {

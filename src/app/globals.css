@@ -5,6 +5,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --primary:#222;
+  --secondary:#ffffff;
+  --complementary:#ffeb3b;
+
+  --footer-bg:var(--primary);
+  --text-light:var(--secondary);
+  --text-dark:var(--primary);
 }
 
 @media (prefers-color-scheme: dark) {
