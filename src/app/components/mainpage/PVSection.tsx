@@ -1,5 +1,4 @@
 import Button from "../general/Button";
-import ImageTablet from "../../images/lbs-kreativa-gymnasiet.jpg";
 
 export default function ProgramveckorSection(){
 
@@ -16,7 +15,7 @@ export default function ProgramveckorSection(){
       </div>
 
       <picture className="md:block hidden">
-        <img src={ImageTablet.src} alt="Having fun at LBS" />
+        <img src="/lbs-kreativa-gymnasiet.jpg" alt="Having fun at LBS" />
       </picture>
 
     </section>
