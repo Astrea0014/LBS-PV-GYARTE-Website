@@ -18,6 +18,10 @@ export default {
         buttonDark: "var(--primary)",
         buttonLight: "var(--secondary)",
         buttonYl: "var(--complementary)",
+        complementary: "var(--complementary)",
+        footer: "var(--footer-bg)",
+        textLight: "var(--text-light)",
+        textDark: "var(--text-dark)",
       },
       keyframes: {
         slideIn: {
