@@ -5,9 +5,7 @@ export default function Footer(){
 
   return(
 
-    <footer className="bg-footer text-textLight flex justify-center flex-col items-center gap-3 min-h-96
-    xl:
-    ">
+    <footer className="bg-footer text-light flex justify-center flex-col items-center gap-3 min-h-96">
       
       
       <img src={Logo.src} alt="lbs-logo" className="w-52"/>
