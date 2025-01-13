@@ -3,7 +3,7 @@ import Button from "../general/Button";
 export default function GyarteSection(){
   return (
 
-    <section className="bg-dark text-light p-5">
+    <section className="bg-dark text-light p-5 xl:px-80">
 
     <h2 className="font-bold text-3xl w-full text-center mb-4">GymnasieArbete</h2>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur alias ipsum, nostrum quas cupiditate provident tempore culpa tenetur sapiente consequuntur maxime ducimus soluta eligendi nobis perferendis placeat fugit. Quis, assumenda.</p>
