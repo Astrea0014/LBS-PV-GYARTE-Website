@@ -1,8 +1,15 @@
-import SelectorButtonsGroup from "./components/general/SelectorButtonsGroup";
+import StartSection from "./components/mainpage/StartSection";
+import OverviewSection from "./components/mainpage/Overview";
+import GyarteSection from "./components/mainpage/Gyarte";
+import ProgramveckorSection from "./components/mainpage/PVSection";
 
 export default function Startsida() {
   return (
-    <section className="py-32 my-32">
-    </section>
+    <main>
+      <StartSection/>
+      <OverviewSection/>
+      <GyarteSection/>
+      <ProgramveckorSection/>
+    </main>
   );
 }
