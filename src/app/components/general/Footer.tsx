@@ -1,4 +1,3 @@
-import Logo from "../../images/lbsLogo.gif"
 import Divider from "../general/Divider"
 
 export default function Footer(){
@@ -8,7 +7,7 @@ export default function Footer(){
     <footer className="bg-footer text-light flex justify-center flex-col items-center gap-3 min-h-96">
       
       
-      <img src={Logo.src} alt="lbs-logo" className="w-52"/>
+      <img src="/lbslogorgbvit.svg" alt="lbs-logo" className="w-52"/>
       
       <Divider responsive = {true} />
       <a href="https://lbs.se/stockholmsodra/" className="hover:cursor-pointer hover:text-complementary">Till Huvudsidan</a>
