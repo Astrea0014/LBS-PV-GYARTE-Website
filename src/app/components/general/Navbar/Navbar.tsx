@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <>
       <header className="bg-navbar w-full flex justify-between items-center h-24 text-white top-0 fixed z-40 box-border px-4">
-        <img className="w-48 lg:w-64" src="https://lbs.se/wp-content/uploads/2023/04/lbs-logo-white2.gif" alt="LBS"/>
+        <img className="w-48 lg:w-64" src="/lbslogorgbvit.svg" alt="LBS"/>
         <Navigation />
       </header>
       
