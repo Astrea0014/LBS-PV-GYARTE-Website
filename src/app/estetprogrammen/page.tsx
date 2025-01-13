@@ -1,6 +1,6 @@
-import Header from "../components/gyarte/Header";
+import Header from "../components/gyarte/GyarteHeader";
 import Whitespace from "../components/general/Navbar/NavWhitespace";
-import Card from "../components/gyarte/GyarteCard";
+import Card from "../components/general/InriktningCard";
 
 export default function Estetprogram(){
   return(
