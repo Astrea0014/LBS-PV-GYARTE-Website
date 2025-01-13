@@ -18,6 +18,8 @@ export default {
         buttonDark: "var(--primary)",
         buttonLight: "var(--secondary)",
         buttonYl: "var(--complementary)",
+        btnHoverYl: "var(--button-hover-yellow)",
+        btnHoverDark: "var(--button-hover-dark)",
         complementary: "var(--complementary)",
       },
       keyframes: {
