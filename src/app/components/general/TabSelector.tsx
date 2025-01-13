@@ -31,7 +31,7 @@ export default function TabSelector({children}: TabSelectorProp) {
   };
 
   return (
-    <div className="relative flex items-center w-11/12 lg:w-10/12 xl:w-8/12 mx-auto border-y-2 border-black border-solid p-8">
+    <div className="relative flex items-center w-11/12 lg:w-10/12 xl:w-8/12 mx-auto border-y-2 mt-16 border-black border-solid p-8">
       <ArrowButton direction="left" scrollFunc={scrollLeft}/>
       <div 
         className="flex mx-4 w-full overflow-x-scroll scroll-smooth whitespace-nowrap no-scrollbar gap-3"
