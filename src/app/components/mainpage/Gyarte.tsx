@@ -10,8 +10,8 @@ export default function GyarteSection(){
     </div>
 
     <div className="flex flex-col justify-center items-center gap-5 mt-7 mb-8 m-20 xl:gap-9">
-      <Button link="/teknikprogrammen" text="Teknikprogram" customClasses="bg-complementary hover:bg-btnHoverYl w-40 text-dark font-bold"/>
-      <Button link="/estetprogrammen" text="Estetprogram" customClasses="bg-complementary hover:bg-btnHoverYl w-40 text-dark font-bold"/>
+      <Button link="/teknikprogramen" text="Teknikprogram" customClasses="bg-complementary hover:bg-btnHoverYl w-40 text-dark font-bold"/>
+      <Button link="/estetprogramen" text="Estetprogram" customClasses="bg-complementary hover:bg-btnHoverYl w-40 text-dark font-bold"/>
     </div>
 
     </section>

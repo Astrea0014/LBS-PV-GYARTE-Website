@@ -7,7 +7,7 @@ export default function Teknikprogram(){
 
     <main>
       <Whitespace/>
-      <Header bgImage="/gyarte/teknik.png" program="Teknikprogrammen"/>
+      <Header bgImage="/gyarte/teknik.png" program="Teknikprogramen"/>
       <ul className="flex flex-wrap justify-center p-5 gap-20 my-16">
         <Card inriktning="APP- OCH WEBBUTVECKLING" image="/gyarte/lbs-app-och-webbutveckling-400x300.jpg"/>
         <Card inriktning="AI UTBILDNING" image="/gyarte/lbs-ai-utbildning-400x225.png"/>

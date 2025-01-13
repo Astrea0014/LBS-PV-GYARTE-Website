@@ -7,7 +7,7 @@ export default function Estetprogram(){
 
     <main>
       <Whitespace/>
-      <Header bgImage="/gyarte/teknik.png" program="Teknikprogrammen"/>
+      <Header bgImage="/lbs-kreativa-gymnasiet-stockholm-sodra-1920x1080.jpg" program="Teknikprogramen"/>
       <ul className="flex flex-wrap justify-center p-5 gap-20 my-16">
         <Card inriktning="GRAFISK DESIGN" image="/gyarte/lbs-grafisk-design-400x300.jpg"/>
         <Card inriktning="SPELGRAFIK" image="/gyarte/lbs-spelgrafik-400x300.jpg"/>
