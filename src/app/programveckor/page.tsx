@@ -5,15 +5,14 @@ import ProgramWeekCard from "../components/general/progrmveckor/ProgramWeekCard"
 import CardsContainer from "../components/general/progrmveckor/CardsContainer";
 
 interface ProgramWeeks {
-  searchParams : {
-    year: string;
-  }
+  searchParams: Promise<{year: string;}>;
 }
 
-export default function ProgramWeeks({searchParams}: ProgramWeeks ) {
+export default async function ProgramWeeks({searchParams}: ProgramWeeks ) {
   
-  const year = searchParams.year;
-  console.log(year)
+  const resolvedSearchParams = await searchParams
+  const year = resolvedSearchParams.year ?? "Unkown";
+
   return (
     <main className="py-12 my-12">
       <section className="flex flex-col justify-center w-full py-16">
