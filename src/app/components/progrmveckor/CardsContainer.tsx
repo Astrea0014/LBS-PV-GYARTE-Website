@@ -1,6 +1,6 @@
 "use client"
-import { useState, useEffect } from "react";
-import ProgramWeekCard from "./ProgramWeekCard"; 
+import { useState, useEffect } from "react"; 
+import Card from "../general/Card";
 
 interface CardsContainerProps {
   year: string | null;
@@ -15,6 +15,7 @@ export default function CardsContainer({ year }: CardsContainerProps) {
         "collaboration_id": 1,
         "year": 2025,
         "description": "This is a collaboration!!",
+        "posterSrc" : "/gyarte/lbs-spelutveckling-400x300.jpg",
         "theme": "Hållbarhet",
         "collaborators": [
           "SU",
@@ -25,6 +26,7 @@ export default function CardsContainer({ year }: CardsContainerProps) {
         "collaboration_id": 2,
         "year": 2025,
         "theme": "Framtid",
+        "posterSrc" : "/gyarte/lbs-ai-utbildning-400x225.png",
         "description": "This is a collaboration 2!!",
         "collaborators": [
           "AW",
@@ -34,6 +36,7 @@ export default function CardsContainer({ year }: CardsContainerProps) {
         "collaboration_id": 3,
         "year": 2025,
         "theme": "Mänskliga Rättigheter",
+        "posterSrc" : "/gyarte/lbs-app-och-webbutveckling-400x300.jpg",
         "description": "This is a collaboration 3!!",
         "collaborators": [
           "FF",
@@ -44,6 +47,7 @@ export default function CardsContainer({ year }: CardsContainerProps) {
         "collaboration_id": 4,
         "year": 2025,
         "theme": "Förr i tiden",
+        "posterSrc": "/gyarte/lbs-media-beteende-400x300.jpg",
         "description": "This is a collaboration 4!!",
         "collaborators": [
           "GD",
@@ -55,16 +59,17 @@ export default function CardsContainer({ year }: CardsContainerProps) {
   const collaborations = testInfo.collaborations;
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5 w-11/12 lg:w-10/12 xl:w-8/12 mx-auto my-24 place-items-center flex-wrap">
-      {testInfo.collaborations.map((collab) =>
-        <ProgramWeekCard 
-          key={collab.collaboration_id}
-          collaberators={collab.collaborators}
-          posterSrc="/spelutv.jpg"
-          theme={collab.theme}
-        />
-      )
-      }
+    <section className="w-12/12 lg:w-10/12 xl:w-8/12 mx-auto">
+      <ul className="flex flex-wrap justify-center p-5 gap-20 my-16 list-none">
+        {testInfo.collaborations.map((collab) =>
+          <Card 
+            key={collab.collaboration_id}
+            focus={collab.collaborators}
+            image={collab.posterSrc}
+            theme={collab.theme}
+          />
+        )}
+      </ul>
     </section>
   );
 }
