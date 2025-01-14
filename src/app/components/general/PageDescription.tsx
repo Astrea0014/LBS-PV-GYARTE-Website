@@ -5,7 +5,7 @@ interface PageDescriptionProps {
 export default function PageDescription({description}: PageDescriptionProps) {
   return (
     <div className="flex w-11/12 lg:w-10/12 xl:w-8/12 mx-auto">
-      <p className="text-2xl ">
+      <p className="text-lg sm:text-xl lg:text-2xl leading-8">
         {description}
       </p>
     </div>

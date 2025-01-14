@@ -38,7 +38,7 @@ export default function Navigation() {
 
       <nav className="xl:w-4/6 flex items-center">
         {/* Laptop */}
-        <div className="hidden xl:flex justify-around w-5/6">
+        <div className="hidden xl:flex gap-16 w-5/6 justify-end">
           <Link
             href="/"
             className={`text-xl ${pathname === "/" ? "font-bold" : ""}`}
@@ -91,7 +91,7 @@ export default function Navigation() {
             {/* Programveckor */}
             <div className="w-9/12 flex justify-end">
               <div className="flex flex-col items-end w-full">
-                <LinkHeader title={"Programveckor"} toPath="/programveckor?year=2027" size="big" currentPath={pathname} closeNavFunc={setIsOpen} /> // Change path to last years projects
+                <LinkHeader title={"Programveckor"} toPath="/programveckor?year=2027" size="big" currentPath={pathname} closeNavFunc={setIsOpen} /> {/* Change path to last years projects */}
               </div>
             </div>
 

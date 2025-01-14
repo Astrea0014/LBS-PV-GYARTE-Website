@@ -1,8 +1,8 @@
 import PageDescription from "../components/general/PageDescription";
 import PageHeader from "../components/general/PageHeader";
 import SelectorButtonsGroup from "../components/general/SelectorButtonsGroup";
-import ProgramWeekCard from "../components/general/progrmveckor/ProgramWeekCard";
-import CardsContainer from "../components/general/progrmveckor/CardsContainer";
+import CardsContainer from "../components/progrmveckor/CardsContainer";
+import Whitespace from "../components/general/navbar/NavWhitespace";
 
 interface ProgramWeeksProps {
   searchParams: Promise<{year: string;}>;
@@ -14,7 +14,8 @@ export default async function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
   const year = resolvedSearchParams.year ?? "Unkown";
 
   return (
-    <main className="py-12 my-12">
+    <main className="">
+      <Whitespace />
       <section className="flex flex-col justify-center w-full py-16">
         <PageHeader headerTitle="Programveckor"/>
         <PageDescription 
