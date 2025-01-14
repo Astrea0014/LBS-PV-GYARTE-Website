@@ -4,11 +4,11 @@ import SelectorButtonsGroup from "../components/general/SelectorButtonsGroup";
 import ProgramWeekCard from "../components/general/progrmveckor/ProgramWeekCard";
 import CardsContainer from "../components/general/progrmveckor/CardsContainer";
 
-interface ProgramWeeks {
+interface ProgramWeeksProps {
   searchParams: Promise<{year: string;}>;
 }
 
-export default async function ProgramWeeks({searchParams}: ProgramWeeks ) {
+export default async function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
   
   const resolvedSearchParams = await searchParams
   const year = resolvedSearchParams.year ?? "Unkown";
