@@ -3,11 +3,12 @@ import PageHeader from "../components/general/PageHeader";
 import SelectorButtonsGroup from "../components/general/SelectorButtonsGroup";
 import CardsContainer from "../components/progrmveckor/CardsContainer";
 import Whitespace from "../components/general/navbar/NavWhitespace";
-interface ProgramWeeks {
+
+interface ProgramWeeksProps {
   searchParams: Promise<{year: string;}>;
 }
 
-export default async function ProgramWeeks({searchParams}: ProgramWeeks ) {
+export default async function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
   
   const resolvedSearchParams = await searchParams
   const year = resolvedSearchParams.year ?? "Unkown";
