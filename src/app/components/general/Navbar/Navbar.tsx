@@ -1,4 +1,3 @@
-"use client";
 import Navigation from "./Navigation";
 import NavigationBreadcrumbs from "./NavigationBreadcrumbs";
 

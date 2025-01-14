@@ -1,17 +1,19 @@
-"use client";
-
 import PageDescription from "../components/general/PageDescription";
 import PageHeader from "../components/general/PageHeader";
 import SelectorButtonsGroup from "../components/general/SelectorButtonsGroup";
 import ProgramWeekCard from "../components/general/progrmveckor/ProgramWeekCard";
 import CardsContainer from "../components/general/progrmveckor/CardsContainer";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 
-export default function Programveckor() {
-  const searchParams = useSearchParams()
-  const year: string | null = searchParams.get('year')
+interface ProgramWeeks {
+  searchParams : {
+    year: string;
+  }
+}
+
+export default function ProgramWeeks({searchParams}: ProgramWeeks ) {
   
+  const year = searchParams.year;
+  console.log(year)
   return (
     <main className="py-12 my-12">
       <section className="flex flex-col justify-center w-full py-16">
