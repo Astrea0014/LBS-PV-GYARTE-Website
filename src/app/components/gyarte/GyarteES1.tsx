@@ -77,7 +77,7 @@ export default function ES1Layout({image, image2, image3, image4, longImage} : E
       <div className=" p-1 md:p-2" style={{height:`${square}vw`, width:`${square}vw`, maxHeight:`${squareMax}rem`, maxWidth:`${squareMax}rem`}}>
         <div className="bg-complementary w-full h-full bg-cover bg-center" style={{backgroundImage:`url("${image}")`}}/>        
       </div>
-      
+
 
     </section>
   );

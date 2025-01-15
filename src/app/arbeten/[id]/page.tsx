@@ -1,7 +1,13 @@
 import Header from "../../components/gyarte/GyarteFocusHeader";
 
 import Layout from "../../components/gyarte/GyarteES1";
+import Carousel from "../../components/gyarte/GyarteESCarousel";
 
+interface ImageData {
+  image_ref : string,
+  image_title : string,
+  image_format : string;
+};
 
 // test data remove later
 const data = {
@@ -47,11 +53,14 @@ const data = {
 }
 
 export default function Individual(){
+
+  const imageDataList: ImageData[] = data.work.component_data
+
   return(
     <main>
 
       <Header thesis={data.work.thesis} name={data.work.author_name} course={data.work.author_class} year={data.work.publication_year}/>
-
+      
       <Layout 
       image={`/${data.work.component_data[0].image_ref}`} 
       image2={`/${data.work.component_data[1].image_ref}`} 
@@ -59,6 +68,8 @@ export default function Individual(){
       image4={`/${data.work.component_data[3].image_ref}`}
       longImage={`/${data.work.component_data[4].image_ref}`}
       />
+
+      <Carousel imageList={imageDataList}/>
 
     </main>
 
