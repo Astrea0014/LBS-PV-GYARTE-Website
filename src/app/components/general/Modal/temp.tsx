@@ -13,6 +13,7 @@ const closeModal = () => {
 }; 
 
 // När du använder Modal componenet --> return (
+  // VIKTIGT -> ELementet du vill ska öpna modalen ska du ge onClick={openModal()}
   <Modal isOpen={isModalOpen} handleClose={closeModal}>
     {/*Lägg till carousel componenent här! :)*/}
   </Modal>
