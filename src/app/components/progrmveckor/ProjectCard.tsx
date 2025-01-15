@@ -1,16 +1,20 @@
-import { GoArrowRight } from "react-icons/go";
+"use client";
+
+import { usePathname } from "next/navigation"; 
 import Link from "next/link";
 
 interface ProjectCardProps {
   posterSrc: string;
   title: string;
   groupName: string;
+  projectId: number;
 }
 
-export default function ProjectCard({posterSrc, title, groupName}: ProjectCardProps) {
-
+export default function ProjectCard({posterSrc, title, groupName, projectId}: ProjectCardProps) {
+  const pathname = usePathname();
+  
   return (
-    <Link href={``} className="text-light bg-dark w-80 hover:scale-105 hover:bg-complementary hover:text-dark hover:border-black transition font-bold p-6 pb-0 m-4 group">
+    <Link href={`${pathname}/${projectId}`} className="text-light bg-dark w-80 hover:scale-105 hover:bg-complementary hover:text-dark hover:border-black transition font-bold p-6 pb-0 m-4 group">
       <li className="w-full list-none">
         <img className="w-full bg-cover bg-center mx-auto" src={posterSrc} />
 
