@@ -1,7 +1,7 @@
 import Header from "../../components/gyarte/GyarteFocusHeader";
-import ESOverview from "../../components/gyarte/GyarteESXOverview";
 import SY1Layout from "@/app/components/gyarte/SY1Layout";
 import ES1 from "./ES1";
+import ES2 from "./ES2";
 import SU0Layout from "@/app/components/gyarte/GyarteSU0Layout";
 
 interface ImageData {
@@ -13,19 +13,42 @@ interface ImageData {
 // test data remove later
 const data = {
   work :
-  {
-    "id": 3,
-    "thesis": "How to make hentai games",
-    "course": "SU",
-    "author_name": "Philip Jansson",
-    "author_class": "SU25d",
-    "publication_year": 2028,
-    "component_id": "SU0",
-    "component_data":
+
     {
-      "video_ref": "db/gyarte/3/video.mp4"
+      "id": 2,
+      "thesis": "How to draw",
+      "course": "GD",
+      "author_name": "Wilmer Säfsten",
+      "author_class": "GD22",
+      "publication_year": 2025,
+      "component_id": "ES2",
+      "component_data":
+      {
+        "video_ref": "db/gyarte/3/video.mp4",
+        "images":
+        [
+          {
+            "image_ref": "db/gyarte/4/images/img1.jpg",
+            "image_title": "My sick image",
+            "image_format": "1:1 1024x"
+          },
+          {
+            "image_ref": "db/gyarte/4/images/img2.jpg",
+            "image_title": "My not so sick image",
+            "image_format": "16:9 1080p"
+          },          {
+            "image_ref": "db/gyarte/4/images/img3.jpg",
+            "image_title": "My sick image",
+            "image_format": "1:1 1024x"
+          },
+          {
+            "image_ref": "db/gyarte/4/images/img4.jpg",
+            "image_title": "My not so sick image",
+            "image_format": "16:9 1080p"
+          }
+        ]
+      }
     }
-  }
 }
 
 export default function Individual(){
@@ -46,7 +69,7 @@ export default function Individual(){
 
           return (
             <section>
-              <ESOverview description={null}/>
+              <ES2 data={data}/>
             </section>
           );
         
