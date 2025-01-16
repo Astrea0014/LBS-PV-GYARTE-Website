@@ -9,6 +9,6 @@ export interface SUSG01ProjectData {
     asset_refs: string[];
 }
 
-export function SUSG01ProjectDataRequester(project_id: number, conn: mysql.Connection): SUSG01ProjectData {
+export async function SUSG01ProjectDataRequester(project_id: number, conn: mysql.Connection): Promise<SUSG01ProjectData> {
     
 }
