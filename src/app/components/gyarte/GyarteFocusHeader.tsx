@@ -10,7 +10,7 @@ interface FocusHeaderProps {
 
 export default function GyarteFocusHeader({thesis, name, course, year} : FocusHeaderProps){
   return(
-    <section className="w-screen py-16 items-center flex flex-col">
+    <section className="w-screen py-10 items-center flex flex-col">
       <Whitespace/>
       <Header headerTitle={thesis}/>
 

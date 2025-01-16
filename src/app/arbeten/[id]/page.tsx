@@ -1,7 +1,6 @@
 import Header from "../../components/gyarte/GyarteFocusHeader";
-
-import Layout from "../../components/gyarte/GyarteES1";
-import Carousel from "../../components/gyarte/GyarteESCarousel";
+import ES1ImageLayout from "../../components/gyarte/GyarteES1FibonacciLayout";
+import ESOverview from "../../components/gyarte/GyarteESXOverview";
 
 interface ImageData {
   image_ref : string,
@@ -61,15 +60,40 @@ export default function Individual(){
 
       <Header thesis={data.work.thesis} name={data.work.author_name} course={data.work.author_class} year={data.work.publication_year}/>
       
-      <Layout 
-      image={`/${data.work.component_data[0].image_ref}`} 
-      image2={`/${data.work.component_data[1].image_ref}`} 
-      image3={`/${data.work.component_data[2].image_ref}`} 
-      image4={`/${data.work.component_data[3].image_ref}`}
-      longImage={`/${data.work.component_data[4].image_ref}`}
-      />
+      {(() => {
+      switch (data.work.component_id) {
+        case "ES1":
+          return (
+            <section>
+              <ESOverview description={null}/>
+              <ES1ImageLayout 
+                image={`/${data.work.component_data[0].image_ref}`} 
+                image2={`/${data.work.component_data[1].image_ref}`} 
+                image3={`/${data.work.component_data[2].image_ref}`} 
+                image4={`/${data.work.component_data[3].image_ref}`}
+                longImage={`/${data.work.component_data[4].image_ref}`} 
+              />
+            </section>
+          );
 
-      <Carousel imageList={imageDataList}/>
+        case "ES2":
+
+          return (
+            <section>
+              <ESOverview description={null}/>
+            </section>
+          );
+        
+        case "SY0":
+          return null;
+
+        case "SU0":
+          return null;
+
+        default:
+          return null;
+      }
+    })()}
 
     </main>
 

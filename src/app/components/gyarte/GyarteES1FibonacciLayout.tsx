@@ -9,7 +9,7 @@ interface ES1Props{
   longImage? : string
 }
 
-export default function ES1Layout({image, image2, image3, image4, longImage} : ES1Props){
+export default function ES1Fibonacci({image, image2, image3, image4, longImage} : ES1Props){
 
   const goldenRatio = 1.618;
   const square = 70; // for adjusting all square sizes
