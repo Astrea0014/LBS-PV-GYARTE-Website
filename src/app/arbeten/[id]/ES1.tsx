@@ -34,7 +34,7 @@ export default function ES1({ data }: ES1Props) {
       />
 
       <Modal isOpen={isModalOpen} handleClose={closeModal}>
-        <ImageCarousel imageRefList={[data.work.component_data[0].image_ref, data.work.component_data[1].image_ref, data.work.component_data[2].image_ref, data.work.component_data[3].image_ref]}/>
+        <ImageCarousel imageRefList={[data.work.component_data[0].image_ref, data.work.component_data[1].image_ref, data.work.component_data[2].image_ref, data.work.component_data[3].image_ref, data.work.component_data[4].image_ref]}/>
       </Modal>
     </section>
   );  

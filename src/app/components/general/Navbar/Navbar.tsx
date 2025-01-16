@@ -4,7 +4,7 @@ import NavigationBreadcrumbs from "./NavigationBreadcrumbs";
 export default function Navbar() {
   return (
     <>
-      <header className="bg-navbar w-full flex justify-between items-center h-24 text-white top-0 fixed z-40 box-border px-4">
+      <header className="bg-navbar w-full flex justify-between items-center h-24 text-white top-0 sticky z-40 box-border px-4">
         <img className="w-48 lg:w-64" src="/lbslogorgbvit.svg" alt="LBS"/>
         <Navigation />
       </header>
