@@ -9,7 +9,7 @@ interface ES1Props{
   longImage? : string
 }
 
-export default function ES1Layout({image, image2, image3, image4, longImage} : ES1Props){
+export default function ES1Fibonacci({image, image2, image3, image4, longImage} : ES1Props){
 
   const goldenRatio = 1.618;
   const square = 70; // for adjusting all square sizes
@@ -77,7 +77,7 @@ export default function ES1Layout({image, image2, image3, image4, longImage} : E
       <div className=" p-1 md:p-2" style={{height:`${square}vw`, width:`${square}vw`, maxHeight:`${squareMax}rem`, maxWidth:`${squareMax}rem`}}>
         <div className="bg-complementary w-full h-full bg-cover bg-center" style={{backgroundImage:`url("${image}")`}}/>        
       </div>
-      
+
 
     </section>
   );
