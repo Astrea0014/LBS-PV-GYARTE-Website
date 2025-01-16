@@ -32,6 +32,10 @@ export default {
           "100%": { transform: "translate(100%)" },
         },
       },
+      fontFamily: {
+        avenirRoman : ['"AvenirProRoman"', 'sans-serif'],
+        avenirBlack : ['"AvenirProBlack"', 'sans-serif']
+      },
       animation: {
         slideIn: "slideIn 0.5s ease-out forwards",
         slideOut: "slideOut 0.5s ease-out forwards",

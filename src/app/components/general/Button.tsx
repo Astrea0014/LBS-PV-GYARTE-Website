@@ -10,7 +10,7 @@ export default function Button({ link, text, customClasses }: ButtonProps ){
   return (
     <Link
       href={link}
-      className={`${customClasses} flex justify-center text-center p-2 w-28 rounded-full transition`}
+      className={`${customClasses} flex justify-center text-center p-2 w-28 rounded-full transition font-avenirBlack`}
     >
       {text}
     </Link>

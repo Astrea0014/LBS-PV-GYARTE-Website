@@ -21,7 +21,7 @@ export default function Card({image, focus, link, theme} : CardProps){
     }
 
   return(
-    <Link href={`${link}`} className="w-full bg-dark text-light max-w-80 hover:scale-105 hover:bg-complementary transition font-bold hover:text-dark">
+    <Link href={`${link}`} className="w-full bg-dark text-light max-w-80 hover:scale-105 hover:bg-complementary transition hover:text-dark font-avenirBlack">
       <li className="w-full h-80 list-none">
         <section className="w-full h-3/4 bg-cover bg-center" style={{backgroundImage:`url("${image}")`}} />
 

@@ -9,7 +9,7 @@ export default function AltButton({ link, text, customClasses, icon}: ButtonProp
   return (
     <a
       href={link}
-      className={`${customClasses} flex justify-center items-center text-center w-28 rounded-full transition`}
+      className={`${customClasses} flex justify-center items-center text-center w-28 rounded-full transition font-avenirBlack`}
     >
       {text}&nbsp;{icon}
     </a>
