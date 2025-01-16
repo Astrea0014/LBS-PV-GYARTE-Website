@@ -2,7 +2,7 @@ import Header from "../../components/gyarte/GyarteFocusHeader";
 
 import ES1Layout from "../../components/gyarte/GyarteES1";
 import SY1Layout from "@/app/components/gyarte/SY1Layout";
-
+import ImageCarousel from "@/app/components/gyarte/ImageCarousel";
 // test data remove later
 const data = {
   work :
@@ -64,6 +64,8 @@ export default function Individual(){
         image4={`/${data.work.component_data[3].image_ref}`}
         longImage={`/${data.work.component_data[4].image_ref}`}
       /> */}
+      
+      <ImageCarousel imageRefList={[data.work.component_data[1].image_ref, data.work.component_data[2].image_ref, data.work.component_data[3].image_ref, data.work.component_data[4].image_ref]} />
 
       <SY1Layout websiteLink="https://www.volvocars.com/se/" />
 
