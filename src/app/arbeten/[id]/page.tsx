@@ -1,12 +1,16 @@
 import Header from "../../components/gyarte/GyarteFocusHeader";
 import ES1ImageLayout from "../../components/gyarte/GyarteES1FibonacciLayout";
 import ESOverview from "../../components/gyarte/GyarteESXOverview";
+import SY1Layout from "@/app/components/gyarte/SY1Layout";
+import ImageCarousel from "@/app/components/gyarte/ImageCarousel";
+
 
 interface ImageData {
   image_ref : string,
   image_title : string,
   image_format : string;
 };
+
 
 // test data remove later
 const data = {
@@ -85,7 +89,9 @@ export default function Individual(){
           );
         
         case "SY0":
-          return null;
+          return (
+          <SY1Layout websiteLink="https://www.volvocars.com/se/" />
+          );
 
         case "SU0":
           return null;
@@ -94,6 +100,8 @@ export default function Individual(){
           return null;
       }
     })()}
+
+      <ImageCarousel imageRefList={[data.work.component_data[1].image_ref, data.work.component_data[2].image_ref, data.work.component_data[3].image_ref, data.work.component_data[4].image_ref]} />
 
     </main>
 

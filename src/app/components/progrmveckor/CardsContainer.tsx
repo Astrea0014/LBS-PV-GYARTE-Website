@@ -67,6 +67,7 @@ export default function CardsContainer({ year }: CardsContainerProps) {
             focus={collab.collaborators}
             image={collab.posterSrc}
             theme={collab.theme}
+            link={`/programveckor/${collab.collaboration_id}`}
           />
         )}
       </ul>

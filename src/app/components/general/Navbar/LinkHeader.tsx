@@ -12,7 +12,7 @@ export default function LinkHeader({ title, toPath, size, currentPath, closeNavF
   return (
     <Link
       href={toPath}
-      className={`border-b ${size === "big" ? "text-2xl p-3 w-11/12"  : "text-md p-3 w-10/12"} ${currentPath === toPath ? "font-bold" : ""}`} 
+      className={`border-b ${size === "big" ? "text-2xl p-3 w-11/12"  : "text-md p-3 w-10/12"} ${currentPath.startsWith(toPath) ? "font-bold" : ""}`} 
       onClick={() => closeNavFunc(false)}
     >
       {title}
