@@ -8,9 +8,10 @@ interface TabSelectorProp {
   children: React.ReactNode;
   fullScreenScroll?: boolean;
   noBorder?: boolean;
+  noMargin?: boolean;
 }
 
-export default function TabSelector({children, fullScreenScroll, noBorder}: TabSelectorProp) {
+export default function TabSelector({children, fullScreenScroll, noBorder, noMargin}: TabSelectorProp) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const scrollLeft = () => {
     if (carouselRef.current) {
@@ -39,8 +40,8 @@ export default function TabSelector({children, fullScreenScroll, noBorder}: TabS
   };
 
   return (
-    <div className={`relative flex items-center w-11/12 lg:w-10/12 xl:w-8/12 mx-auto mt-16 p-8 ${noBorder ? "" : "border-black border-solid border-y-2"}`}>
-      <ArrowButton direction="left" scrollFunc={scrollLeft}/>
+    <div className={`relative flex items-center w-11/12 lg:w-10/12 xl:w-8/12 mx-auto p-8 ${noMargin ? "" : "mt-16"} ${noBorder ? "" : "border-black border-solid border-y-2"}`}>
+      <ArrowButton direction="left" scrollFunc={scrollLeft} />
       <div 
         className="flex mx-4 w-full overflow-x-scroll scroll-smooth whitespace-nowrap no-scrollbar gap-3 snap-x"
         ref={carouselRef}

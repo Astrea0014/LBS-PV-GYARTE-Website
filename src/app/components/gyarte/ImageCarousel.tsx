@@ -9,9 +9,9 @@ interface ImageCarouselProps {
 export default function ImageCarousel({imageRefList}: ImageCarouselProps) {
   console.log(imageRefList)
   return(
-    <section className="w-full lg:w-10/12 xl:w-9/12 2xl:w-8/12 mx-auto">
+    <section className="w-full mx-auto">
       <Whitespace />
-      <TabSelector fullScreenScroll noBorder>
+      <TabSelector fullScreenScroll noBorder noMargin>
         {imageRefList.map((imageRef) =>
           <ImgContainer 
             key={imageRef}

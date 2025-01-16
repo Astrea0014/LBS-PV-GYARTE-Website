@@ -1,9 +1,7 @@
 import Header from "../../components/gyarte/GyarteFocusHeader";
-import ES1ImageLayout from "../../components/gyarte/GyarteES1FibonacciLayout";
 import ESOverview from "../../components/gyarte/GyarteESXOverview";
 import SY1Layout from "@/app/components/gyarte/SY1Layout";
-import ImageCarousel from "@/app/components/gyarte/ImageCarousel";
-
+import ES1 from "./ES1";
 
 interface ImageData {
   image_ref : string,
@@ -57,7 +55,7 @@ const data = {
 
 export default function Individual(){
 
-  const imageDataList: ImageData[] = data.work.component_data
+  const imageDataList: ImageData[] = data.work.component_data;
 
   return(
     <main>
@@ -68,16 +66,7 @@ export default function Individual(){
       switch (data.work.component_id) {
         case "ES1":
           return (
-            <section>
-              <ESOverview description={null}/>
-              <ES1ImageLayout 
-                image={`/${data.work.component_data[0].image_ref}`} 
-                image2={`/${data.work.component_data[1].image_ref}`} 
-                image3={`/${data.work.component_data[2].image_ref}`} 
-                image4={`/${data.work.component_data[3].image_ref}`}
-                longImage={`/${data.work.component_data[4].image_ref}`} 
-              />
-            </section>
+            <ES1 data={data}/>
           );
 
         case "ES2":
@@ -100,10 +89,6 @@ export default function Individual(){
           return null;
       }
     })()}
-
-      <ImageCarousel imageRefList={[data.work.component_data[1].image_ref, data.work.component_data[2].image_ref, data.work.component_data[3].image_ref, data.work.component_data[4].image_ref]} />
-
     </main>
-
   );
 }
