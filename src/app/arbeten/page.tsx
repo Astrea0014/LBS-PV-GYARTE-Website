@@ -1,10 +1,10 @@
-import Whitespace from "../components/general/Navbar/NavWhitespace";
+import Whitespace from "../components/general/navbar/NavWhitespace";
 import Selector from "../components/general/SelectorButtonsGroup";
 import GyarteCard from "../components/gyarte/GyarteCard";
 import Header from "../components/general/PageHeader";
 import Overview from "../components/general/PageDescription";
 
-// temporary student work data (object): replace later
+// Temporary student work data (object): replace later
 const data = {
   works : [
     {

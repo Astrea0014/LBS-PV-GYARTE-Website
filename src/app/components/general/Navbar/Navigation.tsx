@@ -47,19 +47,19 @@ export default function Navigation() {
           </Link>
           <Link
             href="/teknikprogramen"
-            className={`text-xl ${pathname === "/teknikprogramen" ? "font-bold" : ""}`}
+            className={`text-xl ${pathname.startsWith("/teknikprogramen") ? "font-bold" : ""}`}
           >
             Teknikprogramen
           </Link>
           <Link
             href="/estetprogramen"
-            className={`text-xl ${pathname === "/estetprogramen" ? "font-bold" : ""}`}
+            className={`text-xl ${pathname.startsWith("/estetprogramen") ? "font-bold" : ""}`}
           >
             Estetprogramen
           </Link>
           <Link
             href="/programveckor?year=2027"
-            className={`text-xl ${pathname === "/programveckor" ? "font-bold" : ""}`}
+            className={`text-xl ${pathname.startsWith("/programveckor") ? "font-bold" : ""}`}
           >
             Programveckor
           </Link>

@@ -14,7 +14,7 @@ export default async function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
   const year = resolvedSearchParams.year ?? "Unkown";
 
   return (
-    <main className="">
+    <main>
       <Whitespace />
       <section className="flex flex-col justify-center w-full py-16">
         <PageHeader headerTitle="Programveckor"/>
