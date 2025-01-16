@@ -8,6 +8,7 @@ export let GyDb: ThesisDb;
 export function register() {
     PvDb = new CollaborationDb();
     PvDb.SetProjectTypeDataRequester("SUSG01", SUSG01ProjectDataRequester);
+    PvDb.Connect();
 
     GyDb = new ThesisDb();
 }
