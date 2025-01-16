@@ -1,7 +1,7 @@
 import Header from "../../components/gyarte/GyarteFocusHeader";
 
-import Layout from "../../components/gyarte/GyarteES1";
-
+import ES1Layout from "../../components/gyarte/GyarteES1";
+import SY1Layout from "@/app/components/gyarte/SY1Layout";
 
 // test data remove later
 const data = {
@@ -50,15 +50,22 @@ export default function Individual(){
   return(
     <main>
 
-      <Header thesis={data.work.thesis} name={data.work.author_name} course={data.work.author_class} year={data.work.publication_year}/>
-
-      <Layout 
-      image={`/${data.work.component_data[0].image_ref}`} 
-      image2={`/${data.work.component_data[1].image_ref}`} 
-      image3={`/${data.work.component_data[2].image_ref}`} 
-      image4={`/${data.work.component_data[3].image_ref}`}
-      longImage={`/${data.work.component_data[4].image_ref}`}
+      <Header 
+        thesis={data.work.thesis} 
+        name={data.work.author_name} 
+        course={data.work.author_class} 
+        year={data.work.publication_year}
       />
+
+      {/* <ES1Layout 
+        image={`/${data.work.component_data[0].image_ref}`} 
+        image2={`/${data.work.component_data[1].image_ref}`} 
+        image3={`/${data.work.component_data[2].image_ref}`} 
+        image4={`/${data.work.component_data[3].image_ref}`}
+        longImage={`/${data.work.component_data[4].image_ref}`}
+      /> */}
+
+      <SY1Layout websiteLink="https://www.volvocars.com/se/" />
 
     </main>
 
