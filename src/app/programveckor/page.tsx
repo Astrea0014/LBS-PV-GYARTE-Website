@@ -1,16 +1,26 @@
+"use client";
+
 import PageDescription from "../components/general/PageDescription";
 import PageHeader from "../components/general/PageHeader";
 import SelectorButtonsGroup from "../components/general/SelectorButtonsGroup";
 import CardsContainer from "../components/programveckor/CardsContainer";
+import { useState, useEffect } from "react";
+
 
 interface ProgramWeeksProps {
   searchParams: Promise<{year: string;}>;
 }
 
-export default async function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
-  
-  const resolvedSearchParams = await searchParams
-  const year = resolvedSearchParams.year ?? "Unkown";
+export default function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
+  const [paramYear, setParamYear] = useState<string>("Unkown");
+
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedSearchParams = (await searchParams).year ?? "Unkown";
+      setParamYear(resolvedSearchParams);
+    }
+    resolveParams();
+  }, [searchParams]);
 
   return (
     <main>
@@ -23,9 +33,9 @@ export default async function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
           sina färdigheter i reflektion och feedback. Resultatet är både färdiga produkter och en bättre förståelse för hur olika discipliner 
           kompletterar varandra i arbetslivet."
         />
-        <SelectorButtonsGroup years={[2027, 2026, 2025]} pathYear={year} />
+        <SelectorButtonsGroup years={[2027, 2026, 2025]} pathYear={paramYear} />
         
-        <CardsContainer year={year} />
+        <CardsContainer year={paramYear} />
       </section>
     </main>
   );
