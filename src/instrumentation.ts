@@ -2,14 +2,14 @@ import { CollaborationDb, ThesisDb } from './app/lib/Db';
 
 import { SUSG01ProjectDataRequester } from './app/lib/db_proprietary/pv_data_structures/SUSG01';
 
-export let PvDb: CollaborationDb;
-export let GyDb: ThesisDb;
+declare global {
+  var __PvDb: CollaborationDb;
+}
+global.__PvDb = new CollaborationDb();
 
 export function register() {
-    PvDb = new CollaborationDb();
-    PvDb.SetProjectTypeDataRequester("SUSG01", SUSG01ProjectDataRequester);
+  __PvDb.SetProjectTypeDataRequester("SUSG01", SUSG01ProjectDataRequester);
+  __PvDb.Connect();
 
-    GyDb = new ThesisDb();
-
-    console.log('i work nyaah >.<');
+  console.log('i work nyaah >.<');
 }
