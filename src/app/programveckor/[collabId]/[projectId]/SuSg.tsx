@@ -1,8 +1,7 @@
 import PageHeader from "@/app/components/general/PageHeader";
 import PageDescription from "@/app/components/general/PageDescription";
-import { Video } from "@/app/components/progrmveckor/Video";
+import  Video  from "@/app/components/general/Video";
 import AltButton from "@/app/components/progrmveckor/AltButton";
-
 
 interface SuSgProps {
   gameTitle: string;

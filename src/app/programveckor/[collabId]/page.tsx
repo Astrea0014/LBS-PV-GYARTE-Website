@@ -45,7 +45,7 @@ export default async function CollaberationProjects({params}: CollaborationProje
   return (
     <main>
       {/*Byt till dynamisk input*/}
-      <section className="flex flex-col justify-center w-full py-16">
+      <section className="flex flex-col justify-center w-full pb-16">
         <PageHeader headerTitle="Programveckor SU/SG" />
         <PageDescription description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
         <div className="w-full flex  justify-center mx-auto my-8">
