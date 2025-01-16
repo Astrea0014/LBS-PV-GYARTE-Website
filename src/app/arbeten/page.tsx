@@ -1,4 +1,3 @@
-import Whitespace from "../components/general/navbar/NavWhitespace";
 import Selector from "../components/general/SelectorButtonsGroup";
 import GyarteCard from "../components/gyarte/GyarteCard";
 import Header from "../components/general/PageHeader";
@@ -97,9 +96,6 @@ export default function Gyarte(){
   
   return(
     <main>
-
-      <Whitespace/>
-
       <Header headerTitle={`Gymnasie Arbete för ${course}`}/>
       <Overview description="Detta är ett arkiv över tidigare gymnasiearbeten utförda av elever vid LBS Kreativa Gymnasium Stockholm Södra. Här presenteras arbeten från flera av våra olika utbildningsprogram. Du kan bland annat hitta exempel på spelprogrammering från Spelutvecklingsprogrammet, webbplatser från programmet för App- och Webbutveckling. Samt imponerande bilder, kollage och videor skapade av elever från våra Estetiska program."/>
 
