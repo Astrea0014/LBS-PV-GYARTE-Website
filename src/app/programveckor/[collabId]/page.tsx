@@ -1,6 +1,5 @@
 import PageHeader from "../../components/general/PageHeader";
 import PageDescription from "../../components/general/PageDescription";
-import Whitespace from "@/app/components/general/navbar/NavWhitespace";
 import ProjectCard from "@/app/components/progrmveckor/ProjectCard";
 import Divider from "@/app/components/general/Divider";
 
@@ -45,7 +44,6 @@ export default async function CollaberationProjects({params}: CollaborationProje
 
   return (
     <main>
-      <Whitespace />
       {/*Byt till dynamisk input*/}
       <section className="flex flex-col justify-center w-full pb-16">
         <PageHeader headerTitle="Programveckor SU/SG" />

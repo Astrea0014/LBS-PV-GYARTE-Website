@@ -7,9 +7,10 @@ interface ES1Props{
   image3? : string,
   image4? : string,
   longImage? : string
+  openModal?: () => void;
 }
 
-export default function ES1Fibonacci({image, image2, image3, image4, longImage} : ES1Props){
+export default function ES1Fibonacci({image, image2, image3, image4, longImage, openModal} : ES1Props){
 
   const goldenRatio = 1.618;
   const square = 70; // for adjusting all square sizes
@@ -40,7 +41,7 @@ export default function ES1Fibonacci({image, image2, image3, image4, longImage} 
   }, []); 
 
   return(
-    <section className="flex flex-col items-center md:flex-row-reverse md:justify-center mb-20">
+    <section className="cursor-pointer w-fit mx-auto flex flex-col items-center md:flex-row-reverse md:justify-center mb-20" onClick={openModal}>
       
       <div className="flex flex-row md:flex-col">
         <div className=" p-1 md:p-2" style={{height:`${square2}vw`, width:`${square2}vw`, maxHeight:`${squareMax2}rem`, maxWidth:`${squareMax2}rem`}}>

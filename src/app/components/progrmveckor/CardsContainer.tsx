@@ -1,5 +1,3 @@
-"use client"
-import { useState, useEffect } from "react"; 
 import Card from "../general/Card";
 
 interface CardsContainerProps {
@@ -8,7 +6,6 @@ interface CardsContainerProps {
 
 export default function CardsContainer({ year }: CardsContainerProps) {
   // Get info from database with year ->
-  console.log(year)
   const testInfo = {
     collaborations: [
       {
