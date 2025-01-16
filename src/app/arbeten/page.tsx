@@ -56,7 +56,7 @@ const data = {
       "component_id": "SU0",
       "component_data":
       {
-        "video_ref": "gyarte/3/video.mp4"
+        "video_ref": "db/gyarte/3/video.mp4"
       }
     },
     {
@@ -70,17 +70,17 @@ const data = {
       "component_data":
       [
         {
-          "image_ref": "gyarte/4/images/img1.jpg",
+          "image_ref": "db/gyarte/4/images/img1.jpg",
           "image_title": "Pog1",
           "image_format": "1:2"
         },
         {
-          "image_ref": "gyarte/4/images/img2.jpg",
+          "image_ref": "db/gyarte/4/images/img2.jpg",
           "image_title": "Pog2",
           "image_format": "1:1"
         },
         {
-          "image_ref": "gyarte/4/images/img3.jpg",
+          "image_ref": "db/gyarte/4/images/img3.jpg",
           "image_title": "Pog3",
           "image_format": "16:9"
         }

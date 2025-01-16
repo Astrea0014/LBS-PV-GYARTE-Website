@@ -16,7 +16,7 @@ export default async function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
   return (
     <main>
       <Whitespace />
-      <section className="flex flex-col justify-center w-full py-16">
+      <section className="flex flex-col justify-center w-full pb-16">
         <PageHeader headerTitle="Programveckor"/>
         <PageDescription 
           description="Programveckor är en period där deltagare från olika program arbetar tillsammans för att skapa färdiga, användbara produkter.
