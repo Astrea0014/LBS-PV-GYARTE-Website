@@ -50,14 +50,19 @@ export default function Individual(){
   return(
     <main>
 
-      <Header thesis={data.work.thesis} name={data.work.author_name} course={data.work.author_class} year={data.work.publication_year}/>
+      <Header 
+        thesis={data.work.thesis} 
+        name={data.work.author_name} 
+        course={data.work.author_class} 
+        year={data.work.publication_year}
+      />
 
       <Layout 
-      image={`/${data.work.component_data[0].image_ref}`} 
-      image2={`/${data.work.component_data[1].image_ref}`} 
-      image3={`/${data.work.component_data[2].image_ref}`} 
-      image4={`/${data.work.component_data[3].image_ref}`}
-      longImage={`/${data.work.component_data[4].image_ref}`}
+        image={`/${data.work.component_data[0].image_ref}`} 
+        image2={`/${data.work.component_data[1].image_ref}`} 
+        image3={`/${data.work.component_data[2].image_ref}`} 
+        image4={`/${data.work.component_data[3].image_ref}`}
+        longImage={`/${data.work.component_data[4].image_ref}`}
       />
 
     </main>
