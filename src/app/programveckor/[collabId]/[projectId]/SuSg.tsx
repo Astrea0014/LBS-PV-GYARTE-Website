@@ -1,8 +1,8 @@
 import PageHeader from "@/app/components/general/PageHeader";
 import PageDescription from "@/app/components/general/PageDescription";
 import Whitespace from "@/app/components/general/navbar/NavWhitespace";
-import { Video } from "@/app/components/progrmveckor/Video";
-import AltButton from "@/app/components/progrmveckor/AltButton";
+import { Video } from "@/app/components/programveckor/Video";
+import AltButton from "@/app/components/programveckor/AltButton";
 
 
 interface SuSgProps {
