@@ -4,18 +4,18 @@ export default function Footer(){
 
   return(
 
-    <footer className="bg-footer text-light flex justify-center flex-col items-center gap-3 min-h-96">
+    <footer className="bg-footer text-light flex justify-center flex-col items-center gap-3 min-h-96 font-avenirRoman">
       
       
       <img src="/lbslogorgbvit.svg" alt="lbs-logo" className="w-52"/>
       
       <Divider responsive = {true} />
-      <a href="https://lbs.se/stockholmsodra/" className="hover:cursor-pointer hover:text-complementary">Till Huvudsidan</a>
+      <a href="https://lbs.se/stockholmsodra/" className="hover:cursor-pointer hover:text-complementary hover:font-avenirBlack">Till Huvudsidan</a>
       <Divider responsive = {true} />
       
       <section className="text-center">
-        <p>Kontakt</p>
-        <p>Email: stockholm@lbs.se</p>        
+        <p className="font-avenirBlack">Kontakt</p>
+        <p>Email: <span className="font-avenirBlack">stockholm@lbs.se</span></p>        
       </section>
 
 
