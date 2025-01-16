@@ -19,8 +19,8 @@ export default function ProjectCard({posterSrc, title, groupName, projectId}: Pr
         <img className="w-full bg-cover bg-center mx-auto" src={posterSrc} />
 
         <section className="grid grid-cols-3 justify-center items-center p-4 group-hover:border-black">
-          <h2 className="col-span-3 text-center text-xl border-b border-white pb-2 group-hover:border-black">{title}</h2>
-          <h3 className="col-span-3 text-center text-lg mt-3">{groupName}</h3>
+          <h2 className="col-span-3 text-center text-xl border-b border-white pb-2 group-hover:border-black font-avenirBlack">{title}</h2>
+          <h3 className="col-span-3 text-center text-lg mt-3 font-avenirRoman">{groupName}</h3>
         </section>
       </li>
     </Link>
