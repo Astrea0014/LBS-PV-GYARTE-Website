@@ -11,7 +11,7 @@ export default function GyarteCard({thesis, name, course, year} : GyarteCardProp
 
   return(
 
-    <div className="bg-dark text-light hover:bg-complementary hover:text-dark m-4 mt-10 md:mx-20 lg:mx-52 hover:scale-105 p-4 transition flex flex-col items-center hover:underline">
+    <div className="cursor-pointer bg-dark text-light hover:bg-complementary hover:text-dark m-4 mt-10 md:mx-20 lg:mx-52 hover:scale-105 p-4 transition flex flex-col items-center hover:underline">
 
       <div className="h-32 w-full">
         {thesis.length < 120 ? (
