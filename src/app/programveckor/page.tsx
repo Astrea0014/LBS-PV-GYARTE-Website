@@ -1,7 +1,7 @@
 import PageDescription from "../components/general/PageDescription";
 import PageHeader from "../components/general/PageHeader";
 import SelectorButtonsGroup from "../components/general/SelectorButtonsGroup";
-import CardsContainer from "../components/programveckor/CardsContainer";
+import CardsContainer from "../components/progrmveckor/CardsContainer";
 
 interface ProgramWeeksProps {
   searchParams: Promise<{year: string;}>;

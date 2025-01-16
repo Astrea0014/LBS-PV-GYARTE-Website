@@ -1,6 +1,6 @@
 import PageHeader from "../../components/general/PageHeader";
 import PageDescription from "../../components/general/PageDescription";
-import ProjectCard from "@/app/components/programveckor/ProjectCard";
+import ProjectCard from "@/app/components/progrmveckor/ProjectCard";
 import Divider from "@/app/components/general/Divider";
 
 interface CollaborationProjectsProps {
