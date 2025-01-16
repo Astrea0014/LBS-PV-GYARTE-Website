@@ -1,4 +1,3 @@
-import Whitespace from "../general/navbar/NavWhitespace"; 
 import Header from "../general/PageHeader";
 
 interface FocusHeaderProps {
@@ -11,7 +10,6 @@ interface FocusHeaderProps {
 export default function GyarteFocusHeader({thesis, name, course, year} : FocusHeaderProps){
   return(
     <section className="w-screen items-center flex flex-col">
-      <Whitespace/>
       <Header headerTitle={thesis}/>
 
       <div className="flex flex-col md:flex-row border-y-2 px-3 py-3 border-dark w-5/6 md:px-10">
