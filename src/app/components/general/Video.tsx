@@ -3,7 +3,7 @@ interface VideoProps {
 }
 
 
-export function Video({videoRef}: VideoProps) {
+export default function Video({videoRef}: VideoProps) {
 
   return (
     <div className="w-full">
