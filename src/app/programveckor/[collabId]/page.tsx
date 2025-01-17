@@ -1,7 +1,12 @@
+"use client";
+
 import PageHeader from "../../components/general/PageHeader";
 import PageDescription from "../../components/general/PageDescription";
 import ProjectCard from "@/app/components/programveckor/ProjectCard";
 import Divider from "@/app/components/general/Divider";
+import { PvDb } from "@/app/lib/DbFetch";
+import { FullCollaboration } from "@/app/lib/DbTypes";
+import { useState, useEffect } from "react";
 
 interface CollaborationProjectsProps {
   params: Promise<{
@@ -9,38 +14,17 @@ interface CollaborationProjectsProps {
   }>
 }
 
-export default async function CollaberationProjects({params}: CollaborationProjectsProps) {
-  const id = (await params).collabId;
+export default function CollaborationProjects({params}: CollaborationProjectsProps) {
+  const [collaborationData, setCollaborationData] = useState<FullCollaboration | null>(null)
 
-  // Hämta projekt.
-  const data = {
-    projects: [
-      {
-        id: 1,
-        posterSrc: "/Hollow_Knight_first_cover_art.webp.png",
-        title: "Hollow Knight",
-        groupName: "Team Cherry",
-      },
-      {
-        id: 2,
-        posterSrc: "/Hollow_Knight_first_cover_art.webp.png",
-        title: "Hollow Knight",
-        groupName: "Team Cherry",
-      },
-      {
-        id: 3,
-        posterSrc: "/Hollow_Knight_first_cover_art.webp.png",
-        title: "Hollow Knight",
-        groupName: "Team Cherry",
-      },
-      {
-        id: 4,
-        posterSrc: "/Hollow_Knight_first_cover_art.webp.png",
-        title: "Hollow Knight",
-        groupName: "Team Cherry",
-      },
-    ]
-  }
+  useEffect(() => {
+    const getCollaberations = async () => {
+      const collabId = (await params).collabId;
+      const data = await PvDb.GetCollaborationFromId(parseInt(collabId))
+      setCollaborationData(data)
+    }
+    getCollaberations();
+  }, [params]);
 
   return (
     <main>
@@ -53,14 +37,17 @@ export default async function CollaberationProjects({params}: CollaborationProje
         </div>
         <PageHeader headerTitle="Projekt" centerd/>
         <div className="flex w-11/12 lg:w-10/12 xl:w-8/12 justify-around mx-auto mb-8 flex-wrap">
-          {data.projects.map((project) =>
-            <ProjectCard 
-              key={project.id}
-              projectId={project.id}
-              posterSrc={project.posterSrc}
-              title={project.title}
-              groupName={project.groupName}
-            />
+          {collaborationData ? (
+            collaborationData.project_groups.map((project) =>
+              <ProjectCard
+                key={project.project_id}
+                projectId={project.project_id}
+                posterRef={project.project_data.poster_ref}
+                groupName={project.group_name}
+              />
+            )
+          ) : (
+            <span className="loading loading-spinner"/>
           )}
         </div>
       </section>

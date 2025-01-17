@@ -9,9 +9,10 @@ interface TabSelectorProp {
   fullScreenScroll?: boolean;
   noBorder?: boolean;
   noMargin?: boolean;
+  centerContent?: boolean;
 }
 
-export default function TabSelector({children, fullScreenScroll, noBorder, noMargin}: TabSelectorProp) {
+export default function TabSelector({children, fullScreenScroll, noBorder, noMargin, centerContent}: TabSelectorProp) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const scrollLeft = () => {
     if (carouselRef.current) {
@@ -43,7 +44,7 @@ export default function TabSelector({children, fullScreenScroll, noBorder, noMar
     <div className={`relative flex items-center w-11/12 lg:w-10/12 xl:w-8/12 mx-auto p-8 ${noMargin ? "" : "mt-16"} ${noBorder ? "" : "border-black border-solid border-y-2"}`}>
       <ArrowButton direction="left" scrollFunc={scrollLeft} />
       <div 
-        className="flex mx-4 w-full overflow-x-scroll scroll-smooth whitespace-nowrap no-scrollbar gap-3 snap-x"
+        className={`flex mx-4 w-full overflow-x-scroll scroll-smooth whitespace-nowrap no-scrollbar gap-3 snap-x ${centerContent ? "justify-center items-center": ""}`}
         ref={carouselRef}
       >
         {children}
