@@ -129,6 +129,8 @@ export default function Gyarte({searchParams} : GyarteProps){
     }
     resolveParams();
   }, [searchParams, router]);
+
+  
   
   return(
     <main>
