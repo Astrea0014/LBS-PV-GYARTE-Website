@@ -66,6 +66,7 @@ CREATE TABLE collaborations (
 	collaboration_id	INT,
     year				SMALLINT		NOT NULL,
     description			TEXT			NOT NULL,
+    poster_ref          VARCHAR(255)    NOT NULL,
     
     CONSTRAINT pk_collaboration_id
 		PRIMARY KEY (collaboration_id)

@@ -98,6 +98,7 @@ export class CollaborationDb extends Db {
           collaboration_id: values[i].collaboration_id,
           year: values[i].year,
           description: values[i].description,
+          poster_ref: values[i].poster_ref,
           collaborators: []
         };
 

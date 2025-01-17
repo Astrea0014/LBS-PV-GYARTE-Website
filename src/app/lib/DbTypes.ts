@@ -2,6 +2,7 @@ export interface Collaboration {
     collaboration_id: number;
     year: number;
     description: string;
+    poster_ref: string;
     collaborators: string[];
 }
 
