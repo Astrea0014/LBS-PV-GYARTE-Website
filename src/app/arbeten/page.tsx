@@ -1,7 +1,11 @@
+"use client"
+
 import Selector from "../components/general/SelectorButtonsGroup";
 import GyarteCard from "../components/gyarte/GyarteCard";
 import Header from "../components/general/PageHeader";
 import Overview from "../components/general/PageDescription";
+import {useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 // Temporary student work data (object): replace later
 const data = {
@@ -88,15 +92,47 @@ const data = {
   ]
 }
 
+interface GyarteProps {
+  searchParams: Promise<{inriktning: string;}>;
+}
+
 const yearsList = [2025, 2026, 2027] // temporary year list: replace later
 
-export default function Gyarte(){
+// New course needs to be set in this function for the route to be valid
+function IsValid(value: string): boolean {
+  switch (value) {
+    case 'SY':
+    case 'SU':
+    case 'GD':
+    case 'FF':
+    case 'MB':
+    case 'AI':
+    case 'SG':
+      return true;
+    default:
+      return false; 
+  }
+}
 
-  const course = "SY";
+export default function Gyarte({searchParams} : GyarteProps){
+  const [paramCourse, setParamCourse] = useState<string>("Unkown");
+  const router = useRouter();
+
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedSearchParams = (await searchParams).inriktning ?? "Unkown";
+      setParamCourse(resolvedSearchParams);
+
+      if (!IsValid(resolvedSearchParams)){
+        router.push("/404")
+      }
+    }
+    resolveParams();
+  }, [searchParams, router]);
   
   return(
     <main>
-      <Header headerTitle={`Gymnasie Arbete för ${course}`}/>
+      <Header headerTitle={`Gymnasie Arbete för ${paramCourse}`}/>
       <Overview description="Detta är ett arkiv över tidigare gymnasiearbeten utförda av elever vid LBS Kreativa Gymnasium Stockholm Södra. Här presenteras arbeten från flera av våra olika utbildningsprogram. Du kan bland annat hitta exempel på spelprogrammering från Spelutvecklingsprogrammet, webbplatser från programmet för App- och Webbutveckling. Samt imponerande bilder, kollage och videor skapade av elever från våra Estetiska program."/>
 
       <Selector years={yearsList} pathYear={"2027"}/>
