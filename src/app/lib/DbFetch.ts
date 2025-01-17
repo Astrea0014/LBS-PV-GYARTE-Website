@@ -2,8 +2,8 @@ import { Collaboration, FullCollaboration } from "./DbTypes";
 
 const routes = {
   pv_years: "/api/pv/years",                    // GET;
-  pv_collaborations: "/api/pv/collaborations",  // GET; requires 'year' header.
-  pv_collaboration: "/api/pv/collaboration"     // GET; requires 'id' header.
+  pv_collaborations: "/api/pv/collaborations",  // GET; requires 'DbRef-Year' header.
+  pv_collaboration: "/api/pv/collaboration"     // GET; requires 'DbRef-Id' header.
 };
 
 export class PvDb {

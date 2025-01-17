@@ -15,7 +15,8 @@ export interface ProjectGroup {
     group_name: string;
     project_type: string;
     project_data: any;  // This is where a proprietary data
-                        // structure instance is located.
+                        // structure instance queried by a
+                        // project data requester will be located.
     group_members: GroupMember[];
 }
 
