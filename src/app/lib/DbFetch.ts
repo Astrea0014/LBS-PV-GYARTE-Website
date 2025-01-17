@@ -61,6 +61,6 @@ export class PvDb {
 
 export class GyDb {
   static async GetDbPresentYears(): Promise<number[]> { return []; }
-  static async GetThesesByYear(year: number): Promise<Thesis[]> { return []; }
+  static async GetThesesByYearAndCourse(year: number, course:string): Promise<Thesis[]> { return []; }
   static async GetThesisById(id: number): Promise<Thesis> { return { id: 0, thesis: "", course: "AA", author_name: "", author_class: "", publication_year: 0, component_id: "", component_data: null }; }
 }

@@ -86,7 +86,7 @@ export default function Individual({params} : GyarteProjectsProps){
       {typeof studentData !== "string" ? (
         <>
           <Header thesis={studentData.thesis} name={studentData.author_name} course={studentData.author_class} year={studentData.publication_year}/>
-        
+          
           {(() => {
             switch (studentData.component_id) {
               case "ES1":
