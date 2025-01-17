@@ -46,16 +46,16 @@ export default function Navigation() {
             Startsida
           </Link>
           <Link
-            href="/teknikprogramen"
-            className={`text-xl ${pathname.startsWith("/teknikprogramen") ? "font-bold" : ""}`}
+            href="/teknikprogrammen"
+            className={`text-xl ${pathname.startsWith("/teknikprogrammen") ? "font-bold" : ""}`}
           >
-            Teknikprogramen
+            Teknikprogrammen
           </Link>
           <Link
-            href="/estetprogramen"
-            className={`text-xl ${pathname.startsWith("/estetprogramen") ? "font-bold" : ""}`}
+            href="/estetprogrammen"
+            className={`text-xl ${pathname.startsWith("/estetprogrammen") ? "font-bold" : ""}`}
           >
-            Estetprogramen
+            Estetprogrammen
           </Link>
           <Link
             href="/programveckor?year=2027"
@@ -70,21 +70,21 @@ export default function Navigation() {
             {/* Teknik */}
             <div className="w-9/12 flex justify-end">
               <div className="flex flex-col items-end w-full">
-                <LinkHeader title={"Teknikprogram"} toPath="/teknikprogram" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"App-och Webbutveckling"} toPath="/teknikprogram/appochwebb" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"AI och Utveckling"} toPath="/teknikprogram/aiutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Spelutveckling"} toPath="/teknikprogram/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Teknikprogrammen"} toPath="/teknikprogrammen" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"App-och Webbutveckling"} toPath="/teknikprogrammen/appochwebb" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"AI och Utveckling"} toPath="/teknikprogrammen/aiutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Spelutveckling"} toPath="/teknikprogrammen/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
               </div>
             </div>
 
             {/* Estet */}
             <div className="w-9/12 flex justify-end">
               <div className="flex flex-col items-end w-full">
-                <LinkHeader title={"Estetprogram"} toPath="/estetprogram" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Grafisk Design"} toPath="/teknikprogram/appochwebb" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Foto och Film"} toPath="/teknikprogram/aiutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Media-Beteende"} toPath="/teknikprogram/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Spelgrafik"} toPath="/teknikprogram/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Estetprogrammen"} toPath="/estetprogrammen" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Grafisk Design"} toPath="/estetprogrammen/appochwebb" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Foto och Film"} toPath="/estetprogrammen/aiutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Media-Beteende"} toPath="/estetprogrammen/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Spelgrafik"} toPath="/estetprogrammen/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
               </div>
             </div>
 
