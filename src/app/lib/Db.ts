@@ -106,7 +106,7 @@ export class CollaborationDb extends Db {
         collaborators_result[0].forEach(value => collaboration.collaborators.push(value.collaborator as string));
         collaborations.push(collaboration);
       }
-      
+
       return collaborations;
     })!;
   }
@@ -122,7 +122,7 @@ export class CollaborationDb extends Db {
 
     return {                  // Whacky syntax, I know.
       ...collaborations[0],   // Expands so that all collaboration data fetched above is part of
-                              // the derived interface type's data.
+      // the derived interface type's data.
       project_groups: await this.dbConnection?.query<mysql.RowDataPacket[]>(
         mysql.format(
           `
@@ -149,7 +149,7 @@ export class CollaborationDb extends Db {
             project_type: values[i].project_type,
             project_data: await (this.dataRequesters.get(values[i].project_type)!)(values[i].project_id, this.dbConnection!),
             group_members: await this.dbConnection?.query<mysql.RowDataPacket[]>(
-              mysql.format(  
+              mysql.format(
                 `
                 SELECT name, class
                 FROM project_groups_people
@@ -174,7 +174,51 @@ export class CollaborationDb extends Db {
 
         return project_groups;
       })!
-    }
+    };
+  }
+
+  public async GetProjectFromId(id: number): Promise<ProjectGroup> {
+    return await this.dbConnection?.query<mysql.RowDataPacket[]>(
+      mysql.format(
+        `
+        SELECT *
+        FROM project_groups
+        WHERE project_id=?
+        `, id
+      )).then(async (result): Promise<ProjectGroup> => {
+        if (!result)
+          throw new Error('');
+        if (result[0].length == 0)
+          throw new Error('');
+
+        const value = result[0][0];
+        return {
+          project_id: value.project_id,
+          group_name: value.group_name,
+          project_type: value.project_type,
+          project_data: await (this.dataRequesters.get(value.project_type)!)(value.project_id, this.dbConnection!),
+          group_members: await this.dbConnection?.query<mysql.RowDataPacket[]>(
+            mysql.format(
+              `
+              SELECT name, class
+              FROM project_groups_people
+              INNER JOIN people
+                ON project_groups_people.person_id=people.person_id
+              WHERE project_id=?
+              `, value.project_id
+            )).then(result => {
+            if (!result)
+              throw new Error('Failed to fetch group members.');
+
+            return result[0].map((value): GroupMember => {
+              return {
+                name: value.name,
+                class: value.class
+              };
+            });
+          })!
+        };
+      })!;
   }
 }
 
