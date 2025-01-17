@@ -54,7 +54,7 @@ const data = {
 export default function Individual(){
 
   return(
-    <main>
+    <main className="overflow-hidden">
 
       <Header thesis={data.work.thesis} name={data.work.author_name} course={data.work.author_class} year={data.work.publication_year}/>
       
