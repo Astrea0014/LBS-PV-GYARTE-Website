@@ -5,9 +5,10 @@ import { SUSG01ProjectDataRequester } from './app/lib/db_proprietary/pv_data_str
 
 declare global {
   var __PvDb: CollaborationDb;            // DO NOT CHANGE FROM VAR
-}                                         // If you do you are in for a world of pain
-                                          // as it breaks literally everything.
+  var __GyDb: ThesisDb;                   // If you do you are in for a world of pain
+}                                         // as it breaks literally everything.
 global.__PvDb = new CollaborationDb();    // Cannot be moved.
+global.__GyDb = new ThesisDb();           // -----||-----
 
 export function register() {
   // ------------------- Project type data requesters -------------------

@@ -1,4 +1,4 @@
-import { Collaboration, FullCollaboration } from "./DbTypes";
+import { Collaboration, FullCollaboration, Thesis } from "./DbTypes";
 
 const routes = {
   pv_years: "/api/pv/years",                    // GET;
@@ -43,4 +43,10 @@ export class PvDb {
       return JSON.parse(await response.json()) as FullCollaboration;
     });
   }
+}
+
+export class GyDb {
+  static async GetDbPresentYears(): Promise<number[]> { return []; }
+  static async GetThesesByYear(year: number): Promise<Thesis[]> { return []; }
+  static async GetThesisById(id: number): Promise<Thesis> { return { id: 0, thesis: "", course: "AA", author_name: "", author_class: "", publication_year: 0, component_id: "", component_data: null }; }
 }
