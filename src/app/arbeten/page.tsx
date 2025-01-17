@@ -119,7 +119,6 @@ function IsValid(value: string): boolean {
 export default function Gyarte({searchParams} : GyarteProps){
   const [paramCourse, setParamCourse] = useState<string>("Unkown");
   const [projectsData, setProjectsData] = useState<Thesis[] | string>("No student with that ID");
-  const router = useRouter();
 
   useEffect(() => {
     const getGyarteProjects = async () => {
@@ -127,11 +126,7 @@ export default function Gyarte({searchParams} : GyarteProps){
         const resolvedSearchParams = (await searchParams).inriktning ?? "Unkown";
         setParamCourse(resolvedSearchParams);
 
-        if (!IsValid(resolvedSearchParams)){
-          router.push("/404")
-        }
-        
-        const data = await GyDb.GetThesesByYearAndCourse(2025, resolvedSearchParams);
+        const data = await GyDb.GetThesesByYearAndCourse(2025,resolvedSearchParams);
         
         if (typeof data === "object") {
           setProjectsData(data);
@@ -143,37 +138,35 @@ export default function Gyarte({searchParams} : GyarteProps){
 
     }
     getGyarteProjects();
-  }, [searchParams, router]);
+  }, [searchParams]);
 
   
   
   return(
     <main>
-      {projectsData.length > 0 ? (
-      <>
-        <Header headerTitle={`Gymnasie Arbete för ${paramCourse}`}/>
-        <Overview description="Detta är ett arkiv över tidigare gymnasiearbeten utförda av elever vid LBS Kreativa Gymnasium Stockholm Södra. Här presenteras arbeten från flera av våra olika utbildningsprogram. Du kan bland annat hitta exempel på spelprogrammering från Spelutvecklingsprogrammet, webbplatser från programmet för App- och Webbutveckling. Samt imponerande bilder, kollage och videor skapade av elever från våra Estetiska program."/>
+      {typeof projectsData !== "string" ? (
+        <>
+          <Header headerTitle={`Gymnasie Arbete för ${paramCourse}`}/>
+          <Overview description="Detta är ett arkiv över tidigare gymnasiearbeten utförda av elever vid LBS Kreativa Gymnasium Stockholm Södra. Här presenteras arbeten från flera av våra olika utbildningsprogram. Du kan bland annat hitta exempel på spelprogrammering från Spelutvecklingsprogrammet, webbplatser från programmet för App- och Webbutveckling. Samt imponerande bilder, kollage och videor skapade av elever från våra Estetiska program."/>
 
-        <Selector years={yearsList} pathYear={"2027"}/>
+          <Selector years={yearsList} pathYear={"2027"}/>
 
-        <section className="mb-28">
-          {typeof projectsData !== "string" ? (
-            projectsData.map((work) => 
+          <section className="mb-28">
+            {projectsData.map((work) => 
               <GyarteCard
-              key={work.id}
-              thesis={work.thesis}
-              name={work.author_name}
-              course={work.author_class}
-              year={work.publication_year}
+                key={work.id}
+                thesis={work.thesis}
+                name={work.author_name}
+                course={work.author_class}
+                year={work.publication_year}
               />
-            )
-          ) : (
-            <span className="loading loading-spinner"/>
-          )}
-        </section>
-      </>
+            )}
+          </section>
+       </>
       ) : (
-        null
+        <section className="h-96">
+          <h1>{projectsData}</h1>
+        </section>
       )} 
 
     </main>
