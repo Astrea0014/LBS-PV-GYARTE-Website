@@ -3,10 +3,10 @@ import Button from "../general/Button";
 export default function GyarteSection(){
   return (
 
-    <section className="bg-dark text-light p-16 xl:px-60 xl:flex min-h-60 font-avenirRoman">
+    <section className="bg-dark text-light p-10 md:p-16 xl:px-60 xl:flex min-h-60 font-avenirRoman">
     <div>
       <h2 className="font-bold text-3xl w-full text-center mb-4 font-avenirBlack">GymnasieArbete</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur alias ipsum, nostrum quas cupiditate provident tempore culpa tenetur sapiente consequuntur maxime ducimus soluta eligendi nobis perferendis placeat fugit. Quis, assumenda.</p>
+      <p>Detta är ett arkiv över tidigare gymnasiearbeten utförda av elever vid LBS Kreativa Gymnasium Stockholm Södra. Här presenteras arbeten från flera av våra olika utbildningsprogram. Du kan bland annat hitta exempel på spelprogrammering från Spelutvecklingsprogrammet, webbplatser från programmet för App- och Webbutveckling. Samt imponerande bilder, kollage och videor skapade av elever från våra Estetiska program.</p>
     </div>
 
     <div className="flex flex-col justify-center items-center gap-5 mt-7 mb-8 m-20 xl:gap-9">
