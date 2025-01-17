@@ -37,6 +37,21 @@
   }
 }
 
+@font-face{
+  font-family: "AvenirProRoman";
+  src: url("/fonts/AvenirPro55Roman.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{
+  font-family: "AvenirProBlack";
+  src: url("/fonts/AvenirPro95Black.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 body {
   color: var(--foreground);
   background: var(--background);

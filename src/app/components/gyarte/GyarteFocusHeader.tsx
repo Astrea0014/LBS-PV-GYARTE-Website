@@ -12,7 +12,7 @@ export default function GyarteFocusHeader({thesis, name, course, year} : FocusHe
     <section className="w-screen items-center flex flex-col">
       <Header headerTitle={thesis}/>
 
-      <div className="flex flex-col md:flex-row border-y-2 px-3 py-3 border-dark w-5/6 md:px-10">
+      <div className="flex flex-col md:flex-row border-y-2 px-3 py-3 border-dark w-5/6 md:px-10  font-avenirRoman">
 
         <div className="flex flex-row gap-2 text-center md:text-right justify-center items-center">
           <p className="w-fit">{name}</p>

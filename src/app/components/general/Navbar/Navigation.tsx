@@ -25,7 +25,7 @@ export default function Navigation() {
   };
   
   return (
-    <div className="w-full flex justify-end">
+    <div className="w-full flex justify-end font-avenirRoman">
       {/* Hamburgarmeny-knappen */}
       <button
         onClick={toggleNavMenu}
