@@ -9,7 +9,11 @@ const routes = {
 export class PvDb {
   static async GetDbPresentYears(): Promise<number[]> {
     return fetch(routes.pv_years)
-    .then(async (response: Response): Promise<number[]> => JSON.parse(await response.json()) as number[]);
+    .then(async (response: Response): Promise<number[]> => {
+      if (response.status != 200)
+          throw new Error(`Fetch failed (${response.status}): '${response.headers.get('Error-Message')}'`);
+      return JSON.parse(await response.json()) as number[];
+    });
   }
 
   static async GetCollaborationsFromYear(year: number): Promise<Collaboration[]> {
@@ -19,7 +23,11 @@ export class PvDb {
         'Content-Type': 'application/json',
         'DbRef-Year': year.toString()
       }
-    }).then(async (response: Response): Promise<Collaboration[]> => JSON.parse(await response.json()) as Collaboration[]);
+    }).then(async (response: Response): Promise<Collaboration[]> => {
+      if (response.status != 200)
+        throw new Error(`Fetch failed (${response.status}): '${response.headers.get('Error-Message')}'`);
+      return JSON.parse(await response.json()) as Collaboration[];
+    });
   }
 
   static async GetCollaborationFromId(id: number): Promise<FullCollaboration> {
@@ -29,6 +37,10 @@ export class PvDb {
         'Content-Type': 'application/json',
         'DbRef-Id': id.toString()
       }
-    }).then(async (response: Response): Promise<FullCollaboration> => JSON.parse(await response.json()) as FullCollaboration);
+    }).then(async (response: Response): Promise<FullCollaboration> => {
+      if (response.status != 200)
+        throw new Error(`Fetch failed (${response.status}): '${response.headers.get('Error-Message')}'`);
+      return JSON.parse(await response.json()) as FullCollaboration;
+    });
   }
 }
