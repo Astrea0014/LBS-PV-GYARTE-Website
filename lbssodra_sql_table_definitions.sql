@@ -65,6 +65,7 @@ USE program_weeks;
 CREATE TABLE collaborations (
 	collaboration_id	INT,
     year				SMALLINT		NOT NULL,
+    theme               VARCHAR(32)     NOT NULL,
     description			TEXT			NOT NULL,
     poster_ref          VARCHAR(255)    NOT NULL,
     

@@ -97,6 +97,7 @@ export class CollaborationDb extends Db {
         let collaboration: Collaboration = {
           collaboration_id: values[i].collaboration_id,
           year: values[i].year,
+          theme: values[i].theme,
           description: values[i].description,
           poster_ref: values[i].poster_ref,
           collaborators: []
