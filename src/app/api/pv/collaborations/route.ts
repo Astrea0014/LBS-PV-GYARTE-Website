@@ -14,6 +14,8 @@ export async function GET(request: NextRequest) {
           status: 200
         });
   } catch (error) {
+    console.error(error);
+
     const is_header_error = error === 'year';
 
     return new NextResponse(

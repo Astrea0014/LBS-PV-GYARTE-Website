@@ -3,6 +3,12 @@ import { CollaborationDb, ThesisDb } from './app/lib/Db';
 // Project data requester imports go here...
 import { SUSG01ProjectDataRequester } from './app/lib/db_proprietary/pv_data_structures/SUSG01';
 
+// Component data requester imports go here...
+import { SY0ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/SY0';
+import { SU0ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/SU0';
+import { ES1ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/ES1';
+import { ES2ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/ES2';
+
 declare global {
   var __PvDb: CollaborationDb;            // DO NOT CHANGE FROM VAR
   var __GyDb: ThesisDb;                   // If you do you are in for a world of pain
@@ -57,6 +63,14 @@ export function register() {
   __PvDb.SetProjectTypeDataRequester('SUSG01', SUSG01ProjectDataRequester);
 
   __PvDb.Connect();
+
+  // ------------------- Component data requesters -------------------
+  __GyDb.SetComponentDataRequester('SY0', SY0ComponentDataRequester);
+  __GyDb.SetComponentDataRequester('SU0', SU0ComponentDataRequester);
+  __GyDb.SetComponentDataRequester('ES1', ES1ComponentDataRequester);
+  __GyDb.SetComponentDataRequester('ES2', ES2ComponentDataRequester);
+
+  __GyDb.Connect();
 
   console.log('i work nyaah >.<');        // DO NOT REMOVE; integral for app functionality.
 }

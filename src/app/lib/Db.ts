@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 
-import { Collaboration, FullCollaboration, GroupMember, ProjectGroup } from './DbTypes';
+import { Collaboration, FullCollaboration, GroupMember, ProjectGroup, Thesis } from './DbTypes';
 
 export abstract class Db {
   protected dbConnection: mysql.Connection | undefined;
@@ -49,18 +49,16 @@ export class CollaborationDb extends Db {
   }
 
   public async GetDbPresentYears(): Promise<number[]> {
-    return await
-      this.dbConnection?.query<mysql.RowDataPacket[]>(
+    return await this.dbConnection?.query<mysql.RowDataPacket[]>(
         `
         SELECT year
         FROM collaborations
         GROUP BY year
         `
-      ).then(([result, _]) => {
+      ).then((result) => {
         if (!result)
           throw new Error('Failed to fetch years from collaborations database');
-
-        return result.map((value: mysql.RowDataPacket) => value.year as number);
+        return result[0].map((value: mysql.RowDataPacket): number => value.year as number);
       })!;
   }
 
@@ -122,7 +120,7 @@ export class CollaborationDb extends Db {
 
     return {                  // Whacky syntax, I know.
       ...collaborations[0],   // Expands so that all collaboration data fetched above is part of
-      // the derived interface type's data.
+                              // the derived interface type's data.
       project_groups: await this.dbConnection?.query<mysql.RowDataPacket[]>(
         mysql.format(
           `
@@ -224,14 +222,91 @@ export class CollaborationDb extends Db {
 
 // GYARTE
 export class ThesisDb extends Db {
+  private dataRequesters: Map<string, (id: number, conn: mysql.Connection) => Promise<any>>;
+
   public constructor() {
     super('gymnasial_theses');
+    this.dataRequesters = new Map();
+  }
+
+  public SetComponentDataRequester(component_id: string, func: (id: number, conn: mysql.Connection) => Promise<any>) {
+    if (!this.dataRequesters.has(component_id))
+      this.dataRequesters.set(component_id, func);
   }
 
   public async GetDbPresentYears(): Promise<number[]> {
-    let values = await this.dbConnection?.query<mysql.RowDataPacket[]>('SELECT publication_year FROM gymnasial_theses GROUP BY publication_year');
-    if (values)
-      return values[0].map((obj: mysql.RowDataPacket) => obj.year as number);
-    throw new Error('Fetching years failed.');
+    return await this.dbConnection?.query<mysql.RowDataPacket[]>(
+        `
+        SELECT publication_year
+        FROM gymnasial_theses
+        GROUP BY publication_year
+        `
+      ).then(async (result): Promise<number[]> => {
+        if (!result)
+          throw new Error('');
+        return result[0].map((value: mysql.RowDataPacket): number => value.publication_year as number);
+      })!;
+  }
+
+  public async GetThesesByYearAndCourse(year: number, course: string): Promise<Thesis[]> {
+    return await this.dbConnection?.query<mysql.RowDataPacket[]>(
+      mysql.format(
+        `
+        SELECT *
+        FROM theses
+        WHERE id=? AND course=?
+        `, [year, course]
+      )).then(async (result): Promise<Thesis[]> => {
+        if (!result)
+          throw new Error('');
+
+        const values = result[0];
+        let theses: Thesis[] = [];
+
+        for (let i: number = 0; i < values.length; i++) {
+          theses.push({
+            id: values[i].id,
+            thesis: values[i].thesis,
+            course: values[i].course,
+            author_name: values[i].author_name,
+            author_class: values[i].author_class,
+            publication_year: values[i].publication_year,
+            component_id: values[i].component_id,
+            component_data: null
+          });
+        }
+
+        return theses;
+      })!;
+  }
+
+  public async GetThesisById(id: number): Promise<Thesis> {
+    return await this.dbConnection?.query<mysql.RowDataPacket[]>(
+      mysql.format(
+        `
+        SELECT *
+        FROM theses
+        WHERE id=?
+        `, id
+      )).then(async (result): Promise<Thesis> => {
+        if (!result)
+          throw new Error('');
+
+        const value = result[0][0];
+
+        if (!this.dataRequesters.has(value.component_id))
+          throw new Error('');
+
+        return {
+          id: value.id,
+          thesis: value.thesis,
+          course: value.course,
+          author_name: value.author_name,
+          author_class: value.author_class,
+          publication_year: value.publication_year,
+          component_id: value.component_id,
+          component_data: await (this.dataRequesters.get(value.component_id)!)(value.id, this.dbConnection!)
+        };
+      })!;
   }
 }
