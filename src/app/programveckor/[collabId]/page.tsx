@@ -8,20 +8,34 @@ import { PvDb } from "@/app/lib/DbFetch";
 import { FullCollaboration } from "@/app/lib/DbTypes";
 import { useState, useEffect } from "react";
 
+
 interface CollaborationProjectsProps {
   params: Promise<{
     collabId: string;
   }>
 }
 
+
 export default function CollaborationProjects({params}: CollaborationProjectsProps) {
-  const [collaborationData, setCollaborationData] = useState<FullCollaboration | null>(null)
+  const [collaborationData, setCollaborationData] = useState<FullCollaboration | string>("Inget sammarbete med det ID:et")
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
   useEffect(() => {
     const getCollaberations = async () => {
-      const collabId = (await params).collabId;
-      const data = await PvDb.GetCollaborationFromId(parseInt(collabId))
-      setCollaborationData(data)
+      try {
+        const collabId = (await params).collabId;
+        const collabIdNumber = parseInt(collabId);
+
+        const data = await PvDb.GetCollaborationFromId(collabIdNumber);
+        setCollaborationData(data);
+
+      } catch (error) {
+        return null;
+
+      } finally {
+        setIsLoading(false);
+      }
     }
     getCollaberations();
   }, [params]);
@@ -37,21 +51,26 @@ export default function CollaborationProjects({params}: CollaborationProjectsPro
         </div>
         <PageHeader headerTitle="Projekt" centerd/>
         <div className="flex w-11/12 lg:w-10/12 xl:w-8/12 justify-around mx-auto mb-8 flex-wrap">
-          {collaborationData ? (
-            collaborationData.project_groups.map((project) =>
-              <ProjectCard
-                key={project.project_id}
-                projectId={project.project_id}
-                posterRef={project.project_data.poster_ref}
-                groupName={project.group_name}
-              />
-            )
-          ) : (
+          {isLoading ? (
             <span className="loading loading-spinner"/>
+          ) : (
+            (typeof collaborationData !== "string") ? (
+              collaborationData.project_groups.map((project) =>
+                <ProjectCard
+                  key={project.project_id}
+                  projectId={project.project_id}
+                  posterRef={project.project_data.poster_ref}
+                  groupName={project.group_name}
+                />
+              )
+            ) : (
+              <div className="w-full flex justify-center items-center my-12">
+               <span className="text-2xl">{collaborationData}</span>
+              </div>
+            )
           )}
         </div>
       </section>
     </main>
   );
-
 }
