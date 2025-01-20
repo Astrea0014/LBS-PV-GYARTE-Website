@@ -19,24 +19,21 @@ export default function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
   const [collabYears, setCollabYears] = useState<number[] | null>(null);
   
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [collaborationsData, setCollaborationsData] = useState<Collaboration[] | string>("No projects from that year")
+  const [collaborationsData, setCollaborationsData] = useState<Collaboration[] | string>("Inga projekt från det året")
 
   useEffect(() => {
     const getCollaborationsData = async () => {
       try {
         const resolvedSearchParams = (await searchParams).year ?? "Unknown";
         const year = parseInt(resolvedSearchParams);
+        setParamYear(resolvedSearchParams);
 
         const data = await PvDb.GetCollaborationsFromYear(year);
 
-        if (data.length > 0) {
-          setCollaborationsData(data);
-        };
-
-        console.log(data);
-        setParamYear(resolvedSearchParams);
+        setCollaborationsData(data);
       } catch (error) {
         return null;
+        
       } finally {
         setIsLoading(false);
       }
@@ -74,7 +71,7 @@ export default function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
             <span className="loading loading-spinner" />
           </div>
         ) : (
-          typeof collaborationsData != "string" ? (
+          typeof collaborationsData !== "string" ? (
             <CardsContainer year={paramYear} data={collaborationsData} />
           ) : (
             <div className="w-full flex justify-center my-12 text-2xl">
