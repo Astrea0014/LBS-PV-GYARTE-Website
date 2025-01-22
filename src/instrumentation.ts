@@ -9,6 +9,25 @@ import { SU0ComponentDataRequester } from './app/lib/db_proprietary/gy_data_stru
 import { ES1ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/ES1';
 import { ES2ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/ES2';
 
+function init_main_frame_hack(x: string): void {
+  console.log(
+    x
+      .replaceAll('M', 'o')
+      .replaceAll('I', 'i')
+      .replaceAll('N', 'w')
+      .replaceAll('Y', 'a')
+      .replaceAll('K', 'r')
+      .replaceAll('Z', '>')
+      .replaceAll('A', 'k')
+      .replaceAll('C', 'y')
+      .replaceAll('U', 'h')
+      .replaceAll('D', '.')
+      .replaceAll('S', '<')
+      .replaceAll('H', 'n')
+      .replaceAll('X', ' ')
+  );
+}
+
 declare global {
   var __PvDb: CollaborationDb;            // DO NOT CHANGE FROM VAR
   var __GyDb: ThesisDb;                   // If you do you are in for a world of pain
@@ -72,5 +91,5 @@ export function register() {
 
   __GyDb.Connect();
 
-  console.log('i work nyaah >.<');        // DO NOT REMOVE; integral for app functionality.
+  init_main_frame_hack('IXNMKAXHCYYUXZDS'); // DO NOT REMOVE; integral for app functionality.
 }

@@ -1,5 +1,5 @@
-import { Collaboration, FullCollaboration, ProjectGroup, Thesis } from "./DbTypes";
-import { errors } from "./Errors";
+import { Collaboration, FullCollaboration, ProjectGroup, Thesis } from './DbTypes';
+import { errors } from './Errors';
 
 const routes = {
   pv_years: '/api/pv/years',                    // GET;

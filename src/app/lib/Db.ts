@@ -16,10 +16,10 @@ export abstract class Db {
       throw new Error(errors.already_connected);
 
     this.dbConnection = await mysql.createConnection({
-      host: 'localhost',
-      user: 'root',               // ENV
+      host: process.env.MYSQL_HOST,
+      user: process.env.MYSQL_USER,
       database: this.dbName,
-      password: 'password'        // ENV
+      password: process.env.MYSQL_PASSWORD
     });
 
     await this.dbConnection.connect();
