@@ -104,12 +104,12 @@ export default function Individual({params} : GyarteProjectsProps){
               
               case "SY0":
                 return (
-                <SY1Layout websiteLink="https://www.volvocars.com/se/" />
+                <SY1Layout websiteLink={studentData.component_data.href} />
                 );
 
               case "SU0":
                 return (
-                  <SU0Layout videoPath={`/${studentData.component_data[0]}`}/>
+                  <SU0Layout videoPath={`/${studentData.component_data.video_ref}`}/>
                 );
 
               default:
