@@ -5,7 +5,6 @@ import GyarteCard from "../components/gyarte/GyarteCard";
 import Header from "../components/general/PageHeader";
 import Overview from "../components/general/PageDescription";
 import {useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Thesis } from "../lib/DbTypes";
 import { GyDb } from "../lib/DbFetch";
 
