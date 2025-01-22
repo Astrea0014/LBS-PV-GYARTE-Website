@@ -27,13 +27,15 @@ export default function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
         const resolvedSearchParams = (await searchParams).year ?? "Unknown";
         const year = parseInt(resolvedSearchParams);
         setParamYear(resolvedSearchParams);
-
+        
         const data = await PvDb.GetCollaborationsFromYear(year);
-
-        setCollaborationsData(data);
+        if (data.length > 0) {
+          setCollaborationsData(data);
+        }
+        
       } catch (error) {
         return null;
-        
+
       } finally {
         setIsLoading(false);
       }

@@ -2,7 +2,7 @@ import SelectorButton from "./SelectorButton";
 import TabSelector from "./TabSelector";
 interface SelectorButtonsGroupProps {
   years: number[];
-  pathYear: string | null;
+  pathYear: string;
 }
 
 export default function SelectorButtonsGroup({ years, pathYear }: SelectorButtonsGroupProps) {
