@@ -4,7 +4,6 @@ export interface SUSG01ProjectData {
   project_id: number;
   itch_href: string;
   video_ref: string;
-  poster_ref: string;
   moodboard_ref: string;
   asset_refs: string[];
 }
@@ -29,7 +28,6 @@ export async function SUSG01ProjectDataRequester(project_id: number, conn: mysql
       project_id: value.project_id,
       itch_href: value.itch_href,
       video_ref: value.video_ref,
-      poster_ref: value.poster_ref,
       moodboard_ref: value.moodboard_ref,
       asset_refs: []
     };

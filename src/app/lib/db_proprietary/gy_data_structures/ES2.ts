@@ -1,5 +1,6 @@
 import mysql from 'mysql2/promise';
 import { Image } from './Image';
+import { errors } from '../../Errors';
 
 export interface ES2ComponentData {
   id: number;
@@ -17,9 +18,9 @@ export async function ES2ComponentDataRequester(id: number, conn: mysql.Connecti
       `, id
     )).then(async (result): Promise<ES2ComponentData> => {
       if (!result)
-        throw new Error('');
+        throw new Error(errors.result_null);
       if (result[0].length != 1)
-        throw new Error('');
+        throw new Error(errors.result_empty);
 
       return {
         id: id,
@@ -32,7 +33,7 @@ export async function ES2ComponentDataRequester(id: number, conn: mysql.Connecti
           `
         ).then(async (result): Promise<Image[]> => {
           if (!result)
-            throw new Error('');
+            throw new Error(errors.result_null);
 
           return result[0].map((value: mysql.RowDataPacket): Image => {
             return {
