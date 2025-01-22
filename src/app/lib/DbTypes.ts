@@ -15,13 +15,13 @@ export interface GroupMember {
 
 export interface ProjectGroup {
   project_id: number;
+  project_name: string;
   group_name: string;
-  project_type: string;
-  project_data: any;  // This is where a proprietary data
-  // structure instance queried by a
-  // project data requester will be located.
-  group_members: GroupMember[];
-}
+  poster_ref: string;           //<---------------------------------------
+  project_type: string;         //| This is where a proprietary data
+  project_data: any; //<----------| structure instance queried by a
+  group_members: GroupMember[]; //| project data requester will be located.
+}                               //<---------------------------------------
 
 export interface FullCollaboration extends Collaboration {
   project_groups: ProjectGroup[];

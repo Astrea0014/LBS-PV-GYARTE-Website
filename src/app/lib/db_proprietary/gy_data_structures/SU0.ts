@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise';
+import { errors } from '../../Errors';
 
 export interface SU0ComponentData {
   id: number;
@@ -15,9 +16,9 @@ export async function SU0ComponentDataRequester(id: number, conn: mysql.Connecti
       `, id
     )).then(async (result): Promise<SU0ComponentData> => {
       if (!result)
-        throw new Error('');
+        throw new Error(errors.result_null);
       if (result[0].length != 1)
-        throw new Error('');
+        throw new Error(errors.result_empty);
 
       return {
         id: id,

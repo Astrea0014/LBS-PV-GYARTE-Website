@@ -65,9 +65,9 @@ USE program_weeks;
 CREATE TABLE collaborations (
 	collaboration_id	INT,
     year				SMALLINT		NOT NULL,
-    theme               VARCHAR(32)     NOT NULL,
+    theme				VARCHAR(32)		NOT NULL,
     description			TEXT			NOT NULL,
-    poster_ref          VARCHAR(255)    NOT NULL,
+    poster_ref			VARCHAR(256)	NOT NULL,
     
     CONSTRAINT pk_collaboration_id
 		PRIMARY KEY (collaboration_id)
@@ -91,7 +91,9 @@ CREATE TABLE collaborators (
 CREATE TABLE project_groups (
 	collaboration_id	INT,
     project_id			INT,
+    project_name		VARCHAR(64)		NOT NULL,
     group_name			VARCHAR(64)		NOT NULL,		# If none is specified, the group id should be provided. E.g. 2:21, 3:1 et cetera.
+    poster_ref			VARCHAR(64),					# If this is null, the collaboration poster will be used instead.
     project_type		CHAR(8)			NOT NULL,		# Used as a data location and layout reference.
 														# -- Longer explanation --
 														# This field is highly modifiable, as it determines what react component is used for the layout,
@@ -147,7 +149,6 @@ CREATE TABLE susg01_project_data (
 	project_id			INT,
     itch_href			VARCHAR(512)	NOT NULL,
     video_ref			VARCHAR(256)	NOT NULL,
-    poster_ref			VARCHAR(256)	NOT NULL,
     moodboard_ref		VARCHAR(256)	NOT NULL,
     
 	CONSTRAINT fk_susg01_project_id

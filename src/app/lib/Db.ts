@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise';
 
 import { Collaboration, FullCollaboration, GroupMember, ProjectGroup, Thesis } from './DbTypes';
+import { errors } from './Errors';
 
 export abstract class Db {
   protected dbConnection: mysql.Connection | undefined;
@@ -12,7 +13,7 @@ export abstract class Db {
 
   public async Connect() {
     if (this.dbConnection)
-      throw new Error('Cannot connect; already connected.');
+      throw new Error(errors.already_connected);
 
     this.dbConnection = await mysql.createConnection({
       host: 'localhost',
@@ -26,7 +27,7 @@ export abstract class Db {
 
   public Disconnect() {
     if (!this.dbConnection)
-      throw new Error('Cannot disconnect; already disconnected.');
+      throw new Error(errors.not_connected);
 
     this.dbConnection.destroy();
   }
@@ -57,7 +58,7 @@ export class CollaborationDb extends Db {
         `
       ).then((result) => {
         if (!result)
-          throw new Error('Failed to fetch years from collaborations database');
+          throw new Error(errors.result_null);
         return result[0].map((value: mysql.RowDataPacket): number => value.year as number);
       })!;
   }
@@ -73,7 +74,7 @@ export class CollaborationDb extends Db {
       )
     ).then(async (result): Promise<Collaboration[]> => {
       if (!result)
-        throw new Error(`Failed to fetch collaborations where '${query}' had the value '${data}'.`);
+        throw new Error(errors.result_null);
 
       const values = result[0];
       let collaborations: Collaboration[] = [];
@@ -90,7 +91,7 @@ export class CollaborationDb extends Db {
         );
 
         if (!collaborators_result)
-          throw new Error(`Failed to fetch collaborators from collaboration id ${values[i].collaboration_id}`);
+          throw new Error(errors.result_null);
 
         let collaboration: Collaboration = {
           collaboration_id: values[i].collaboration_id,
@@ -133,17 +134,19 @@ export class CollaborationDb extends Db {
         let project_groups: ProjectGroup[] = [];
 
         if (!result)
-          throw new Error('Fetching project groups from collaboration id failed; no entries with matching id exists.');
+          throw new Error(errors.result_null);
 
         const values = result[0];
 
         for (let i: number = 0; i < values.length; i++) {
           if (!this.dataRequesters.has(values[i].project_type))
-            throw new Error(`Data requester for type ${values[i].project_type} could not be found; no matching data requester registered.`);
+            throw new Error(errors.data_requester_not_exists(values[i].project_type));
 
           project_groups.push({
             project_id: values[i].project_id,
+            project_name: values[i].project_name,
             group_name: values[i].group_name,
+            poster_ref: values[i].poster_ref,
             project_type: values[i].project_type,
             project_data: await (this.dataRequesters.get(values[i].project_type)!)(values[i].project_id, this.dbConnection!),
             group_members: await this.dbConnection?.query<mysql.RowDataPacket[]>(
@@ -158,7 +161,7 @@ export class CollaborationDb extends Db {
               )
             ).then(result => {
               if (!result)
-                throw new Error('Failed to fetch group members.');
+                throw new Error(errors.result_null);
 
               return result[0].map((value): GroupMember => {
                 return {
@@ -185,14 +188,16 @@ export class CollaborationDb extends Db {
         `, id
       )).then(async (result): Promise<ProjectGroup> => {
         if (!result)
-          throw new Error('');
+          throw new Error(errors.result_null);
         if (result[0].length == 0)
-          throw new Error('');
+          throw new Error(errors.result_empty);
 
         const value = result[0][0];
         return {
           project_id: value.project_id,
+          project_name: value.project_name,
           group_name: value.group_name,
+          poster_ref: value.poster_ref,
           project_type: value.project_type,
           project_data: await (this.dataRequesters.get(value.project_type)!)(value.project_id, this.dbConnection!),
           group_members: await this.dbConnection?.query<mysql.RowDataPacket[]>(
@@ -206,7 +211,7 @@ export class CollaborationDb extends Db {
               `, value.project_id
             )).then(result => {
             if (!result)
-              throw new Error('Failed to fetch group members.');
+              throw new Error(errors.result_null);
 
             return result[0].map((value): GroupMember => {
               return {
@@ -238,12 +243,12 @@ export class ThesisDb extends Db {
     return await this.dbConnection?.query<mysql.RowDataPacket[]>(
         `
         SELECT publication_year
-        FROM gymnasial_theses
+        FROM theses
         GROUP BY publication_year
         `
       ).then(async (result): Promise<number[]> => {
         if (!result)
-          throw new Error('');
+          throw new Error(errors.result_null);
         return result[0].map((value: mysql.RowDataPacket): number => value.publication_year as number);
       })!;
   }
@@ -258,7 +263,7 @@ export class ThesisDb extends Db {
         `, [year, course]
       )).then(async (result): Promise<Thesis[]> => {
         if (!result)
-          throw new Error('');
+          throw new Error(errors.result_null);
 
         const values = result[0];
         let theses: Thesis[] = [];
@@ -290,12 +295,12 @@ export class ThesisDb extends Db {
         `, id
       )).then(async (result): Promise<Thesis> => {
         if (!result)
-          throw new Error('');
+          throw new Error(errors.result_null);
 
         const value = result[0][0];
 
         if (!this.dataRequesters.has(value.component_id))
-          throw new Error('');
+          throw new Error(errors.data_requester_not_exists(value.component_id));
 
         return {
           id: value.id,
