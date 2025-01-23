@@ -5,6 +5,7 @@ const routes = {
   pv_years: '/api/pv/years',                    // GET;
   pv_collaborations: '/api/pv/collaborations',  // GET; requires 'DbRef-Year' header.
   pv_collaboration: '/api/pv/collaboration',    // GET; requires 'DbRef-Id' header.
+  pv_project: '/api/pv/project',                // GET; requires 'DbRef-Id' header.
   gy_years: '/api/gyarte/years',                // GET;
   gy_theses: '/api/gyarte/theses',              // GET; requires 'DbRef-Year' and 'DbRef-Course' headers.
   gy_thesis: '/api/gyarte/thesis'               // GET; requires 'DbRef-Id' header.
@@ -58,7 +59,7 @@ export class PvDb {
     if (Number.isNaN(id))
       throw new Error(errors.input_nan);
 
-    return fetch(routes.pv_collaboration, {
+    return fetch(routes.pv_project, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
