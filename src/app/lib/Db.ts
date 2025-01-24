@@ -147,6 +147,7 @@ export class CollaborationDb extends Db {
             project_name: values[i].project_name,
             group_name: values[i].group_name,
             poster_ref: values[i].poster_ref,
+            description: values[i].description,
             project_type: values[i].project_type,
             project_data: await (this.dataRequesters.get(values[i].project_type)!)(values[i].project_id, this.dbConnection!),
             group_members: await this.dbConnection?.query<mysql.RowDataPacket[]>(
@@ -198,6 +199,7 @@ export class CollaborationDb extends Db {
           project_name: value.project_name,
           group_name: value.group_name,
           poster_ref: value.poster_ref,
+          description: value.description,
           project_type: value.project_type,
           project_data: await (this.dataRequesters.get(value.project_type)!)(value.project_id, this.dbConnection!),
           group_members: await this.dbConnection?.query<mysql.RowDataPacket[]>(

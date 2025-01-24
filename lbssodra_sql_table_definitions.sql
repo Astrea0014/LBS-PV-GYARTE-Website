@@ -94,6 +94,7 @@ CREATE TABLE project_groups (
     project_name		VARCHAR(64)		NOT NULL,
     group_name			VARCHAR(64)		NOT NULL,		# If none is specified, the group id should be provided. E.g. 2:21, 3:1 et cetera.
     poster_ref			VARCHAR(64),					# If this is null, the collaboration poster will be used instead.
+    description         TEXT,                           # If this is null, no desciption will be presented.
     project_type		CHAR(8)			NOT NULL,		# Used as a data location and layout reference.
 														# -- Longer explanation --
 														# This field is highly modifiable, as it determines what react component is used for the layout,
