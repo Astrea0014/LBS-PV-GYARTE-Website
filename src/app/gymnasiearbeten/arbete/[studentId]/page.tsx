@@ -55,10 +55,7 @@ interface GyarteProjectsProps {
   }>
 }
 
-
 export default function Individual({params} : GyarteProjectsProps){
-
-
   const [studentData, setStudentData] = useState<Thesis | string>("No student with that ID");
 
   useEffect(() => {
