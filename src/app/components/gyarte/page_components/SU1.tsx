@@ -1,4 +1,4 @@
-import Video from "../general/Video";
+import Video from "../../general/Video";
 
 interface SU0LayoutProps{
   videoPath : string;

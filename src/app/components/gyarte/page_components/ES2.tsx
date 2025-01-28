@@ -1,5 +1,4 @@
 "use client";
-
 import ESXOverview from "@/app/components/gyarte/GyarteESXOverview";
 import ES2Fibonacci from "@/app/components/gyarte/GyarteES2FibonacciLayout";
 import ImageCarousel from "@/app/components/gyarte/ImageCarousel";

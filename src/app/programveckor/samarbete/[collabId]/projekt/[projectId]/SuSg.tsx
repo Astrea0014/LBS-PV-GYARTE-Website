@@ -7,11 +7,11 @@ interface SuSgProps {
   gameTitle: string;
   overview: string;
   posterRef?: string;
-  itchLink: string;
+  link: string;
   videoRef?: string;
 }
 
-export default function SuSg({gameTitle, overview, posterRef, itchLink, videoRef}: SuSgProps) {
+export default function SuSg({gameTitle, overview, posterRef, link, videoRef}: SuSgProps) {
   return (
     <main>
       <section className="my-16 p-4 sm:py-16 sm:px-16 w-11/12 lg:w-10/12 xl:w-8/12 mx-auto flex bg-dark text-white flex-wrap justify-center">
@@ -23,7 +23,7 @@ export default function SuSg({gameTitle, overview, posterRef, itchLink, videoRef
         <div className="w-5/6 sm:w-4/6 mt-8">
           <PageHeader headerTitle={gameTitle} centerd />
           <PageDescription description={overview} />
-          <AltButton customClasses={"bg-complementary text-black mx-auto my-8 py-2 px-4"} link={itchLink} text="Play&nbsp;game" />
+          <AltButton customClasses={"bg-complementary text-black mx-auto my-8 py-2 px-4"} link={link} text="Play&nbsp;game" />
         </div>
       </section>
       
@@ -34,7 +34,7 @@ export default function SuSg({gameTitle, overview, posterRef, itchLink, videoRef
         </div>
       </section>
 
-      <AltButton link={itchLink} text="Play&nbsp;game" customClasses={"bg-complementary text-black mx-auto my-8 px-32 py-4 text-xl"} />
+      <AltButton link={link} text="Play&nbsp;game" customClasses={"bg-complementary text-black mx-auto my-8 px-32 py-4 text-xl"} />
     </main>
   );
 }

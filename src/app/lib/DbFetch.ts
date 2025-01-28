@@ -22,9 +22,10 @@ export class PvDb {
   }
 
   public static async GetCollaborationsFromYear(year: number): Promise<Collaboration[]> {
-    if (Number.isNaN(year))
+    if (Number.isNaN(year)) {
       throw new Error(errors.input_nan);
-
+    }
+    
     return fetch(routes.pv_collaborations, {
       method: 'GET',
       headers: {
@@ -39,8 +40,9 @@ export class PvDb {
   }
 
   public static async GetCollaborationFromId(id: number): Promise<FullCollaboration> {
-    if (Number.isNaN(id))
+    if (Number.isNaN(id)) {
       throw new Error(errors.input_nan);
+    }
 
     return fetch(routes.pv_collaboration, {
       method: 'GET',
@@ -56,8 +58,9 @@ export class PvDb {
   }
 
   public static async GetProjectFromId(id: number): Promise<ProjectGroup> {
-    if (Number.isNaN(id))
+    if (Number.isNaN(id)) {
       throw new Error(errors.input_nan);
+    }
 
     return fetch(routes.pv_project, {
       method: 'GET',
@@ -84,9 +87,10 @@ export class GyDb {
   }
 
   public static async GetThesesByYearAndCourse(year: number, course: string): Promise<Thesis[]> {
-    if (Number.isNaN(year))
+    if (Number.isNaN(year)) {
       throw new Error(errors.input_nan);
-    
+    }
+
     return fetch(routes.gy_theses, {
       method: 'GET',
       headers: {
@@ -102,8 +106,9 @@ export class GyDb {
   }
 
   public static async GetThesisById(id: number): Promise<Thesis> {
-    if (Number.isNaN(id))
+    if (Number.isNaN(id)) {
       throw new Error(errors.input_nan);
+    }
 
     return fetch(routes.gy_thesis, {
       method: 'GET',

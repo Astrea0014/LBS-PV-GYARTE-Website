@@ -1,9 +1,6 @@
 "use client";
-import Header from "../../../components/gyarte/GyarteFocusHeader";
-import SY1Layout from "@/app/components/gyarte/SY1Layout";
-import ES1 from "./ES1";
-import ES2 from "./ES2";
-import SU0Layout from "@/app/components/gyarte/GyarteSU0Layout";
+import Header from "@/app/components/gyarte/GyarteFocusHeader";
+import DynamicDataLoader from "@/app/components/gyarte/page_components/DynamicDataLoader";
 import { useState, useEffect } from "react";
 import { GyDb } from "@/app/lib/DbFetch";
 import { Thesis } from "@/app/lib/DbTypes";
@@ -83,36 +80,7 @@ export default function Individual({params} : GyarteProjectsProps){
       {typeof studentData !== "string" ? (
         <>
           <Header thesis={studentData.thesis} name={studentData.author_name} course={studentData.author_class} year={studentData.publication_year}/>
-          
-          {(() => {
-            switch (studentData.component_id) {
-              case "ES1":
-                return (
-                  <ES1 data={studentData}/>
-                );
-
-              case "ES2":
-
-                return (
-                  <section>
-                    <ES2 data={studentData}/>
-                  </section>
-                );
-              
-              case "SY0":
-                return (
-                <SY1Layout websiteLink={studentData.component_data.href} />
-                );
-
-              case "SU0":
-                return (
-                  <SU0Layout videoPath={`/${studentData.component_data.video_ref}`}/>
-                );
-
-              default:
-                return null;
-            }
-          })()}
+          <DynamicDataLoader studentData={studentData} />
         </>
       ) : (
         null

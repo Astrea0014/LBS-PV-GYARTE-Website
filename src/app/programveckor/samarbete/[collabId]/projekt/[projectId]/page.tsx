@@ -45,10 +45,13 @@ export default function ProjectPage({params}: ProjectPageProps) {
         </div>
       ) : (
         typeof projectData !== "string" ? (
-          // <SuSg 
-          //   gameTitle={(projectData.project_data as SUSG01ProjectData).gameTitle}
-          // />
-          <></>
+          <SuSg 
+            gameTitle={projectData.project_name}
+            overview={projectData.description}
+            posterRef={projectData.poster_ref}
+            link={(projectData.project_data as SUSG01ProjectData).itch_href}
+            videoRef={(projectData.project_data as SUSG01ProjectData).video_ref}
+          />
         ) : (
           <div className="w-full flex justify-center items-center"> 
             <h1 className="text-2xl">{projectData}</h1>

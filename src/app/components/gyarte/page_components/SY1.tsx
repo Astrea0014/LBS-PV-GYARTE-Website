@@ -1,6 +1,6 @@
-import Iframe from "./Iframe"
-import Whitespace from "../general/navbar/NavWhitespace";
-import ViewportRatioContainer from "./ViewPortContainer";
+import Iframe from "../Iframe";
+import ViewportRatioContainer from "../ViewPortContainer";
+
 interface SY1LayoutProps {
   websiteLink: string;
 }
