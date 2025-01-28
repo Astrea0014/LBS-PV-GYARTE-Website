@@ -1,7 +1,7 @@
 "use client";
 
-import PageHeader from "../../components/general/PageHeader";
-import PageDescription from "../../components/general/PageDescription";
+import PageHeader from "../../../components/general/PageHeader";
+import PageDescription from "../../../components/general/PageDescription";
 import ProjectCard from "@/app/components/programveckor/ProjectCard";
 import Divider from "@/app/components/general/Divider";
 import { PvDb } from "@/app/lib/DbFetch";

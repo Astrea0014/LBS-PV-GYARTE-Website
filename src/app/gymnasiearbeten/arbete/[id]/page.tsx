@@ -1,5 +1,5 @@
 "use client";
-import Header from "../../components/gyarte/GyarteFocusHeader";
+import Header from "../../../components/gyarte/GyarteFocusHeader";
 import SY1Layout from "@/app/components/gyarte/SY1Layout";
 import ES1 from "./ES1";
 import ES2 from "./ES2";
