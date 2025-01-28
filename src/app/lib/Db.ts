@@ -261,7 +261,7 @@ export class ThesisDb extends Db {
         `
         SELECT *
         FROM theses
-        WHERE id=? AND course=?
+        WHERE publication_year=? AND course=?
         `, [year, course]
       )).then(async (result): Promise<Thesis[]> => {
         if (!result)
@@ -294,7 +294,7 @@ export class ThesisDb extends Db {
         SELECT *
         FROM theses
         WHERE id=?
-        `, id
+        `, [id]
       )).then(async (result): Promise<Thesis> => {
         if (!result)
           throw new Error(errors.result_null);

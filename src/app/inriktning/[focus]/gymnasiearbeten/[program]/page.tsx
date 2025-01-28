@@ -54,15 +54,14 @@ export default function Gyarte({searchParams, params} : GyarteProps){
         const searchParamCourse = (await params).program ?? "Unkown";
         setParamCourse(searchParamCourse);
         
-        const data = await GyDb.GetThesesByYearAndCourse(2022, "SU");
-        console.log("DATA", data);
+        const data = await GyDb.GetThesesByYearAndCourse(year, searchParamCourse);
         
         if (data.length > 0) {
           setProjectsData(data);
         }
 
       } catch (error){
-        return null;
+        console.error(error);
 
       } finally {
         setIsLoading(false)
@@ -98,6 +97,7 @@ export default function Gyarte({searchParams, params} : GyarteProps){
                 {projectsData.map((work) => 
                   <GyarteCard
                     key={work.id}
+                    id={work.id}
                     thesis={work.thesis}
                     name={work.author_name}
                     course={work.author_class}

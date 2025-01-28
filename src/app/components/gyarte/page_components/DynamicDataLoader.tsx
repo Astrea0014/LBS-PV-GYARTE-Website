@@ -1,8 +1,8 @@
 import { Thesis } from "@/app/lib/DbTypes";
 import ES1 from "./ES1";
 import ES2 from "./ES2";
-import SU1 from "./SU1"
-import SY1 from "./SY1"
+import SU1 from "./SU0"
+import SY1 from "./SY0"
 
 interface DynamicDataLoaderProps {
   studentData: Thesis;

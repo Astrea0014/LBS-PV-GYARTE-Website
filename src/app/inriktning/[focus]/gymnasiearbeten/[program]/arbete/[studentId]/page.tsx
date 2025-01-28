@@ -5,47 +5,6 @@ import { useState, useEffect } from "react";
 import { GyDb } from "@/app/lib/DbFetch";
 import { Thesis } from "@/app/lib/DbTypes";
 
-// test data remove later
-// const data = {
-//   work :
-
-//     {
-//       "id": 2,
-//       "thesis": "How to draw",
-//       "course": "GD",
-//       "author_name": "Wilmer Säfsten",
-//       "author_class": "GD22",
-//       "publication_year": 2025,
-//       "component_id": "ES2",
-//       "component_data":
-//       {
-//         "video_ref": "db/gyarte/3/video.mp4",
-//         "images":
-//         [
-//           {
-//             "image_ref": "db/gyarte/4/images/img1.jpg",
-//             "image_title": "My sick image",
-//             "image_format": "1:1 1024x"
-//           },
-//           {
-//             "image_ref": "db/gyarte/4/images/img2.jpg",
-//             "image_title": "My not so sick image",
-//             "image_format": "16:9 1080p"
-//           },          {
-//             "image_ref": "db/gyarte/4/images/img3.jpg",
-//             "image_title": "My sick image",
-//             "image_format": "1:1 1024x"
-//           },
-//           {
-//             "image_ref": "db/gyarte/4/images/img4.jpg",
-//             "image_title": "My not so sick image",
-//             "image_format": "16:9 1080p"
-//           }
-//         ]
-//       }
-//     }
-// }
-
 interface GyarteProjectsProps {
   params: Promise<{
     studentId: string;
@@ -53,7 +12,7 @@ interface GyarteProjectsProps {
 }
 
 export default function Individual({params} : GyarteProjectsProps){
-  const [studentData, setStudentData] = useState<Thesis | string>("No student with that ID");
+  const [studentData, setStudentData] = useState<Thesis | string>("Ingen elev med det ID:t");
 
   useEffect(() => {
     const getStudentData = async () => {
@@ -62,10 +21,8 @@ export default function Individual({params} : GyarteProjectsProps){
         const studentIdNumber = parseInt(studentWorkId);
         
         const data = await GyDb.GetThesisById(studentIdNumber);
-        
-        if (typeof data === "object") {
-          setStudentData(data);
-        }
+        console.log("WORK?", data);
+        setStudentData(data);
       } catch (error){
         return null;
       }
@@ -83,7 +40,9 @@ export default function Individual({params} : GyarteProjectsProps){
           <DynamicDataLoader studentData={studentData} />
         </>
       ) : (
-        null
+        <section className="h-96 flex justify-center items-center">
+          <h1>{studentData}</h1>
+        </section>
       )}
     </main>
   );

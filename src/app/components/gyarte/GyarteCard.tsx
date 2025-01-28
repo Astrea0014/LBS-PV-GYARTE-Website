@@ -1,17 +1,16 @@
-
+import Link from "next/link"
 
 interface GyarteCardProps {
   thesis : string,
   name : string | null,
   course : string | null,
   year : number
+  id: number;
 }
 
-export default function GyarteCard({thesis, name, course, year} : GyarteCardProps){
-
+export default function GyarteCard({id, thesis, name, course, year} : GyarteCardProps){
   return(
-
-    <div className="cursor-pointer bg-dark text-light hover:bg-complementary hover:text-dark m-4 mt-10 md:mx-20 lg:mx-52 hover:scale-105 p-4 transition flex flex-col items-center hover:underline font-avenirBlack">
+    <Link href={`http://localhost:3000/inriktning/teknik/gymnasiearbeten/SU/arbete/${id}`} className="cursor-pointer bg-dark text-light hover:bg-complementary hover:text-dark m-4 mt-10 md:mx-20 lg:mx-52 hover:scale-105 p-4 transition flex flex-col items-center hover:underline font-avenirBlack">
 
       <div className="h-32 w-full">
         {thesis.length < 120 ? (
@@ -34,7 +33,7 @@ export default function GyarteCard({thesis, name, course, year} : GyarteCardProp
         <p className="justify-self-end col-span-2 items-center">{year}</p>
       </div>
 
-    </div>
+    </Link>
 
   );
 }
