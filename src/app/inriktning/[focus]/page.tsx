@@ -13,22 +13,22 @@ const aestheteData = {
     {
       focus: "GRAFISK DESIGN",
       image: "/gyarte/lbs-grafisk-design-400x300.jpg",
-      link: "/gymnasiearbeten?inriktning=GD",
+      link: "/inriktning/estet/gymnasiearbeten/GD?year=2025",
     },
     {
       focus: "SPELGRAFIK",
       image: "/gyarte/lbs-spelgrafik-400x300.jpg",
-      link: "/gymnasiearbeten?inriktning=SG",
+      link: "/inriktning/estet/gymnasiearbeten/SG?year=2025",
     },
     {
       focus: "FOTO OCH FILM",
       image: "/gyarte/lbs-foto-och-film-400x300.jpg",
-      link: "/gymnasiearbeten?inriktning=FF",
+      link: "/inriktning/estet/gymnasiearbeten/FF?year=2025",
     },
     {
       focus: "MEDIA BETEENDE",
       image: "/gyarte/lbs-media-beteende-400x300.jpg",
-      link: "/gymnasiearbeten?inriktning=MB",
+      link: "/inriktning/estet/gymnasiearbeten/MB?year=2025",
     },
   ],
 };
@@ -42,17 +42,17 @@ const techData = {
     {
       focus: "APP- OCH WEBBUTVECKLING",
       image: "/gyarte/lbs-app-och-webbutveckling-400x300.jpg",
-      link: "/gymnasiearbeten?inriktning=SY",
+      link: "/inriktning/teknik/gymnasiearbeten/SY?year=2025",
     },
     {
       focus: "AI-UTBILDNING",
       image: "/gyarte/lbs-ai-utbildning-400x225.png",
-      link: "/gymnasiearbeten?inriktning=AI",
+      link: "/inriktning/teknik/gymnasiearbeten/AI?year=2025",
     },
     {
       focus: "SPELUTVECKLING",
       image: "/gyarte/lbs-spelutveckling-400x300.jpg",
-      link: "/gymnasiearbeten?inriktning=SU",
+      link: "/inriktning/teknik/gymnasiearbeten/SU?year=2025",
     },
   ],
 };
@@ -78,7 +78,7 @@ interface PageData {
 }
 
 export default function FocusPage({params}: FocusPageProps){
-  const [pageData, setPageData] = useState<PageData | string>("Inga program för den inrikningen");
+  const [pageData, setPageData] = useState<PageData | string>("Inga program för den inriktningen");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {

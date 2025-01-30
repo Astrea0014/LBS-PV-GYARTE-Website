@@ -6,11 +6,12 @@ interface GyarteCardProps {
   course : string | null,
   year : number
   id: number;
+  pathname: string;
 }
 
-export default function GyarteCard({id, thesis, name, course, year} : GyarteCardProps){
+export default function GyarteCard({id, thesis, name, course, year, pathname} : GyarteCardProps){
   return(
-    <Link href={`http://localhost:3000/inriktning/teknik/gymnasiearbeten/SU/arbete/${id}`} className="cursor-pointer bg-dark text-light hover:bg-complementary hover:text-dark m-4 mt-10 md:mx-20 lg:mx-52 hover:scale-105 p-4 transition flex flex-col items-center hover:underline font-avenirBlack">
+    <Link href={`${pathname}/arbete/${id}`} className="cursor-pointer bg-dark text-light hover:bg-complementary hover:text-dark m-4 mt-10 md:mx-20 lg:mx-52 hover:scale-105 p-4 transition flex flex-col items-center hover:underline font-avenirBlack">
 
       <div className="h-32 w-full">
         {thesis.length < 120 ? (

@@ -19,7 +19,7 @@ export default function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
   const [collabYears, setCollabYears] = useState<number[] | null>(null);
   
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [collaborationsData, setCollaborationsData] = useState<Collaboration[] | string>("Inga projekt från det året")
+  const [collaborationsData, setCollaborationsData] = useState<Collaboration[] | string>("Inga projekt från det året");
 
   useEffect(() => {
     const getCollaborationsData = async () => {
@@ -48,7 +48,7 @@ export default function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
       const years = await PvDb.GetDbPresentYears();
       setCollabYears(years);
     } 
-    getCollabYears()
+    getCollabYears();
   }, []);
 
   return (

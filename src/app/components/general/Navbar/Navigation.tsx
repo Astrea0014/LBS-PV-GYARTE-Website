@@ -46,19 +46,19 @@ export default function Navigation() {
             Startsida
           </Link>
           <Link
-            href="/teknikprogrammen"
-            className={`text-xl ${pathname.startsWith("/teknikprogrammen") ? "font-bold" : ""}`}
+            href="/inriktning/teknik"
+            className={`text-xl ${pathname.startsWith("/inriktning/teknik") ? "font-bold" : ""}`}
           >
             Teknikprogrammen
           </Link>
           <Link
-            href="/estetprogrammen"
-            className={`text-xl ${pathname.startsWith("/estetprogrammen") ? "font-bold" : ""}`}
+            href="/inriktning/estet"
+            className={`text-xl ${pathname.startsWith("/inriktning/estet") ? "font-bold" : ""}`}
           >
             Estetprogrammen
           </Link>
           <Link
-            href="/programveckor?year=2027"
+            href="/programveckor?year=2025"
             className={`text-xl ${pathname.startsWith("/programveckor") ? "font-bold" : ""}`}
           >
             Programveckor
@@ -70,10 +70,10 @@ export default function Navigation() {
             {/* Teknik */}
             <div className="w-9/12 flex justify-end">
               <div className="flex flex-col items-end w-full">
-                <LinkHeader title={"Teknikprogrammen"} toPath="/teknikprogrammen" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"App-och Webbutveckling"} toPath="/teknikprogrammen/appochwebb" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"AI och Utveckling"} toPath="/teknikprogrammen/aiutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Spelutveckling"} toPath="/teknikprogrammen/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Teknikprogrammen"} toPath="/inriktning/teknik" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"App-och Webbutveckling"} toPath="/inriktning/teknik/gymnasiearbeten/AW" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"AI och Utveckling"} toPath="/inriktning/teknik/gymnasiearbeten/AI" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Spelutveckling"} toPath="/inriktning/teknik/gymnasiearbeten/SU" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
               </div>
             </div>
 
@@ -81,17 +81,17 @@ export default function Navigation() {
             <div className="w-9/12 flex justify-end">
               <div className="flex flex-col items-end w-full">
                 <LinkHeader title={"Estetprogrammen"} toPath="/estetprogrammen" size="big" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Grafisk Design"} toPath="/estetprogrammen/appochwebb" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Foto och Film"} toPath="/estetprogrammen/aiutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Media-Beteende"} toPath="/estetprogrammen/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
-                <LinkHeader title={"Spelgrafik"} toPath="/estetprogrammen/spelutveckling" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Grafisk Design"} toPath="/inriktning/estet/gymnasiearbeten/GD" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Foto och Film"} toPath="/inriktning/estet/gymnasiearbeten/FF" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Media-Beteende"} toPath="/inriktning/estet/gymnasiearbeten/MB" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
+                <LinkHeader title={"Spelgrafik"} toPath="/inriktning/estet/gymnasiearbeten/SG" size="small" currentPath={pathname} closeNavFunc={setIsOpen} />
               </div>
             </div>
 
             {/* Programveckor */}
             <div className="w-9/12 flex justify-end">
               <div className="flex flex-col items-end w-full">
-                <LinkHeader title={"Programveckor"} toPath="/programveckor?year=2027" size="big" currentPath={pathname} closeNavFunc={setIsOpen} /> {/* Change path to last years projects */}
+                <LinkHeader title={"Programveckor"} toPath="/programveckor?year=2025" size="big" currentPath={pathname} closeNavFunc={setIsOpen} /> {/* Change path to last years projects */}
               </div>
             </div>
 

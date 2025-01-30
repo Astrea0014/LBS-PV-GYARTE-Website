@@ -7,6 +7,7 @@ import PageDescription from "@/app/components/general/PageDescription";
 import {useState, useEffect } from "react";
 import { Thesis } from "@/app/lib/DbTypes";
 import { GyDb } from "@/app/lib/DbFetch";
+import { usePathname } from "next/navigation";
 
 
 interface GyarteProps {
@@ -61,7 +62,7 @@ export default function Gyarte({searchParams, params} : GyarteProps){
         }
 
       } catch (error){
-        console.error(error);
+        return null;
 
       } finally {
         setIsLoading(false)
@@ -78,6 +79,8 @@ export default function Gyarte({searchParams, params} : GyarteProps){
     } 
     getCollabYears()
   }, []);
+
+  const pathname = usePathname();
   
   return(
     <main>
@@ -102,6 +105,7 @@ export default function Gyarte({searchParams, params} : GyarteProps){
                     name={work.author_name}
                     course={work.author_class}
                     year={work.publication_year}
+                    pathname={pathname}
                   />
                 )}
               </section>

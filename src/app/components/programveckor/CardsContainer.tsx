@@ -15,7 +15,7 @@ export default function CardsContainer({ year, data }: CardsContainerProps) {
             focus={collab.collaborators}
             image={collab.poster_ref}
             theme={collab.theme}
-            link={`/programveckor/${collab.collaboration_id}`}
+            link={`/programveckor/samarbete/${collab.collaboration_id}`}
           />
         )}
       </ul>
