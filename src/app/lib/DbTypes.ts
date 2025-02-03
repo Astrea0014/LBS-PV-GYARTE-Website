@@ -17,7 +17,8 @@ export interface ProjectGroup {
   project_id: number;
   project_name: string;
   group_name: string;
-  poster_ref: string;           //<---------------------------------------
+  poster_ref: string;
+  description: string;          //<---------------------------------------
   project_type: string;         //| This is where a proprietary data
   project_data: any; //<----------| structure instance queried by a
   group_members: GroupMember[]; //| project data requester will be located.

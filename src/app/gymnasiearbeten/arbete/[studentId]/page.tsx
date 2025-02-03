@@ -1,5 +1,5 @@
 "use client";
-import Header from "../../components/gyarte/GyarteFocusHeader";
+import Header from "../../../components/gyarte/GyarteFocusHeader";
 import SY1Layout from "@/app/components/gyarte/SY1Layout";
 import ES1 from "./ES1";
 import ES2 from "./ES2";
@@ -55,10 +55,7 @@ interface GyarteProjectsProps {
   }>
 }
 
-
 export default function Individual({params} : GyarteProjectsProps){
-
-
   const [studentData, setStudentData] = useState<Thesis | string>("No student with that ID");
 
   useEffect(() => {

@@ -26,12 +26,13 @@ export async function ES2ComponentDataRequester(id: number, conn: mysql.Connecti
         id: id,
         video_ref: result[0][0].video_ref,
         images: await conn.query<mysql.RowDataPacket[]>(
-          `
-          SELECT image_header, image_ref, image_format
-          FROM esx_component_data
-          WHERE id=?
-          `
-        ).then(async (result): Promise<Image[]> => {
+          mysql.format(
+            `
+            SELECT image_header, image_ref, image_format
+            FROM esx_component_data
+            WHERE id=?
+            `, id
+          )).then(async (result): Promise<Image[]> => {
           if (!result)
             throw new Error(errors.result_null);
 
