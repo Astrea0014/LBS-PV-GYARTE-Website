@@ -4,8 +4,8 @@ import PageHeader from "../../../components/general/PageHeader";
 import PageDescription from "../../../components/general/PageDescription";
 import ProjectCard from "@/app/components/programveckor/ProjectCard";
 import Divider from "@/app/components/general/Divider";
-import { PvDb } from "@/app/lib/DbFetch";
-import { FullCollaboration } from "@/app/lib/DbTypes";
+import { PvDb } from "@/app/lib/database/DbFetch";
+import { FullCollaboration } from "@/app/lib/database/DbTypes";
 import { useState, useEffect } from "react";
 
 

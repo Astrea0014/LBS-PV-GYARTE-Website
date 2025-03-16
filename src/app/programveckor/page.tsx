@@ -5,8 +5,8 @@ import PageHeader from "../components/general/PageHeader";
 import SelectorButtonsGroup from "../components/general/SelectorButtonsGroup";
 import TabSelector from "../components/general/TabSelector";
 import CardsContainer from "../components/programveckor/CardsContainer";
-import { PvDb } from "../lib/DbFetch";
-import { Collaboration } from "../lib/DbTypes";
+import { PvDb } from "../lib/database/DbFetch";
+import { Collaboration } from "../lib/database/DbTypes";
 import { useState, useEffect } from "react";
 
 interface ProgramWeeksProps {

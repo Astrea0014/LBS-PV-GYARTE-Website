@@ -1,10 +1,10 @@
 "use client";
 
 import SuSg from "./SuSg";
-import { PvDb } from "@/app/lib/DbFetch";
+import { PvDb } from "@/app/lib/database/DbFetch";
 import { useState, useEffect } from "react";
-import { ProjectGroup } from "@/app/lib/DbTypes";
-import { SUSG01ProjectData } from "@/app/lib/db_proprietary/pv_data_structures/SUSG01";
+import { ProjectGroup } from "@/app/lib/database/DbTypes";
+import { SUSG01ProjectData } from "@/app/lib/database/db_proprietary/pv_data_structures/SUSG01";
 
 interface ProjectPageProps {
   params: Promise<{
