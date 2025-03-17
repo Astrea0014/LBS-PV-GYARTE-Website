@@ -100,14 +100,9 @@ export class Database {
     return this.connection;
   }
 
-  public SetPVDataRequester(layout_reference: string, callback: (id: number, connection: mysql.Connection) => Promise<any>) {
+  public PVSetDataRequester(layout_reference: string, callback: (id: number, connection: mysql.Connection) => Promise<any>) {
     if (!this.pvDataRequesters.has(layout_reference))
       this.pvDataRequesters.set(layout_reference, callback);
-  }
-
-  public SetGYDataRequester(layout_reference: string, callback: (id: number, connection: mysql.Connection) => Promise<any>) {
-    if (!this.gyDataRequesters.has(layout_reference))
-      this.gyDataRequesters.set(layout_reference, callback);
   }
 
   public async PVGetPresentYears(): Promise<number[]> {
@@ -185,4 +180,15 @@ export class Database {
 
     return ret;
   }
+
+  public GYSetDataRequester(layout_reference: string, callback: (id: number, connection: mysql.Connection) => Promise<any>) {
+    if (!this.gyDataRequesters.has(layout_reference))
+      this.gyDataRequesters.set(layout_reference, callback);
+  }
+
+  public async GYGetPresentYears(): Promise<number[]> {
+    return this.GetPresentYears("SELECT publication_year FROM theses GROUP BY publication_year");
+  }
+
+  
 }
