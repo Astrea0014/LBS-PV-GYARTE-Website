@@ -1,4 +1,5 @@
-import mysql from 'mysql2/promise';
+import mysql from "mysql2/promise";
+import { errors } from "../../Errors";
 
 export interface SUSG01ProjectData {
   project_id: number;
@@ -8,28 +9,24 @@ export interface SUSG01ProjectData {
   asset_refs: string[];
 }
 
-export async function SUSG01ProjectDataRequester(project_id: number, conn: mysql.Connection): Promise<SUSG01ProjectData> {
-  return await conn.query<mysql.RowDataPacket[]>(
-    mysql.format(
-      `
-      SELECT *
-      FROM susg01_project_data
-      WHERE project_id=?
-      `, project_id
-    )).then(async (result): Promise<SUSG01ProjectData> => {
-    if (!result)
-      throw new Error('SUSG01 project data requester: failed to fetch data.');
-    if (result[0].length != 1)
-      throw new Error('SUSG01 project data requester: failed to obtain data. Invalid number of copies fetched.');
+export async function SUSG01ProjectDataRequester(id: number, connection: mysql.Connection): Promise<SUSG01ProjectData> {
+  const [projects] = await connection.execute<mysql.RowDataPacket[]>(
+    "SELECT itch_href, video_ref, moodboard_ref FROM susg01_project_data WHERE project_id=?",
+    id
+  );
 
-    const value = result[0][0];
+  if (projects.length == 0)
+    throw new Error(errors.result_empty);
 
-    return {
-      project_id: value.project_id,
-      itch_href: value.itch_href,
-      video_ref: value.video_ref,
-      moodboard_ref: value.moodboard_ref,
-      asset_refs: []
-    };
-  })!;
+  const project: SUSG01ProjectData = {
+    project_id: id,
+    itch_href: projects[0].itch_href,
+    video_ref: projects[0].video_ref,
+    moodboard_ref: projects[0].moodboard_ref,
+    asset_refs: []
+  };
+
+  // ADD ASSET REFS QUERY HERE.
+
+  return project;
 }
