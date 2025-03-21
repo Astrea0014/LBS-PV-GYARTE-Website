@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { DB } from "@/instrumentation";
 
 export async function GET(_: NextRequest) {
   try {
-    return NextResponse.json(JSON.stringify(await __PvDb.GetDbPresentYears()), {
+    return NextResponse.json(JSON.stringify(await DB.PVGetPresentYears()), {
       status: 200
     });
   } catch (error) {

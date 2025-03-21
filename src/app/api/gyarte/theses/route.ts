@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { DB } from "@/instrumentation";
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,7 +13,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(
       JSON.stringify(
-        await __GyDb.GetThesesByYearAndCourse(
+        await DB.GYGetThesesByYearAndCourse(
           parseInt(year),
           course
         )), {

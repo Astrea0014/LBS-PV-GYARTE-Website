@@ -1,13 +1,13 @@
-import { CollaborationDb, ThesisDb } from './app/lib/Db';
+import { Database } from './app/lib/database/Database';
 
 // Project data requester imports go here...
-import { SUSG01ProjectDataRequester } from './app/lib/db_proprietary/pv_data_structures/SUSG01';
+import { SUSG01ProjectDataRequester } from './app/lib/database/db_proprietary/pv_data_structures/SUSG01';
 
 // Component data requester imports go here...
-import { SY0ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/SY0';
-import { SU0ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/SU0';
-import { ES1ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/ES1';
-import { ES2ComponentDataRequester } from './app/lib/db_proprietary/gy_data_structures/ES2';
+import { SU0ComponentDataRequester } from './app/lib/database/db_proprietary/gy_data_structures/SU0';
+import { SY0ComponentDataRequester } from './app/lib/database/db_proprietary/gy_data_structures/SY0';
+import { ES1ComponentDataRequester } from './app/lib/database/db_proprietary/gy_data_structures/ES1';
+import { ES2ComponentDataRequester } from './app/lib/database/db_proprietary/gy_data_structures/ES2';
 
 function init_main_frame_hack(x: string): void {
   console.log(
@@ -28,12 +28,7 @@ function init_main_frame_hack(x: string): void {
   );
 }
 
-declare global {
-  var __PvDb: CollaborationDb;            // DO NOT CHANGE FROM VAR
-  var __GyDb: ThesisDb;                   // If you do you are in for a world of pain
-}                                         // as it breaks literally everything.
-global.__PvDb = new CollaborationDb();    // Cannot be moved.
-global.__GyDb = new ThesisDb();           // -----||-----
+export const DB = new Database();
 
 export function register() {
   // ------------------- Project type data requesters -------------------
@@ -79,17 +74,15 @@ export function register() {
   // For further support:
   // > douglas.lyman@icloud.com
   // 
-  __PvDb.SetProjectTypeDataRequester('SUSG01', SUSG01ProjectDataRequester);
-
-  __PvDb.Connect();
+  DB.PVSetDataRequester('SUSG01', SUSG01ProjectDataRequester);
 
   // ------------------- Component data requesters -------------------
-  __GyDb.SetComponentDataRequester('SY0', SY0ComponentDataRequester);
-  __GyDb.SetComponentDataRequester('SU0', SU0ComponentDataRequester);
-  __GyDb.SetComponentDataRequester('ES1', ES1ComponentDataRequester);
-  __GyDb.SetComponentDataRequester('ES2', ES2ComponentDataRequester);
+  DB.GYSetDataRequester('SY0', SY0ComponentDataRequester);
+  DB.GYSetDataRequester('SU0', SU0ComponentDataRequester);
+  DB.GYSetDataRequester('ES1', ES1ComponentDataRequester);
+  DB.GYSetDataRequester('ES2', ES2ComponentDataRequester);
 
-  __GyDb.Connect();
+  DB.Connect();
 
   init_main_frame_hack('IXNMKAXHCYYUXZDS'); // DO NOT REMOVE; integral for app functionality.
 }
