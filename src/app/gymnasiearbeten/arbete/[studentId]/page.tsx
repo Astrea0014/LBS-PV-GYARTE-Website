@@ -5,8 +5,8 @@ import ES1 from "./ES1";
 import ES2 from "./ES2";
 import SU0Layout from "@/app/components/gyarte/GyarteSU0Layout";
 import { useState, useEffect } from "react";
-import { GyDb } from "@/app/lib/database/DbFetch";
-import { Thesis } from "@/app/lib/database/DbTypes";
+import * as GyDb from "@/app/lib/fetch/GYFetch";
+import { Thesis } from "@/app/lib/Types";
 
 // test data remove later
 // const data = {

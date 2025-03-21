@@ -5,8 +5,8 @@ import PageHeader from "../components/general/PageHeader";
 import SelectorButtonsGroup from "../components/general/SelectorButtonsGroup";
 import TabSelector from "../components/general/TabSelector";
 import CardsContainer from "../components/programveckor/CardsContainer";
-import { PvDb } from "../lib/database/DbFetch";
-import { Collaboration } from "../lib/database/DbTypes";
+import * as PvDb from "../lib/fetch/PVFetch";
+import { Collaboration } from "../lib/Types";
 import { useState, useEffect } from "react";
 
 interface ProgramWeeksProps {
@@ -45,7 +45,7 @@ export default function ProgramWeeks({searchParams}: ProgramWeeksProps ) {
 
   useEffect(() => {
     const getCollabYears = async () => {
-      const years = await PvDb.GetDbPresentYears();
+      const years = await PvDb.GetPresentYears();
       setCollabYears(years);
     } 
     getCollabYears()

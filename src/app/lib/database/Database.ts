@@ -1,6 +1,7 @@
 import mysql from "mysql2/promise";
+
 import { errors } from "./Errors";
-import { Collaboration, FullCollaboration, GroupMember, ProjectGroup, Thesis } from "./DbTypes";
+import { Collaboration, FullCollaboration, GroupMember, ProjectGroup, Thesis } from "../Types";
 
 export class Database {
   private connection: mysql.Connection | undefined;

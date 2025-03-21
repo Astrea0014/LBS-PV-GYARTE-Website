@@ -5,8 +5,8 @@ import GyarteCard from "../components/gyarte/GyarteCard";
 import Header from "../components/general/PageHeader";
 import Overview from "../components/general/PageDescription";
 import {useState, useEffect } from "react";
-import { Thesis } from "../lib/database/DbTypes";
-import { GyDb } from "../lib/database/DbFetch";
+import * as GyDb from "../lib/fetch/GYFetch";
+import { Thesis } from "../lib/Types";
 
 
 interface GyarteProps {
@@ -69,7 +69,7 @@ export default function Gyarte({searchParams} : GyarteProps){
 
   useEffect(() => {
     const getCollabYears = async () => {
-      const years = await GyDb.GetDbPresentYears();
+      const years = await GyDb.GetPresentYears();
       setCollabYears(years);
     } 
     getCollabYears()
