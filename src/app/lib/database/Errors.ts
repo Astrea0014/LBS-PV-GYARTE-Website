@@ -1,5 +1,4 @@
 export const errors = {
-  bad_gateway: 'BAD GATEWAY: Db failure.',
   not_connected: 'Cannot disconnect; not connected.',
   already_connected: 'Cannot connect; already connected.',
   result_empty: 'Failed to fetch data: result list is empty.',
