@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 import { errors } from "./Errors";
-import { Collaboration, FullCollaboration, GroupMember, ProjectGroup } from "./DbTypes";
+import { Collaboration, FullCollaboration, GroupMember, ProjectGroup, Thesis } from "./DbTypes";
 
 export class Database {
   private connection: mysql.Connection | undefined;
@@ -12,36 +12,35 @@ export class Database {
     if (!this.connection)
       throw new Error(errors.not_connected);
 
-    return this.connection.execute<mysql.RowDataPacket[]>(query)
-    .then((result) => {
-      return result[0].map((value) => value.year as number);
-    });
+    const [years] = await this.connection.execute<mysql.RowDataPacket[]>(query);
+
+    return years.map((value) => value.year as number);
   }
 
   private async PVGetCollaborationsFromQueryString(query: string, data: number): Promise<Collaboration[]> {
     if (!this.connection)
       throw new Error(errors.not_connected);
   
-    const collaborations = await this.connection.execute<mysql.RowDataPacket[]>(
+    const [collaborations] = await this.connection.execute<mysql.RowDataPacket[]>(
       "SELECT * FROM collaborations WHERE " + query + "=?",
       data
       );
   
     const ret: Collaboration[] = [];
   
-    for (let i = 0; i < collaborations[0].length; i++) {
-      const collaborator = await this.connection.query<mysql.RowDataPacket[]>(
+    for (let i = 0; i < collaborations.length; i++) {
+      const [collaborators] = await this.connection.query<mysql.RowDataPacket[]>(
         "SELECT collaborator FROM collaborators WHERE collaboration_id=?",
-        collaborations[0][i].collaboration_id
+        collaborations[i].collaboration_id
         );
   
         ret.push({
-          collaboration_id: collaborations[0][i].collaboration_id,
-          year: collaborations[0][i].year,
-          theme: collaborations[0][i].theme,
-          description: collaborations[0][i].description,
-          poster_ref: collaborations[0][i].poster_ref,
-          collaborators: collaborator[0].map((value) => value.collaborator as string)
+          collaboration_id: collaborations[i].collaboration_id,
+          year: collaborations[i].year,
+          theme: collaborations[i].theme,
+          description: collaborations[i].description,
+          poster_ref: collaborations[i].poster_ref,
+          collaborators: collaborators.map((value) => value.collaborator as string)
         });
     }
   
@@ -49,16 +48,19 @@ export class Database {
   }
 
   private async PVGetGroupMembersFromProjectId(project_id: number): Promise<GroupMember[]> {
-    return this.connection!.execute<mysql.RowDataPacket[]>(
+    if (!this.connection)
+      throw new Error(errors.not_connected);
+
+    const [group_members] = await this.connection.execute<mysql.RowDataPacket[]>(
       "SELECT name, class FROM project_groups_people INNER JOIN people ON project_groups_people.person_id=people.person_id WHERE project_id=?",
       project_id
-    ).then(result => {
-      return result[0].map((value): GroupMember => {
-        return {
-          name: value.name,
-          class: value.class
-        };
-      });
+    );
+
+    return group_members.map((value): GroupMember => {
+      return {
+        name: value.name,
+        class: value.class
+      }
     });
   }
 
@@ -130,19 +132,19 @@ export class Database {
       project_groups: await this.connection!.execute<mysql.RowDataPacket[]>(
         "SELECT * FROM project_groups WHERE collaboration_id=?",
         collaboration_id
-      ).then(async (result): Promise<ProjectGroup[]> => {
+      ).then(async ([result]): Promise<ProjectGroup[]> => {
         const ret: ProjectGroup[] = [];
         
-        for (let i = 0; i < result[0].length; i++) {
+        for (let i = 0; i < result.length; i++) {
           ret.push({
-            project_id: result[0][i].project_id,
-            project_name: result[0][i].project_name,
-            group_name: result[0][i].group_name,
-            poster_ref: result[0][i].poster_ref,
-            description: result[0][i].description,
-            project_type: result[0][i].project_type,
+            project_id: result[i].project_id,
+            project_name: result[i].project_name,
+            group_name: result[i].group_name,
+            poster_ref: result[i].poster_ref,
+            description: result[i].description,
+            project_type: result[i].project_type,
             project_data: null,
-            group_members: await this.PVGetGroupMembersFromProjectId(result[0][i].project_id)
+            group_members: await this.PVGetGroupMembersFromProjectId(result[i].project_id)
           });
         }
 
@@ -155,21 +157,21 @@ export class Database {
     if (!this.connection)
       throw new Error(errors.not_connected);
 
-    const projects = await this.connection.execute<mysql.RowDataPacket[]>(
+    const [projects] = await this.connection.execute<mysql.RowDataPacket[]>(
       "SELECT * FROM project_groups WHERE project_id=?",
       project_id
     );
 
-    if (projects[0].length == 0)
+    if (projects.length == 0)
       throw new Error(errors.result_empty);
 
     const ret: ProjectGroup = {
-      project_id: projects[0][0].project_id,
-      project_name: projects[0][0].project_name,
-      group_name: projects[0][0].group_name,
-      poster_ref: projects[0][0].poster_ref,
-      description: projects[0][0].description,
-      project_type: projects[0][0].project_type,
+      project_id: projects[0].project_id,
+      project_name: projects[0].project_name,
+      group_name: projects[0].group_name,
+      poster_ref: projects[0].poster_ref,
+      description: projects[0].description,
+      project_type: projects[0].project_type,
       project_data: null,
       group_members: await this.PVGetGroupMembersFromProjectId(projects[0][0].project_id)
     };
@@ -190,5 +192,59 @@ export class Database {
     return this.GetPresentYears("SELECT publication_year FROM theses GROUP BY publication_year");
   }
 
-  
+  public async GYGetThesesByYearAndCourse(year: number, course: string): Promise<Thesis[]> {
+    if (!this.connection)
+      throw new Error(errors.not_connected);
+    
+    const [theses] = await this.connection.execute<mysql.RowDataPacket[]>(
+      "SELECT * FROM theses WHERE year=? AND course=?",
+      [year, course]
+    );
+
+    return theses.map((value): Thesis => {
+      return {
+        id: value.id,
+        thesis: value.thesis,
+        course: value.course,
+        author_name: value.author_name,
+        author_class: value.author_class,
+        publication_year: value.publication_year,
+        component_id: value.component_id,
+        component_data: null
+      };
+    });
+  }
+
+  public async GYGetThesisById(id: number): Promise<Thesis> {
+    if (!this.connection)
+      throw new Error(errors.not_connected);
+
+    const [rows] = await this.connection.execute<mysql.RowDataPacket[]>(
+      "SELECT * FROM theses WHERE id=?",
+      id
+    );
+
+    if (rows.length == 0)
+      throw new Error(errors.result_empty);
+
+    const raw = rows[0];
+
+    const thesis: Thesis = {
+      id: raw.id,
+      thesis: raw.thesis,
+      course: raw.course,
+      author_name: raw.author_name,
+      author_class: raw.author_class,
+      publication_year: raw.publication_year,
+      component_id: raw.component_id,
+      component_data: null
+    };
+
+    if (!this.gyDataRequesters.has(thesis.component_id))
+      throw new Error(errors.data_requester_not_exists(thesis.component_id));
+
+    thesis.component_data = await (this.gyDataRequesters.get(thesis.component_id)!)(thesis.id, this.connection);
+
+    return thesis;
+  }
 }
