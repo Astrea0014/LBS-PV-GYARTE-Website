@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-import { errors } from "./Errors";
+import { SQL_ERRORS } from "@/app/lib/Errors";
 import { Collaboration, FullCollaboration, GroupMember, ProjectGroup, Thesis } from "../Types";
 
 export class Database {
@@ -11,7 +11,7 @@ export class Database {
   
   private async GetPresentYears(query: string) {
     if (!this.connection)
-      throw new Error(errors.not_connected);
+      throw new Error(SQL_ERRORS.not_connected);
 
     const [years] = await this.connection.execute<mysql.RowDataPacket[]>(query);
 
@@ -20,7 +20,7 @@ export class Database {
 
   private async PVGetCollaborationsFromQueryString(query: string, data: number): Promise<Collaboration[]> {
     if (!this.connection)
-      throw new Error(errors.not_connected);
+      throw new Error(SQL_ERRORS.not_connected);
   
     const [collaborations] = await this.connection.execute<mysql.RowDataPacket[]>(
       "SELECT * FROM collaborations WHERE " + query + "=?",
@@ -50,7 +50,7 @@ export class Database {
 
   private async PVGetGroupMembersFromProjectId(project_id: number): Promise<GroupMember[]> {
     if (!this.connection)
-      throw new Error(errors.not_connected);
+      throw new Error(SQL_ERRORS.not_connected);
 
     const [group_members] = await this.connection.execute<mysql.RowDataPacket[]>(
       "SELECT name, class FROM project_groups_people INNER JOIN people ON project_groups_people.person_id=people.person_id WHERE project_id=?",
@@ -73,7 +73,7 @@ export class Database {
 
   public async Connect(): Promise<void> {
     if (this.connection)
-      throw new Error(errors.already_connected);
+      throw new Error(SQL_ERRORS.already_connected);
 
     this.connection = await mysql.createConnection({
       host: process.env.MYSQL_HOST,
@@ -87,7 +87,7 @@ export class Database {
 
   public Disconnect() {
     if (!this.connection)
-      throw new Error(errors.not_connected);
+      throw new Error(SQL_ERRORS.not_connected);
 
     this.connection.destroy();
     this.connection = undefined;
@@ -99,7 +99,7 @@ export class Database {
 
   public GetConnection(): mysql.Connection {
     if (!this.connection)
-      throw new Error(errors.not_connected);
+      throw new Error(SQL_ERRORS.not_connected);
     return this.connection;
   }
 
@@ -126,7 +126,7 @@ export class Database {
     );
 
     if (collaborations.length == 0)
-      throw new Error(errors.result_empty);
+      throw new Error(SQL_ERRORS.result_empty);
 
     return {
       ...collaborations[0],
@@ -156,7 +156,7 @@ export class Database {
 
   public async PVGetProjectFromId(project_id: number): Promise<ProjectGroup> {
     if (!this.connection)
-      throw new Error(errors.not_connected);
+      throw new Error(SQL_ERRORS.not_connected);
 
     const [projects] = await this.connection.execute<mysql.RowDataPacket[]>(
       "SELECT * FROM project_groups WHERE project_id=?",
@@ -164,7 +164,7 @@ export class Database {
     );
 
     if (projects.length == 0)
-      throw new Error(errors.result_empty);
+      throw new Error(SQL_ERRORS.result_empty);
 
     const ret: ProjectGroup = {
       project_id: projects[0].project_id,
@@ -178,7 +178,7 @@ export class Database {
     };
 
     if (!this.pvDataRequesters.has(ret.project_type))
-      throw new Error(errors.data_requester_not_exists(ret.project_type));
+      throw new Error(SQL_ERRORS.data_requester_not_exists(ret.project_type));
     ret.project_data = (this.pvDataRequesters.get(ret.project_type)!)(ret.project_id, this.connection);
 
     return ret;
@@ -195,7 +195,7 @@ export class Database {
 
   public async GYGetThesesByYearAndCourse(year: number, course: string): Promise<Thesis[]> {
     if (!this.connection)
-      throw new Error(errors.not_connected);
+      throw new Error(SQL_ERRORS.not_connected);
     
     const [theses] = await this.connection.execute<mysql.RowDataPacket[]>(
       "SELECT * FROM theses WHERE year=? AND course=?",
@@ -218,7 +218,7 @@ export class Database {
 
   public async GYGetThesisById(id: number): Promise<Thesis> {
     if (!this.connection)
-      throw new Error(errors.not_connected);
+      throw new Error(SQL_ERRORS.not_connected);
 
     const [rows] = await this.connection.execute<mysql.RowDataPacket[]>(
       "SELECT * FROM theses WHERE id=?",
@@ -226,7 +226,7 @@ export class Database {
     );
 
     if (rows.length == 0)
-      throw new Error(errors.result_empty);
+      throw new Error(SQL_ERRORS.result_empty);
 
     const raw = rows[0];
 
@@ -242,7 +242,7 @@ export class Database {
     };
 
     if (!this.gyDataRequesters.has(thesis.component_id))
-      throw new Error(errors.data_requester_not_exists(thesis.component_id));
+      throw new Error(SQL_ERRORS.data_requester_not_exists(thesis.component_id));
 
     thesis.component_data = await (this.gyDataRequesters.get(thesis.component_id)!)(thesis.id, this.connection);
 

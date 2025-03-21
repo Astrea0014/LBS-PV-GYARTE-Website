@@ -1,51 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DB } from "@/instrumentation";
+import { HTTP_CODES } from "@/app/lib/Errors";
 
 export async function GET(request: NextRequest) {
+  const year = request.headers.get("DbRef-Year");
+  if (!year)
+    return HTTP_CODES.bad_request("DbRef-Year");
+
+  const course = request.headers.get("DbRef-Course");
+  if (!course)
+      return HTTP_CODES.bad_request("DbRef-Course");
+
   try {
-    const year = request.headers.get('DbRef-Year');
-    if (!year)
-      throw 'year';
-
-    const course = request.headers.get('DbRef-Course');
-    if (!course)
-      throw 'course';
-
-    return NextResponse.json(
-      JSON.stringify(
-        await DB.GYGetThesesByYearAndCourse(
-          parseInt(year),
-          course
-        )), {
-          status: 200
-        });
+    const obj = await DB.GYGetThesesByYearAndCourse(parseInt(year), course);
+    return NextResponse.json(obj, {
+      status: 200
+    });
   } catch (error) {
     console.error(error);
-
-    let message: string;
-    let code: number;
-
-    switch (error) {
-      case 'year':
-        message = 'DbRef-Year header is missing from request.';
-        code = 400;
-        break;
-      case 'course':
-        message = 'DbRef-Course header is missing from request.';
-        code = 400;
-        break;
-      default:
-        message = 'BAD GATEWAY: DB failure';
-        code = 502;
-        break;
-    }
-
-    return new NextResponse(
-      message, {
-      status: code,
-      headers: {
-        'Error-Message': error as string
-      }
-    });
+    return HTTP_CODES.bad_gateway();
   }
 }

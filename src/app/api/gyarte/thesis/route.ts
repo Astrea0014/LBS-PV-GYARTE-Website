@@ -1,30 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DB } from "@/instrumentation";
+import { SQL_ERRORS, HTTP_CODES } from "@/app/lib/Errors";
 
 export async function GET(request: NextRequest) {
-  try {
-    const id = request.headers.get('DbRef-Id');
-    if (!id)
-      throw 'id';
+  const id = request.headers.get("DbRef-Id");
+  if (!id)
+    return HTTP_CODES.bad_request("DbRef-Id");
 
-    return NextResponse.json(
-      JSON.stringify(
-        await DB.GYGetThesisById(
-          parseInt(id)
-        )), {
-          status: 200
-        });
+  try {
+    const obj = await DB.GYGetThesisById(parseInt(id));
+    return NextResponse.json(obj, {
+      status: 200
+    });
   } catch (error) {
     console.error(error);
 
-    const is_header_error = error === 'id';
-
-    return new NextResponse(
-      is_header_error ? 'DbRef-Id is missing from request.' : 'BAD GATEWAY: DB failure', {
-      status: is_header_error ? 400 : 502,
-      headers: {
-        'Error-Message': error as string
-      }
-    });
+    if ((error as Error).message == SQL_ERRORS.result_empty)
+      return HTTP_CODES.not_found("DbRef-Id");
+    return HTTP_CODES.bad_gateway();
   }
 }

@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 import { Image } from './Image';
-import { errors } from '../../Errors';
+import { SQL_ERRORS } from "@/app/lib/Errors";
 
 export interface ES1ComponentData {
   id: number;
@@ -14,7 +14,7 @@ export async function ES1ComponentDataRequester(id: number, connection: mysql.Co
     );
 
     if (rows.length == 0)
-      throw new Error(errors.result_empty);
+      throw new Error(SQL_ERRORS.result_empty);
 
     return {
       id: id,

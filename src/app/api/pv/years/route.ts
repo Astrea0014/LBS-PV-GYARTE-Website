@@ -1,19 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DB } from "@/instrumentation";
+import { HTTP_CODES } from "@/app/lib/Errors";
 
 export async function GET(_: NextRequest) {
   try {
-    return NextResponse.json(JSON.stringify(await DB.PVGetPresentYears()), {
+    const obj = DB.PVGetPresentYears();
+    return NextResponse.json(obj, {
       status: 200
     });
   } catch (error) {
     console.error(error);
-
-    return new NextResponse('502 - BAD GATEWAY: DB failure', {
-      status: 502,
-      headers: {
-        'Error-Message': error as string
-      }
-    });
+    return HTTP_CODES.bad_gateway();
   }
 }

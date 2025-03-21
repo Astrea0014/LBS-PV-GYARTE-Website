@@ -1,30 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DB } from "@/instrumentation";
+import { HTTP_CODES } from "@/app/lib/Errors";
 
 export async function GET(request: NextRequest) {
-  try {
-    const year = request.headers.get('DbRef-Year');
-    if (!year)
-      throw 'year';
+  const year = request.headers.get("DbRef-Year");
+  if (!year)
+    return HTTP_CODES.bad_request("DbRef-Year");
 
-    return NextResponse.json(
-      JSON.stringify(
-        await DB.PVGetCollaborationsFromYear(
-          parseInt(year) 
-        )), {
-          status: 200
-        });
+  try {
+    const obj = await DB.PVGetCollaborationsFromYear(parseInt(year));
+    return NextResponse.json(obj, {
+      status: 200
+    });
   } catch (error) {
     console.error(error);
-
-    const is_header_error = error === 'year';
-
-    return new NextResponse(
-      is_header_error ? 'DbRef-Year header is missing from request.' : 'BAD GATEWAY: DB failure', {
-      status: is_header_error ? 400 : 502, // BAD REQUEST | BAD GATEWAY
-      headers: {
-        'Error-Message': error as string
-      }
-    });
+    return HTTP_CODES.bad_gateway();
   }
 }

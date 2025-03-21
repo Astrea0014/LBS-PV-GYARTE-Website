@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise";
-import { errors } from "../../Errors";
+import { SQL_ERRORS } from "@/app/lib/Errors";
 
 export interface SUSG01ProjectData {
   project_id: number;
@@ -16,7 +16,7 @@ export async function SUSG01ProjectDataRequester(id: number, connection: mysql.C
   );
 
   if (projects.length == 0)
-    throw new Error(errors.result_empty);
+    throw new Error(SQL_ERRORS.result_empty);
 
   const project: SUSG01ProjectData = {
     project_id: id,
