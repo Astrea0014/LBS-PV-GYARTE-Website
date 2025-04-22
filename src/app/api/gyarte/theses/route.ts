@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
       return HTTP_CODES.bad_request("DbRef-Course");
 
   try {
-    const obj = await DB.GYGetThesesByYearAndCourse(parseInt(year), course);
+    const obj = await DB.gy.GetThesesByYearAndCourse(parseInt(year), course);
     return NextResponse.json(obj, {
       status: 200
     });

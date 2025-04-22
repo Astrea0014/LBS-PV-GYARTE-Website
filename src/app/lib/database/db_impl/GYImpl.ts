@@ -19,7 +19,7 @@ export class DatabaseGYImpl {
       this.dataRequesters.set(layout_reference, callback);
   }
 
-  public async GetPresentYears(query: string) {
+  public async GetPresentYears() {
     const [years] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
       "SELECT publication_year FROM theses GROUP BY publication_year"
     );
@@ -47,7 +47,7 @@ export class DatabaseGYImpl {
     });
   }
 
-  public async GYGetThesisById(id: number): Promise<Thesis> {
+  public async GetThesisById(id: number): Promise<Thesis> {
     const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
       "SELECT * FROM theses WHERE id=?",
       id

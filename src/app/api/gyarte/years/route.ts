@@ -4,7 +4,7 @@ import { HTTP_CODES } from "@/app/lib/Errors";
 
 export async function GET(_: NextRequest) {
   try {
-    const obj = await DB.GYGetPresentYears();
+    const obj = await DB.gy.GetPresentYears();
     return NextResponse.json(obj, {
       status: 200
     });

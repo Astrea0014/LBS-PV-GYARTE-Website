@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     return HTTP_CODES.bad_request("DbRef-Id");
 
   try {
-    const obj = await DB.GYGetThesisById(parseInt(id));
+    const obj = await DB.gy.GetThesisById(parseInt(id));
     return NextResponse.json(obj, {
       status: 200
     });
