@@ -74,7 +74,7 @@ export function register() {
   // For further support:
   // > douglas.lyman@icloud.com
   // 
-  DB.PVSetDataRequester('SUSG01', SUSG01ProjectDataRequester);
+  DB.pv.SetDataRequester('SUSG01', SUSG01ProjectDataRequester);
 
   // ------------------- Component data requesters -------------------
   DB.GYSetDataRequester('SY0', SY0ComponentDataRequester);
