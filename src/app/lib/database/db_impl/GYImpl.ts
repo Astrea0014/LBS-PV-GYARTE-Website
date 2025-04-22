@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-import { SQL_ERRORS } from "@/app/lib/Errors";
+import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS } from "@/app/lib/Errors";
 
 import { Database } from "@/app/lib/database/Database";
 import { Thesis } from "@/app/lib/Types";
@@ -54,7 +54,7 @@ export class DatabaseGYImpl {
     );
 
     if (rows.length == 0)
-      throw new Error(SQL_ERRORS.result_empty);
+      throw RESULT_EXCEPTIONS.result_empty;
 
     const raw = rows[0];
 
@@ -70,7 +70,7 @@ export class DatabaseGYImpl {
     };
 
     if (!this.dataRequesters.has(thesis.component_id))
-      throw new Error(SQL_ERRORS.data_requester_not_exists(thesis.component_id));
+      throw SQL_EXCEPTIONS.data_requester_not_exists(thesis.component_id);
 
     thesis.component_data = await (this.dataRequesters.get(thesis.component_id)!)(thesis.id, this.master.GetConnection());
 

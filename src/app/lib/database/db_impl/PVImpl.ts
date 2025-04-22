@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-import { SQL_ERRORS } from "@/app/lib/Errors";
+import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS } from "@/app/lib/Errors";
 
 import { Database } from "@/app/lib/database/Database";
 import { Collaboration, FullCollaboration, ProjectGroup, GroupMember } from "@/app/lib/Types";
@@ -82,7 +82,7 @@ export class DatabasePVImpl {
     );
 
     if (collaborations.length == 0)
-      throw new Error(SQL_ERRORS.result_empty);
+      throw RESULT_EXCEPTIONS.result_empty;
 
     return {
       ...collaborations[0],
@@ -117,7 +117,7 @@ export class DatabasePVImpl {
     );
 
     if (projects.length == 0)
-      throw new Error(SQL_ERRORS.result_empty);
+      throw RESULT_EXCEPTIONS.result_empty;
 
     const ret: ProjectGroup = {
       project_id: projects[0].project_id,
@@ -127,11 +127,11 @@ export class DatabasePVImpl {
       description: projects[0].description,
       project_type: projects[0].project_type,
       project_data: null,
-      group_members: await this.GetGroupMembersFromProjectId(projects[0][0].project_id)
+      group_members: await this.GetGroupMembersFromProjectId(projects[0].project_id)
     };
 
     if (!this.dataRequesters.has(ret.project_type))
-      throw new Error(SQL_ERRORS.data_requester_not_exists(ret.project_type));
+      throw SQL_EXCEPTIONS.data_requester_not_exists(ret.project_type);
     ret.project_data = (this.dataRequesters.get(ret.project_type)!)(ret.project_id, this.master.GetConnection());
 
     return ret;
