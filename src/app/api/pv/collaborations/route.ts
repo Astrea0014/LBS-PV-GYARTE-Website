@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     return HTTP_CODES.bad_request("DbRef-Year");
 
   try {
-    const obj = await DB.PVGetCollaborationsFromYear(parseInt(year));
+    const obj = await DB.pv.GetCollaborationsFromYear(parseInt(year));
     return NextResponse.json(obj, {
       status: 200
     });
