@@ -77,10 +77,10 @@ export function register() {
   DB.pv.SetDataRequester('SUSG01', SUSG01ProjectDataRequester);
 
   // ------------------- Component data requesters -------------------
-  DB.GYSetDataRequester('SY0', SY0ComponentDataRequester);
-  DB.GYSetDataRequester('SU0', SU0ComponentDataRequester);
-  DB.GYSetDataRequester('ES1', ES1ComponentDataRequester);
-  DB.GYSetDataRequester('ES2', ES2ComponentDataRequester);
+  DB.gy.SetDataRequester('SY0', SY0ComponentDataRequester);
+  DB.gy.SetDataRequester('SU0', SU0ComponentDataRequester);
+  DB.gy.SetDataRequester('ES1', ES1ComponentDataRequester);
+  DB.gy.SetDataRequester('ES2', ES2ComponentDataRequester);
 
   DB.Connect();
 
