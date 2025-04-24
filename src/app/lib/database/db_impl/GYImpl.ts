@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS } from "@/app/lib/Errors";
+import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS, SqlException } from "@/app/lib/Errors";
 
 import { Database } from "@/app/lib/database/Database";
 import { Thesis } from "@/app/lib/Types";
@@ -28,23 +28,31 @@ export class DatabaseGYImpl {
   }
 
   public async GetThesesByYearAndCourse(year: number, course: string): Promise<Thesis[]> {
-    const [theses] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
-      "SELECT * FROM theses WHERE year=? AND course=?",
-      [year, course]
-    );
+    try {
+      const [theses] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+        "SELECT * FROM theses WHERE year=? AND course=?",
+        [year, course]
+      );
 
-    return theses.map((value): Thesis => {
-      return {
-        id: value.id,
-        thesis: value.thesis,
-        course: value.course,
-        author_name: value.author_name,
-        author_class: value.author_class,
-        publication_year: value.publication_year,
-        component_id: value.component_id,
-        component_data: null
-      };
-    });
+      return theses.map((value): Thesis => {
+        return {
+          id: value.id,
+          thesis: value.thesis,
+          course: value.course,
+          author_name: value.author_name,
+          author_class: value.author_class,
+          publication_year: value.publication_year,
+          component_id: value.component_id,
+          component_data: null
+        };
+      });
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
   }
 
   public async GetThesisById(id: number): Promise<Thesis> {

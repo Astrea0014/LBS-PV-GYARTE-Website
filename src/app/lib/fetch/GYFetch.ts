@@ -29,8 +29,8 @@ export async function GetThesesByYearAndCourse(year: number, course: string): Pr
     method: "GET",
     headers: {
       "Accept": "application/json",
-      "DbRef-Year": year.toString(),
-      "DbRef-Course": course
+      "Reference-Publication-Year": year.toString(),
+      "Reference-Course": course
     }
   });
 

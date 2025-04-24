@@ -30,6 +30,12 @@ export class ContentException extends Error {
   }
 }
 
+export class HeaderException extends Error {
+  public constructor(message: string) {
+    super(message);
+  }
+}
+
 export class ResultException extends Error {
   public constructor(message: string) {
     super(message);
