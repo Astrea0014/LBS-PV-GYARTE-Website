@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import { SQL_ERRORS } from "@/app/lib/Errors";
+import { RESULT_EXCEPTIONS } from "@/app/lib/Errors";
 
 export interface SU0ComponentData {
   id: number;
@@ -13,7 +13,7 @@ export async function SU0ComponentDataRequester(id: number, connection: mysql.Co
   );
 
   if (rows.length == 0)
-    throw new Error(SQL_ERRORS.result_empty);
+    throw RESULT_EXCEPTIONS.result_empty;
 
   return {
     id: id,

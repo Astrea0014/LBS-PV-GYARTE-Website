@@ -39,3 +39,27 @@ export interface Thesis {
   component_id: string;
   component_data: any;
 }
+
+// AUTH
+export interface Access {
+  access_id: string;
+  description: string;
+}
+
+export interface Token {
+  entity_id: number;
+  token: string | null;
+  created_at: Date;
+}
+
+export interface Entity {
+  entity_id: number;
+  username: string;
+  password: string;
+}
+
+export interface ResponseEntity {
+  username: string;
+  password: string | null;
+  access: string[];
+}

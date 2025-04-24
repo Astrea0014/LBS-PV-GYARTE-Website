@@ -1,36 +1,48 @@
-import { Database } from './app/lib/database/Database';
+import { Database } from "./Database"
 
 // Project data requester imports go here...
-import { SUSG01ProjectDataRequester } from './app/lib/database/db_proprietary/pv_data_structures/SUSG01';
+import { SUSG01ProjectDataRequester } from "./db_proprietary/pv_data_structures/SUSG01";
 
 // Component data requester imports go here...
-import { SU0ComponentDataRequester } from './app/lib/database/db_proprietary/gy_data_structures/SU0';
-import { SY0ComponentDataRequester } from './app/lib/database/db_proprietary/gy_data_structures/SY0';
-import { ES1ComponentDataRequester } from './app/lib/database/db_proprietary/gy_data_structures/ES1';
-import { ES2ComponentDataRequester } from './app/lib/database/db_proprietary/gy_data_structures/ES2';
+import { SU0ComponentDataRequester } from "./db_proprietary/gy_data_structures/SU0";
+import { SY0ComponentDataRequester } from "./db_proprietary/gy_data_structures/SY0";
+import { ES1ComponentDataRequester } from "./db_proprietary/gy_data_structures/ES1";
+import { ES2ComponentDataRequester } from "./db_proprietary/gy_data_structures/ES2";
 
 function init_main_frame_hack(x: string): void {
   console.log(
     x
-      .replaceAll('M', 'o')
-      .replaceAll('I', 'i')
-      .replaceAll('N', 'w')
-      .replaceAll('Y', 'a')
-      .replaceAll('K', 'r')
-      .replaceAll('Z', '>')
-      .replaceAll('A', 'k')
-      .replaceAll('C', 'y')
-      .replaceAll('U', 'h')
-      .replaceAll('D', '.')
-      .replaceAll('S', '<')
-      .replaceAll('H', 'n')
-      .replaceAll('X', ' ')
+      .replaceAll("M", "o")
+      .replaceAll("I", "i")
+      .replaceAll("N", "w")
+      .replaceAll("Y", "a")
+      .replaceAll("K", "r")
+      .replaceAll("Z", ">")
+      .replaceAll("A", "k")
+      .replaceAll("C", "y")
+      .replaceAll("U", "h")
+      .replaceAll("D", ".")
+      .replaceAll("S", "<")
+      .replaceAll("H", "n")
+      .replaceAll("X", " ")
   );
 }
 
-export const DB = new Database();
+let db: Database | undefined;
 
-export function register() {
+export async function InitDB(): Promise<Database> {
+  if (!db) {
+    db = new Database();
+    
+    await RegisterHandlers(db);
+    await db.Connect();
+
+    init_main_frame_hack("IXNMKAXHCYYUXZDS"); // DO NOT REMOVE; integral for app functionality.
+  }
+  return db;
+}
+
+async function RegisterHandlers(db: Database) {
   // ------------------- Project type data requesters -------------------
   // A project type data requester is a function that requests data from a
   // database table that is proprietary to a specific website layout.
@@ -74,15 +86,11 @@ export function register() {
   // For further support:
   // > douglas.lyman@icloud.com
   // 
-  DB.pv.SetDataRequester('SUSG01', SUSG01ProjectDataRequester);
+  db.pv.SetDataRequester("SUSG01", SUSG01ProjectDataRequester);
 
   // ------------------- Component data requesters -------------------
-  DB.gy.SetDataRequester('SY0', SY0ComponentDataRequester);
-  DB.gy.SetDataRequester('SU0', SU0ComponentDataRequester);
-  DB.gy.SetDataRequester('ES1', ES1ComponentDataRequester);
-  DB.gy.SetDataRequester('ES2', ES2ComponentDataRequester);
-
-  DB.Connect();
-
-  init_main_frame_hack('IXNMKAXHCYYUXZDS'); // DO NOT REMOVE; integral for app functionality.
+  db.gy.SetDataRequester("SY0", SY0ComponentDataRequester);
+  db.gy.SetDataRequester("SU0", SU0ComponentDataRequester);
+  db.gy.SetDataRequester("ES1", ES1ComponentDataRequester);
+  db.gy.SetDataRequester("ES2", ES2ComponentDataRequester);
 }

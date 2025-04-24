@@ -24,6 +24,12 @@ export class AuthException extends Error {
   }
 }
 
+export class ContentException extends Error {
+  public constructor(message: string) {
+    super(message);
+  }
+}
+
 export class ResultException extends Error {
   public constructor(message: string) {
     super(message);
@@ -51,22 +57,22 @@ export const SQL_EXCEPTIONS = {
 };
 
 export const HTTP_CODES = {
-  bad_request: (header: string) => new NextResponse(null, {
-    status: 400,
-    headers: {
-      "Error-Message": "Request is ill-formatted. Required header '" + header + "' was not specified in request."
-    }
-  }),
-  not_found: (header: string) => new NextResponse(null, {
-    status: 404,
-    headers: {
-      "Error-Message": "The resource could not be found. Header '" + header + "' passed a value that does not reference an existing object."
-    }
-  }),
-  bad_gateway: () => new NextResponse(null, {
-    status: 502,
-    headers: {
-      "Error-Message": "An error in the SQL-database has occurred. Contact the server administrator for more information."
-    }
-  })
+  bad_request: (error: string) => NextResponse.json({
+    "error": `Bad Request - Request is ill-formatted; ${error}`
+  }, { status: 400 }),
+  unauthorized: (error: string) => NextResponse.json({
+    "error": `Unauthenticated; ${error}`
+  }, { status: 401 }),
+  not_found: (error: string) => NextResponse.json({
+    "error": `Not Found; ${error}`
+  }, { status: 404 }),
+  internal_server_error: () => NextResponse.json({
+    "error": "Internal Server Error; contact a system administrator if the issue persists."
+  }, { status: 500 }),
+  not_implemented: () => NextResponse.json({
+    "error": "Not Implemented; A method for this route is declared but not yet defined."
+  }, { status: 501 }),
+  bad_gateway: () => NextResponse.json({
+    "error": "An error in the SQL-database has occurred. Contact the server administrator for more information."
+  }, { status: 502 })
 };

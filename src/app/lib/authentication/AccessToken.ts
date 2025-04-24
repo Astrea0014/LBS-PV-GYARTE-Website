@@ -1,29 +1,8 @@
 import jwt from "jsonwebtoken";
 
-import { Token } from "./Token";
-
 const DELTA_TIMEOUT = 8 * 60 * 60 * 1000; // The timeout for an access token in milliseconds.
 
-export class AccessToken implements Token {
-  entity_id: number = 0;
-  token: string = "";
-  created_at: Date = new Date(0);
-
-  static create_and_insert(entity_id: number): AccessToken {
-    const ret = new AccessToken();
-    ret.entity_id = entity_id;
-    ret.created_at = new Date();
-    ret.token = jwt.sign({ entity_id: ret.entity_id, created_at: ret.created_at }, process.env.AUTH_MASTER as string, { expiresIn: DELTA_TIMEOUT });
-
-    
-    return ret;
-  }
-
-  static import_jwt(token: string): AccessToken {
-
-  }
-}
-
+/* --- MAY BE USED LATER ---
 export class AccessTokenChache {
   chache: AccessToken[];
 
@@ -63,3 +42,4 @@ export class AccessTokenChache {
     }
   }
 }
+*/
