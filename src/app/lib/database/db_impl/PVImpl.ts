@@ -61,11 +61,19 @@ export class DatabasePVImpl {
   }
 
   public async GetPresentYears() {
-    const [years] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
-      "SELECT year FROM collaborations GROUP BY year"
-    );
-
-    return years.map((value) => value.year as number);
+    try {
+      const [years] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+        "SELECT year FROM collaborations GROUP BY year"
+      );
+  
+      return years.map((value) => value.year as number);
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
   }
 
   public async GetCollaborationsFromYear(year: number): Promise<Collaboration[]> {
