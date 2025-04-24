@@ -20,11 +20,19 @@ export class DatabaseGYImpl {
   }
 
   public async GetPresentYears() {
-    const [years] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
-      "SELECT publication_year FROM theses GROUP BY publication_year"
-    );
+    try {
+      const [years] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+        "SELECT publication_year FROM theses GROUP BY publication_year"
+      );
 
-    return years.map((value) => value.year as number);
+      return years.map((value) => value.year as number);
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
   }
 
   public async GetThesesByYearAndCourse(year: number, course: string): Promise<Thesis[]> {

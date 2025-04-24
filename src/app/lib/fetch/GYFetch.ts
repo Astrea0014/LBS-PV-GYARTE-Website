@@ -1,5 +1,5 @@
-import { Thesis } from "../Types";
-import * as Helper from "../RoutingHelpers";
+import { Thesis } from "@/app/lib/Types";
+import * as Helper from "@/app/lib/RoutingHelpers";
 
 const routes = {
   stub: "/api/gyarte/",
@@ -19,7 +19,7 @@ export async function GetPresentYears(): Promise<number[]> {
   Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
-  return JSON.parse(json) as number[];
+  return json as number[];
 }
 
 export async function GetThesesByYearAndCourse(year: number, course: string): Promise<Thesis[]> {

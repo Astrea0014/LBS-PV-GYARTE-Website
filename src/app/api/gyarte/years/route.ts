@@ -1,15 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DB } from "@/instrumentation";
-import { HTTP_CODES } from "@/app/lib/Errors";
+
+import { HTTP_CODES, SqlException } from "@/app/lib/Errors";
+
+import { InitDB } from "@/app/lib/database/Initialize";
 
 export async function GET(_: NextRequest) {
   try {
-    const obj = await DB.gy.GetPresentYears();
-    return NextResponse.json(obj, {
-      status: 200
-    });
-  } catch (error) {
-    console.error(error);
-    return HTTP_CODES.bad_gateway();
+    const db = await InitDB();
+    const response = await db.gy.GetPresentYears();
+    return NextResponse.json(response);
+  }
+  catch (e) {
+    // If the SQL-executes are throwing.
+    if (e instanceof SqlException) {
+      console.error(e.message);
+      return HTTP_CODES.bad_gateway();
+    }
+
+    return HTTP_CODES.internal_server_error();
   }
 }
