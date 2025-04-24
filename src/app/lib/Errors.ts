@@ -69,6 +69,9 @@ export const HTTP_CODES = {
   unauthorized: (error: string) => NextResponse.json({
     "error": `Unauthenticated; ${error}`
   }, { status: 401 }),
+  forbidden: () => NextResponse.json({
+    "error": `Forbidden; you do not have the authorization needed to perform this action.`
+  }, { status: 403 }),
   not_found: (error: string) => NextResponse.json({
     "error": `Not Found; ${error}`
   }, { status: 404 }),

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { AuthException, ContentException, HTTP_CODES, ResultException, SqlException } from "@/app/lib/Errors";
+import { AccessException, AuthException, ContentException, HTTP_CODES, ResultException, SqlException } from "@/app/lib/Errors";
 import { GetTokenFromRequestCookie } from "@/app/lib/RoutingHelpers";
 
 import { GetEntityACL } from "@/app/lib/authentication/AccessControl";
@@ -45,6 +45,12 @@ export async function PATCH(request: NextRequest) {
     // If the JSON-body is invalid or has an invalid structure.
     if (e instanceof SyntaxError || e instanceof ContentException)
       return HTTP_CODES.bad_request(e.message);
+
+    // If the entity holding the token does not have the access required to perform this action.
+    if (e instanceof AccessException) {
+      console.error(e.message);
+      return HTTP_CODES.forbidden();
+    }
 
     // If the entity does not exist.
     if (e instanceof ResultException)
