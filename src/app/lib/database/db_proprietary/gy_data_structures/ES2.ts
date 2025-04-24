@@ -11,7 +11,7 @@ export interface ES2ComponentData {
 export async function ES2ComponentDataRequester(id: number, connection: mysql.Connection): Promise<ES2ComponentData> {
   const [videos] = await connection.execute<mysql.RowDataPacket[]>(
     "SELECT video_ref FROM esv_component_data WHERE id=?",
-    id
+    [id]
   );
 
   if (videos.length == 0)

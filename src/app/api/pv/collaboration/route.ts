@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { HeaderException, ResultException, SqlException, HTTP_CODES } from "@/app/lib/Errors";
+import { HeaderException, ResultException, SqlException, HTTP_CODES, ArgumentException } from "@/app/lib/Errors";
 
 import { InitDB } from "@/app/lib/database/Initialize";
 
@@ -10,13 +10,16 @@ export async function GET(request: NextRequest) {
     if (!id)
       throw new HeaderException("Reference-Collaboration-Id");
 
+    if (Number.isNaN(id))
+      throw new ArgumentException("Id is NaN.");
+
     const db = await InitDB();
     const response = await db.pv.GetCollaborationFromId(parseInt(id));
     return NextResponse.json(response);
   }
   catch (e) {
     // If mandatory headers are missing.
-    if (e instanceof HeaderException)
+    if (e instanceof HeaderException || e instanceof ArgumentException)
       return HTTP_CODES.bad_request(e.message);
 
     // If no result could be found.

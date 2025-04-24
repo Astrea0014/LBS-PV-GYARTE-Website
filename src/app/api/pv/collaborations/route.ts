@@ -1,19 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DB } from "@/instrumentation";
-import { HTTP_CODES } from "@/app/lib/Errors";
+
+import { ArgumentException, HeaderException, HTTP_CODES, SqlException } from "@/app/lib/Errors";
+
+import { InitDB } from "@/app/lib/database/Initialize";
 
 export async function GET(request: NextRequest) {
-  const year = request.headers.get("DbRef-Year");
-  if (!year)
-    return HTTP_CODES.bad_request("DbRef-Year");
-
   try {
-    const obj = await DB.pv.GetCollaborationsFromYear(parseInt(year));
-    return NextResponse.json(obj, {
-      status: 200
-    });
-  } catch (error) {
-    console.error(error);
-    return HTTP_CODES.bad_gateway();
+    const year = request.headers.get("Reference-Publication-Year");
+    if (!year)
+      throw new HeaderException("Reference-Publication-Year");
+
+    if (Number.isNaN(year))
+      throw new ArgumentException("Year is NaN.");
+
+    const db = await InitDB();
+    const response = db.pv.GetCollaborationsFromYear(parseInt(year));
+    return NextResponse.json(response);
+  }
+  catch (e) {
+    // If mandatory headers are missing or data is ill-formatted.
+    if (e instanceof HeaderException || e instanceof ArgumentException)
+      return HTTP_CODES.bad_request(e.message);
+
+    // If the SQL-executes are throwing.
+    if (e instanceof SqlException) {
+      console.error(e.message);
+      return HTTP_CODES.bad_gateway();
+    }
+
+    return HTTP_CODES.internal_server_error();
   }
 }

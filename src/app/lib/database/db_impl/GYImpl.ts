@@ -67,7 +67,7 @@ export class DatabaseGYImpl {
     try {
       const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
         "SELECT * FROM theses WHERE id=?",
-        id
+        [id]
       );
 
       if (rows.length == 0)

@@ -17,7 +17,7 @@ export class DatabasePVImpl {
   private async GetCollaborationsFromQueryString(query: string, data: number): Promise<Collaboration[]> {
     const [collaborations] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
       "SELECT * FROM collaborations WHERE " + query + "=?",
-      data
+      [data]
     );
 
     const ret: Collaboration[] = [];
@@ -25,7 +25,7 @@ export class DatabasePVImpl {
     for (let i = 0; i < collaborations.length; i++) {
       const [collaborators] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
         "SELECT collaborator FROM collaborators WHERE collaboration_id=?",
-        collaborations[i].collaboration_id
+        [collaborations[i].collaboration_id]
       );
 
       ret.push({
@@ -44,7 +44,7 @@ export class DatabasePVImpl {
   private async GetGroupMembersFromProjectId(project_id: number): Promise<GroupMember[]> {
     const [group_members] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
       "SELECT name, class FROM project_groups_people INNER JOIN people ON project_groups_people.person_id=people.person_id WHERE project_id=?",
-      project_id
+      [project_id]
     );
 
     return group_members.map((value): GroupMember => {
@@ -69,10 +69,18 @@ export class DatabasePVImpl {
   }
 
   public async GetCollaborationsFromYear(year: number): Promise<Collaboration[]> {
-    return this.GetCollaborationsFromQueryString(
-      "year",
-      year
-    );
+    try {
+      return this.GetCollaborationsFromQueryString(
+        "year",
+        year
+      );
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
   }
 
   public async GetCollaborationFromId(collaboration_id: number): Promise<FullCollaboration> {
@@ -89,7 +97,7 @@ export class DatabasePVImpl {
         ...collaborations[0],
         project_groups: await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
           "SELECT * FROM project_groups WHERE collaboration_id=?",
-          collaboration_id
+          [collaboration_id]
         ).then(async ([result]): Promise<ProjectGroup[]> => {
           const ret: ProjectGroup[] = [];
 
@@ -121,7 +129,7 @@ export class DatabasePVImpl {
   public async GetProjectFromId(project_id: number): Promise<ProjectGroup> {
     const [projects] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
       "SELECT * FROM project_groups WHERE project_id=?",
-      project_id
+      [project_id]
     );
 
     if (projects.length == 0)

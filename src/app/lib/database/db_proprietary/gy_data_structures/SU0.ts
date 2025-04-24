@@ -9,7 +9,7 @@ export interface SU0ComponentData {
 export async function SU0ComponentDataRequester(id: number, connection: mysql.Connection): Promise<SU0ComponentData> {
   const [rows] = await connection.execute<mysql.RowDataPacket[]>(
     "SELECT video_ref FROM esv_component_data WHERE id=?",
-    id
+    [id]
   );
 
   if (rows.length == 0)

@@ -30,14 +30,14 @@ export async function GetCollaborationsFromYear(year: number): Promise<Collabora
     method: "GET",
     headers: {
       "Accept": "application/json",
-      "DbRef-Year": year.toString()
+      "Reference-Publication-Year": year.toString()
     }
   });
 
   Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
-  return JSON.parse(json) as Collaboration[];
+  return json as Collaboration[];
 }
 
 export async function GetCollaborationFromId(collaboration_id: number): Promise<FullCollaboration> {

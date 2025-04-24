@@ -9,7 +9,7 @@ export interface SY0ComponentData {
 export async function SY0ComponentDataRequester(id: number, connection: mysql.Connection): Promise<SY0ComponentData> {
   const [rows] = await connection.execute<mysql.RowDataPacket[]>(
     "SELECT href FROM sy0_component_data WHERE id=?",
-    id
+    [id]
   );
 
   if (rows.length == 0)

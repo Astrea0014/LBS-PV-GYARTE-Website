@@ -10,7 +10,7 @@ export interface ES1ComponentData {
 export async function ES1ComponentDataRequester(id: number, connection: mysql.Connection): Promise<ES1ComponentData> {
     const [rows] = await connection.execute<mysql.RowDataPacket[]>(
       "SELECT image_header, image_ref, image_format FROM esx_component_data WHERE id=?",
-      id
+      [id]
     );
 
     if (rows.length == 0)
