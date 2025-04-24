@@ -17,10 +17,10 @@ export async function GetPresentYears(): Promise<number[]> {
     }
   });
 
-  Helper.ThrowOnBadResponse(response);
+  await Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
-  return JSON.parse(json) as number[];
+  return json as number[];
 }
 
 export async function GetCollaborationsFromYear(year: number): Promise<Collaboration[]> {
@@ -34,7 +34,7 @@ export async function GetCollaborationsFromYear(year: number): Promise<Collabora
     }
   });
 
-  Helper.ThrowOnBadResponse(response);
+  await Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
   return json as Collaboration[];
@@ -51,7 +51,7 @@ export async function GetCollaborationFromId(collaboration_id: number): Promise<
     }
   });
 
-  Helper.ThrowOnBadResponse(response);
+  await Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
   return json as FullCollaboration;
@@ -68,6 +68,8 @@ export async function GetProjectFromId(project_id: number): Promise<ProjectGroup
     }
   });
 
+  await Helper.ThrowOnBadResponse(response);
+
   const json = await response.json();
-  return JSON.parse(json) as ProjectGroup;
+  return json as ProjectGroup;
 }

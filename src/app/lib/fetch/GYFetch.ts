@@ -16,7 +16,7 @@ export async function GetPresentYears(): Promise<number[]> {
     }
   });
 
-  Helper.ThrowOnBadResponse(response);
+  await Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
   return json as number[];
@@ -34,7 +34,7 @@ export async function GetThesesByYearAndCourse(year: number, course: string): Pr
     }
   });
 
-  Helper.ThrowOnBadResponse(response);
+  await Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
   return json as Thesis[];
@@ -51,7 +51,7 @@ export async function GetThesisById(id: number): Promise<Thesis> {
     }
   });
 
-  Helper.ThrowOnBadResponse(response);
+  await Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
   return json as Thesis;

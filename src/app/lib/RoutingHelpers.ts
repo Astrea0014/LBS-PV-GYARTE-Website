@@ -34,9 +34,9 @@ export async function SetTokenAsCookie(response: NextResponse, token: string) {
 
 // Fetch API helpers
 
-export function ThrowOnBadResponse(response: Response) {
+export async function ThrowOnBadResponse(response: Response) {
   if (!response.ok)
-    throw new Error(`${response.statusText} (${response.status}): ${response.headers.get("Error-Message")}`);
+    throw new Error(`${response.statusText} (${response.status}): ${(await response.json()).error}`);
 }
 
 export function ThrowOnNaN(num: number) {
