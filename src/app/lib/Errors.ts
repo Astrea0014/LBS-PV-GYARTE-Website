@@ -32,7 +32,7 @@ export class ContentException extends Error {
 
 export class HeaderException extends Error {
   public constructor(message: string) {
-    super(message);
+    super(`Request is missing header '${message}'`);
   }
 }
 

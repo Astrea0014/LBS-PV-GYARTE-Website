@@ -37,7 +37,7 @@ export async function GetThesesByYearAndCourse(year: number, course: string): Pr
   Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
-  return JSON.parse(json) as Thesis[];
+  return json as Thesis[];
 }
 
 export async function GetThesisById(id: number): Promise<Thesis> {
@@ -47,12 +47,12 @@ export async function GetThesisById(id: number): Promise<Thesis> {
     method: "GET",
     headers: {
       "Accept": "application/json",
-      "DbRef-Id": id.toString()
+      "Reference-Thesis-Id": id.toString()
     }
   });
 
   Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
-  return JSON.parse(json) as Thesis;
+  return json as Thesis;
 }

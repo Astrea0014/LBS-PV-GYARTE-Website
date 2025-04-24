@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS, SqlException } from "@/app/lib/Errors";
+import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS, SqlException, ResultException } from "@/app/lib/Errors";
 
 import { Database } from "@/app/lib/database/Database";
 import { Thesis } from "@/app/lib/Types";
@@ -56,32 +56,45 @@ export class DatabaseGYImpl {
   }
 
   public async GetThesisById(id: number): Promise<Thesis> {
-    const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
-      "SELECT * FROM theses WHERE id=?",
-      id
-    );
+    try {
+      const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+        "SELECT * FROM theses WHERE id=?",
+        id
+      );
 
-    if (rows.length == 0)
-      throw RESULT_EXCEPTIONS.result_empty;
+      if (rows.length == 0)
+        throw RESULT_EXCEPTIONS.result_empty;
 
-    const raw = rows[0];
+      const raw = rows[0];
 
-    const thesis: Thesis = {
-      id: raw.id,
-      thesis: raw.thesis,
-      course: raw.course,
-      author_name: raw.author_name,
-      author_class: raw.author_class,
-      publication_year: raw.publication_year,
-      component_id: raw.component_id,
-      component_data: null
-    };
+      const thesis: Thesis = {
+        id: raw.id,
+        thesis: raw.thesis,
+        course: raw.course,
+        author_name: raw.author_name,
+        author_class: raw.author_class,
+        publication_year: raw.publication_year,
+        component_id: raw.component_id,
+        component_data: null
+      };
 
-    if (!this.dataRequesters.has(thesis.component_id))
-      throw SQL_EXCEPTIONS.data_requester_not_exists(thesis.component_id);
+      if (!this.dataRequesters.has(thesis.component_id))
+        throw SQL_EXCEPTIONS.data_requester_not_exists(thesis.component_id);
 
-    thesis.component_data = await (this.dataRequesters.get(thesis.component_id)!)(thesis.id, this.master.GetConnection());
+      thesis.component_data = await (this.dataRequesters.get(thesis.component_id)!)(thesis.id, this.master.GetConnection());
 
-    return thesis;
+      return thesis;
+    }
+    catch (e: any) {
+      if (e instanceof ResultException)
+        throw e;
+      if (e instanceof SqlException)
+        throw e;
+
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
   }
 }

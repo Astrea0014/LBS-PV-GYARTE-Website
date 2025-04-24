@@ -1,22 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DB } from "@/instrumentation";
-import { SQL_ERRORS, HTTP_CODES } from "@/app/lib/Errors";
+
+import { HeaderException, HTTP_CODES, ResultException, SqlException } from "@/app/lib/Errors";
+import { InitDB } from "@/app/lib/database/Initialize";
 
 export async function GET(request: NextRequest) {
-  const id = request.headers.get("DbRef-Id");
-  if (!id)
-    return HTTP_CODES.bad_request("DbRef-Id");
-
   try {
-    const obj = await DB.gy.GetThesisById(parseInt(id));
-    return NextResponse.json(obj, {
-      status: 200
-    });
-  } catch (error) {
-    console.error(error);
+    const id = request.headers.get("Reference-Thesis-Id");
+    if (!id)
+      throw new HeaderException("Reference-Thesis-Id");
 
-    if ((error as Error).message == SQL_ERRORS.result_empty)
-      return HTTP_CODES.not_found("DbRef-Id");
-    return HTTP_CODES.bad_gateway();
+    const db = await InitDB();
+
+    const response = await db.gy.GetThesisById(parseInt(id));
+    return NextResponse.json(response);
+  }
+  catch (e) {
+    // If mandatory headers are missing.
+    if (e instanceof HeaderException)
+      return HTTP_CODES.bad_request(e.message);
+
+    if (e instanceof ResultException)
+      return HTTP_CODES.not_found(e.message);
+
+    // If the SQL-executes are throwing.
+    if (e instanceof SqlException) {
+      console.error(e.message);
+      return HTTP_CODES.bad_gateway();
+    }
+
+    return HTTP_CODES.internal_server_error();
   }
 }
