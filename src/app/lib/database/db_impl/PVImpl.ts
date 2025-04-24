@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS, SqlException } from "@/app/lib/Errors";
+import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS, SqlException, ResultException } from "@/app/lib/Errors";
 
 import { Database } from "@/app/lib/database/Database";
 import { Collaboration, FullCollaboration, ProjectGroup, GroupMember } from "@/app/lib/Types";
@@ -127,29 +127,40 @@ export class DatabasePVImpl {
   }
 
   public async GetProjectFromId(project_id: number): Promise<ProjectGroup> {
-    const [projects] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
-      "SELECT * FROM project_groups WHERE project_id=?",
-      [project_id]
-    );
+    try {
+      const [projects] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+        "SELECT * FROM project_groups WHERE project_id=?",
+        [project_id]
+      );
+  
+      if (projects.length == 0)
+        throw RESULT_EXCEPTIONS.result_empty;
+  
+      const ret: ProjectGroup = {
+        project_id: projects[0].project_id,
+        project_name: projects[0].project_name,
+        group_name: projects[0].group_name,
+        poster_ref: projects[0].poster_ref,
+        description: projects[0].description,
+        project_type: projects[0].project_type,
+        project_data: null,
+        group_members: await this.GetGroupMembersFromProjectId(projects[0].project_id)
+      };
+  
+      if (!this.dataRequesters.has(ret.project_type))
+        throw SQL_EXCEPTIONS.data_requester_not_exists(ret.project_type);
+      ret.project_data = (this.dataRequesters.get(ret.project_type)!)(ret.project_id, this.master.GetConnection());
+  
+      return ret;
+    }
+    catch (e: any) {
+      if (e instanceof SqlException || e instanceof ResultException)
+        throw e;
 
-    if (projects.length == 0)
-      throw RESULT_EXCEPTIONS.result_empty;
-
-    const ret: ProjectGroup = {
-      project_id: projects[0].project_id,
-      project_name: projects[0].project_name,
-      group_name: projects[0].group_name,
-      poster_ref: projects[0].poster_ref,
-      description: projects[0].description,
-      project_type: projects[0].project_type,
-      project_data: null,
-      group_members: await this.GetGroupMembersFromProjectId(projects[0].project_id)
-    };
-
-    if (!this.dataRequesters.has(ret.project_type))
-      throw SQL_EXCEPTIONS.data_requester_not_exists(ret.project_type);
-    ret.project_data = (this.dataRequesters.get(ret.project_type)!)(ret.project_id, this.master.GetConnection());
-
-    return ret;
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
   }
 }
