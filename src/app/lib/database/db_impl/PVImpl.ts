@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS } from "@/app/lib/Errors";
+import { SQL_EXCEPTIONS, RESULT_EXCEPTIONS, SqlException } from "@/app/lib/Errors";
 
 import { Database } from "@/app/lib/database/Database";
 import { Collaboration, FullCollaboration, ProjectGroup, GroupMember } from "@/app/lib/Types";
@@ -76,38 +76,46 @@ export class DatabasePVImpl {
   }
 
   public async GetCollaborationFromId(collaboration_id: number): Promise<FullCollaboration> {
-    const collaborations = await this.GetCollaborationsFromQueryString(
-      "collaboration_id",
-      collaboration_id
-    );
-
-    if (collaborations.length == 0)
-      throw RESULT_EXCEPTIONS.result_empty;
-
-    return {
-      ...collaborations[0],
-      project_groups: await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
-        "SELECT * FROM project_groups WHERE collaboration_id=?",
+    try {
+      const collaborations = await this.GetCollaborationsFromQueryString(
+        "collaboration_id",
         collaboration_id
-      ).then(async ([result]): Promise<ProjectGroup[]> => {
-        const ret: ProjectGroup[] = [];
+      );
 
-        for (let i = 0; i < result.length; i++) {
-          ret.push({
-            project_id: result[i].project_id,
-            project_name: result[i].project_name,
-            group_name: result[i].group_name,
-            poster_ref: result[i].poster_ref,
-            description: result[i].description,
-            project_type: result[i].project_type,
-            project_data: null,
-            group_members: await this.GetGroupMembersFromProjectId(result[i].project_id)
-          });
-        }
+      if (collaborations.length == 0)
+        throw RESULT_EXCEPTIONS.result_empty;
 
-        return ret;
-      })
-    };
+      return {
+        ...collaborations[0],
+        project_groups: await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+          "SELECT * FROM project_groups WHERE collaboration_id=?",
+          collaboration_id
+        ).then(async ([result]): Promise<ProjectGroup[]> => {
+          const ret: ProjectGroup[] = [];
+
+          for (let i = 0; i < result.length; i++) {
+            ret.push({
+              project_id: result[i].project_id,
+              project_name: result[i].project_name,
+              group_name: result[i].group_name,
+              poster_ref: result[i].poster_ref,
+              description: result[i].description,
+              project_type: result[i].project_type,
+              project_data: null,
+              group_members: await this.GetGroupMembersFromProjectId(result[i].project_id)
+            });
+          }
+
+          return ret;
+        })
+      };
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
   }
 
   public async GetProjectFromId(project_id: number): Promise<ProjectGroup> {

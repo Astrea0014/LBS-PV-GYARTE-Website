@@ -19,6 +19,7 @@ export async function GET(request: NextRequest) {
     if (e instanceof HeaderException)
       return HTTP_CODES.bad_request(e.message);
 
+    // If no result could be found.
     if (e instanceof ResultException)
       return HTTP_CODES.not_found(e.message);
 

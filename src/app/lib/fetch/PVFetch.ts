@@ -47,14 +47,14 @@ export async function GetCollaborationFromId(collaboration_id: number): Promise<
     method: "GET",
     headers: {
       "Accept": "application/json",
-      "DbRef-Id": collaboration_id.toString()
+      "Reference-Collaboration-Id": collaboration_id.toString()
     }
   });
 
   Helper.ThrowOnBadResponse(response);
 
   const json = await response.json();
-  return JSON.parse(json) as FullCollaboration;
+  return json as FullCollaboration;
 }
 
 export async function GetProjectFromId(project_id: number): Promise<ProjectGroup> {
