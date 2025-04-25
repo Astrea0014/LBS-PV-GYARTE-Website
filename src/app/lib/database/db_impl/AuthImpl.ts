@@ -46,12 +46,30 @@ export class DatabaseAuthImpl {
 
   public async RemovePartialEntityOnFailureByUsername(username: string) {
     try {
-      await this.master.GetConnection().execute(
-        "DELETE FROM entity WHERE username=?",
+      const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+        "SELECT entity_id FROM entity WHERE username=?",
         [username]
+      );
+
+      if (rows.length === 0)
+        throw RESULT_EXCEPTIONS.result_empty;
+
+      const entity_id = rows[0].entity_id;
+
+      await this.master.GetConnection().execute(
+        "DELETE FROM entity_access WHERE entity_id=?",
+        [entity_id]
+      );
+
+      await this.master.GetConnection().execute(
+        "DELETE FROM entity WHERE entity_id=?",
+        [entity_id]
       );
     }
     catch (e: any) {
+      if (e instanceof ResultException)
+        throw e;
+
       if ("message" in e)
         throw new SqlException(e.message);
       else

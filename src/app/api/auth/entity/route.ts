@@ -116,6 +116,11 @@ export function GET(request: NextRequest) {
   // Get usernames of registered entities.
   // OR
   // Get username and access for single entity.
-  
-  return HTTP_CODES.not_implemented();
+
+  try {
+    
+  }
+  catch (e) {
+
+  }
 }
