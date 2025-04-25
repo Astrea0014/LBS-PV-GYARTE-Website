@@ -3,8 +3,14 @@ import { ContentException } from "@/app/lib/Errors";
 import { InitDB } from "@/app/lib/database/Initialize";
 
 import { GetEntityACL, RequireAccess, AccessControlList } from "./AccessControl";
-import { UpdateEntityPassword } from "./Authentication";
+import { InsertEntity, UpdateEntityPassword } from "./Authentication";
 import { GenerateRandomPassword } from "./PasswordGenerator";
+
+export interface RegisterEntityActionArgs {
+  username: string;
+  password: string | undefined;
+  access: string[];
+}
 
 export interface UpdateEntityActionArgs {
   username: string;
@@ -27,12 +33,43 @@ export class AuthenticatedUser {
     this.acl = acl;
   }
 
-  async RegisterEntity(
-    username: string,
-    password: string | undefined,
-    acl: AccessControlList
-  ) {
+  async RegisterEntity(args: RegisterEntityActionArgs): Promise<ResponseEntity> {
     RequireAccess(this.acl, "AUDIT_ENTITY_EXTENDED");
+
+    if (args.access.length === 0)
+      throw new ContentException("access specifies no values.");
+
+    // 1. Check if username exists.
+
+    const db = await InitDB();
+    if (await db.auth.IsUsernamePresent(args.username))
+      throw new ContentException("Entity with specified name already exists.");
+
+    // 2. See if password is present or if it needs to be generated.
+
+    let password: string;
+
+    if (args.password)
+      password = args.password;
+    else
+      password = await GenerateRandomPassword();
+
+    // 3. Insert entity in database.
+
+    await InsertEntity(args.username, password);
+
+    // 4. Set access rights for entity.
+
+    const entity = await db.auth.GetEntityByUsername(args.username);
+    await db.auth.AppendEntityAccessByIds(entity.entity_id, args.access);
+
+    // 5. Return created entity.
+
+    return {
+      username: args.username,
+      password: password,
+      access: args.access
+    };
   }
 
   async UpdateEntity(args: UpdateEntityActionArgs): Promise<ResponseEntity> {

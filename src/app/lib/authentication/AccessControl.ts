@@ -49,6 +49,9 @@ export function RequireAccess(acl: AccessControlList, access_id: string) {
  * @throws An {@linkcode SqlException} if the database query failed.
  */
 export async function GetEntityACL(entity_id: number): Promise<AccessControlList> {
+  if (entity_id === 0)
+    return new AccessControlList(0, [{ access_id: "ADMIN_ALL_ACCESS", description: "Administrator master key authorization." }]);
+  
   const db = await InitDB();
   return new AccessControlList(entity_id, await db.auth.GetEntityAccessById(entity_id));
 }

@@ -56,14 +56,17 @@ export async function AuthenticateMaster(master: string): Promise<string> {
   if (master != process.env.AUTH_MASTER)
     throw new AuthException("Invalid master key.");
 
-  if (!process.env.AUTH_MASTER_ENTITY_ID)
-    throw new Error("AUTH_MASTER_ENTITY_ID is not declared or defined in .env.");
-
   return ExportJWT({
-    entity_id: parseInt(process.env.AUTH_MASTER_ENTITY_ID!),
+    entity_id: 0,
     token: null,
     created_at: new Date()
   });
+}
+
+export async function InsertEntity(username: string, password: string) {
+  const db = await InitDB();
+  const hashed = await HashPassword(password);
+  return db.auth.InsertEntity(username, hashed);
 }
 
 export async function UpdateEntityPassword(entity: Entity, password: string) {
