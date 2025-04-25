@@ -1,6 +1,5 @@
-CREATE DATABASE gymnasial_theses;
-
-USE gymnasial_theses;
+CREATE DATABASE lbssodra_data;
+USE lbssodra_data;
 
 CREATE TABLE theses (
 	id					INT,
@@ -55,10 +54,6 @@ CREATE TABLE esv_component_data (
 	CONSTRAINT uq_video_ref
 		UNIQUE (video_ref)
 );
-
-CREATE DATABASE program_weeks;
-
-USE program_weeks;
 
 # Contains a collaboration between one or more programs.
 # Example: SU-SG program weeks 2025
@@ -166,4 +161,23 @@ CREATE TABLE susg01_project_assets (
     CONSTRAINT fk_susg01a_project_id
 		FOREIGN KEY (project_id)
 		REFERENCES project_groups(project_id) 
+);
+
+CREATE TABLE entity (
+	entity_id	INT				PRIMARY KEY AUTO_INCREMENT,
+    username 	VARCHAR(32)		UNIQUE,
+    password	VARCHAR(256)
+);
+
+CREATE TABLE access (
+	access_id	CHAR(24)		PRIMARY KEY,
+    description	TEXT
+);
+
+CREATE TABLE entity_access (
+	entity_id	INT,
+    access_id	CHAR(24),
+    FOREIGN KEY (entity_id) REFERENCES entity(entity_id),
+    FOREIGN KEY (access_id) REFERENCES access(access_id),
+    PRIMARY KEY (entity_id, access_Id)
 );
