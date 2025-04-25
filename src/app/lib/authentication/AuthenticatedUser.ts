@@ -1,4 +1,4 @@
-import { ResponseEntity, Token } from "@/app/lib/Types";
+import { DetailedEntity, ResponseEntity, Token } from "@/app/lib/Types";
 import { ContentException } from "@/app/lib/Errors";
 import { InitDB } from "@/app/lib/database/Initialize";
 
@@ -149,6 +149,33 @@ export class AuthenticatedUser {
       username: args.username,
       password: password,
       access: (await db.auth.GetEntityAccessById(entity.entity_id)).map(x => x.access_id)
+    };
+  }
+
+  async GetEntities(): Promise<string[]> {
+    RequireAccess(this.acl, "AUDIT_ENTITY_EXTENDED");
+
+    // 1. Get all entity usernames.
+    // 2. Return fetched details.
+
+    const db = await InitDB();
+    return db.auth.GetEntityUsernames();
+  }
+
+  async GetEntityDetailsByUsername(username: string): Promise<DetailedEntity> {
+    RequireAccess(this.acl, "AUDIT_ENTITY_EXTENDED");
+
+    // 1. Get entity by username.
+
+    const db = await InitDB();
+    const entity = await db.auth.GetEntityByUsername(username);
+
+    // 2. Get entity access.
+    // 3. Return fetched details.
+
+    return {
+      ...entity,
+      access: await db.auth.GetEntityAccessById(entity.entity_id)
     };
   }
 }

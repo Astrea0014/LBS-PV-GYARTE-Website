@@ -112,15 +112,49 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
   // Get usernames of registered entities.
   // OR
   // Get username and access for single entity.
 
   try {
-    
+    // 1. Authenticate
+
+    const token = await GetTokenFromRequestCookie(request);
+    const acl = await GetEntityACL(token.entity_id);
+
+    const user = new AuthenticatedUser(token, acl);
+
+    // 2. Check if username header is present.
+
+    const username = request.headers.get("Reference-Entity-Username");
+
+    if (username) {
+      // 3. Respond with entity details (if username is present).
+
+      const response = await user.GetEntityDetailsByUsername(username);
+      return NextResponse.json(response);
+    }
+    else {
+      // 3. Print all entity usernames (if username is not present).
+
+      const response = await user.GetEntities();
+      return NextResponse.json(response);
+    }
   }
   catch (e) {
+    // If the token is missing, expired or invalid.
+    if (e instanceof AuthException)
+      return HTTP_CODES.unauthorized(e.message);
 
+    // If the entity holding the token does not have the access required to perform this action.
+    if (e instanceof AccessException) {
+      console.error(e.message);
+      return HTTP_CODES.forbidden();
+    }
+
+    // If the entity does not exist (entity specified by username).
+    if (e instanceof ResultException)
+      return HTTP_CODES.not_found(e.message);
   }
 }

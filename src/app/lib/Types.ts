@@ -63,3 +63,10 @@ export interface ResponseEntity {
   password: string | null;
   access: string[];
 }
+
+export interface DetailedEntity {
+  entity_id: number;
+  username: string;
+  password: string;
+  access: Access[];
+}

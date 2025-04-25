@@ -77,6 +77,22 @@ export class DatabaseAuthImpl {
     }
   }
 
+  public async GetEntityUsernames(): Promise<string[]> {
+    try {
+      const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+        "SELECT username FROM entity"
+      );
+
+      return rows.map((row): string => row.username);
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
+  }
+
   public async GetEntityByUsername(username: string): Promise<Entity> {
     try {
       const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
