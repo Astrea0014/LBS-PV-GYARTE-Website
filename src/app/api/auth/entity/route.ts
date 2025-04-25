@@ -4,12 +4,57 @@ import { AccessException, AuthException, ContentException, HTTP_CODES, ResultExc
 import { GetTokenFromRequestCookie } from "@/app/lib/RoutingHelpers";
 
 import { GetEntityACL } from "@/app/lib/authentication/AccessControl";
-import { AuthenticatedUser, UpdateEntityActionArgs } from "@/app/lib/authentication/AuthenticatedUser";
+import { AuthenticatedUser, RegisterEntityActionArgs, UpdateEntityActionArgs } from "@/app/lib/authentication/AuthenticatedUser";
 
-export function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
   // Register entity.
 
-  return HTTP_CODES.not_implemented();
+  try {
+    // 1. Authenticate
+
+    const token = await GetTokenFromRequestCookie(request);
+    const acl = await GetEntityACL(token.entity_id);
+
+    const user = new AuthenticatedUser(token, acl);
+
+    // 2. Validate body
+
+    const body = await request.json();
+
+    if (!("username" in body))
+      throw new SyntaxError("Required field 'username' is missing from body.");
+    if (!("access" in body))
+      throw new SyntaxError("Required field 'access' is missing from body.");
+
+    // 3. Register entity.
+
+    const response = await user.RegisterEntity(body as RegisterEntityActionArgs);
+    return NextResponse.json(response, { status: 201 });
+  }
+  catch (e) {
+    // If the token is missing, expired or invalid.
+    if (e instanceof AuthException)
+      return HTTP_CODES.unauthorized(e.message);
+
+    // If the JSON-body is invalid or has an invalid structure.
+    if (e instanceof SyntaxError || e instanceof ContentException)
+      return HTTP_CODES.bad_request(e.message);
+
+    // If the entity holding the token does not have the access required to perform this action.
+    if (e instanceof AccessException) {
+      console.error(e.message);
+      return HTTP_CODES.forbidden();
+    }
+
+    // If the SQL-executes are throwing.
+    if (e instanceof SqlException) {
+      console.error(e.message);
+      return HTTP_CODES.bad_gateway();
+    }
+
+    console.error(e);
+    return HTTP_CODES.internal_server_error();
+  }
 }
 
 export async function PATCH(request: NextRequest) {
@@ -34,8 +79,8 @@ export async function PATCH(request: NextRequest) {
 
     // 3. Update entity.
 
-    const result = await user.UpdateEntity(body as UpdateEntityActionArgs);
-    return NextResponse.json(result);
+    const response = await user.UpdateEntity(body as UpdateEntityActionArgs);
+    return NextResponse.json(response);
   }
   catch (e) {
     // If the token is missing, expired or invalid.
@@ -62,6 +107,7 @@ export async function PATCH(request: NextRequest) {
       return HTTP_CODES.bad_gateway();
     }
 
+    console.error(e);
     return HTTP_CODES.internal_server_error();
   }
 }

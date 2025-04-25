@@ -12,6 +12,53 @@ export class DatabaseAuthImpl {
     this.master = master;
   }
 
+  public async IsUsernamePresent(username: string): Promise<boolean> {
+    try {
+      const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(
+        "SELECT entity_id FROM entity WHERE username=?",
+        [username]
+      );
+
+      return rows.length !== 0;
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
+  }
+
+  public async InsertEntity(username: string, password: string) {
+    try {
+      await this.master.GetConnection().execute(
+        "INSERT INTO entity (username, password) VALUES (?, ?)",
+        [username, password]
+      );
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
+  }
+
+  public async RemovePartialEntityOnFailureByUsername(username: string) {
+    try {
+      await this.master.GetConnection().execute(
+        "DELETE FROM entity WHERE username=?",
+        [username]
+      );
+    }
+    catch (e: any) {
+      if ("message" in e)
+        throw new SqlException(e.message);
+      else
+        throw new SqlException("Unknown error occured.");
+    }
+  }
+
   public async GetEntityByUsername(username: string): Promise<Entity> {
     try {
       const [rows] = await this.master.GetConnection().execute<mysql.RowDataPacket[]>(

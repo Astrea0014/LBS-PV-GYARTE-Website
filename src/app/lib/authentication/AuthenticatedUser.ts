@@ -61,7 +61,14 @@ export class AuthenticatedUser {
     // 4. Set access rights for entity.
 
     const entity = await db.auth.GetEntityByUsername(args.username);
-    await db.auth.AppendEntityAccessByIds(entity.entity_id, args.access);
+    
+    try {
+      await db.auth.AppendEntityAccessByIds(entity.entity_id, args.access);
+    }
+    catch (e) {
+      db.auth.RemovePartialEntityOnFailureByUsername(entity.username);
+      throw e;
+    }
 
     // 5. Return created entity.
 
