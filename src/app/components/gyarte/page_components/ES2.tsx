@@ -23,18 +23,24 @@ export default function ES2({ data }: ES2Props) {
 
   return (
     <section>
-      <ESXOverview description={null}/>
+      <ESXOverview description={null} />
+
       <ES2Fibonacci 
         video={`/${data.component_data.video_ref}`}
-        image={`/${data.component_data.images[0].image_ref}`} 
-        image2={`/${data.component_data.images[1].image_ref}`} 
-        image3={`/${data.component_data.images[2].image_ref}`} 
-        image4={`/${data.component_data.images[3].image_ref}`}
+        image={data.component_data.images[0]?.image_ref ? `/${data.component_data.images[0].image_ref}` : undefined} 
+        image2={data.component_data.images[1]?.image_ref ? `/${data.component_data.images[1].image_ref}` : undefined} 
+        image3={data.component_data.images[2]?.image_ref ? `/${data.component_data.images[2].image_ref}` : undefined} 
+        image4={data.component_data.images[3]?.image_ref ? `/${data.component_data.images[3].image_ref}` : undefined}
         openModal={openModal}
       />
 
       <Modal isOpen={isModalOpen} handleClose={closeModal}>
-        <ImageCarousel imageRefList={[data.component_data.images[0].image_ref, data.component_data.images[1].image_ref, data.component_data.images[2].image_ref, data.component_data.images[3].image_ref]}/>
+        <ImageCarousel 
+          imageRefList={data.component_data.images
+            .slice(0, 4)
+            .filter((img : any) => !!img?.image_ref)
+            .map((img : any)=> img.image_ref)}
+        />
       </Modal>
     </section>
   );  

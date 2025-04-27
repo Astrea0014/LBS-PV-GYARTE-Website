@@ -25,18 +25,32 @@ export default function ES1({ data }: ES1Props) {
   return (
     <section>
       <ESXOverview description={null}/>
-      <ES1Fibonacci 
-        image={`/${data.component_data.images[0].image_ref}`} 
-        image2={`/${data.component_data.images[1].image_ref}`} 
-        image3={`/${data.component_data.images[2].image_ref}`} 
-        image4={`/${data.component_data.images[3].image_ref}`}
-        longImage={`/${data.component_data.images[4].image_ref}`}
-        openModal={openModal}
-      />
 
-      <Modal isOpen={isModalOpen} handleClose={closeModal}>
-        <ImageCarousel imageRefList={[data.component_data.images[0].image_ref, data.component_data.images[1].image_ref, data.component_data.images[2].image_ref, data.component_data.images[3].image_ref, data.component_data.images[4].image_ref]}/>
-      </Modal>
-    </section>
+      {data.component_data.images.length > 0 ? (
+        <>
+          <ES1Fibonacci 
+            image={data.component_data.images[0]?.image_ref ? `/${data.component_data.images[0].image_ref}` : undefined} 
+            image2={data.component_data.images[1]?.image_ref ? `/${data.component_data.images[1].image_ref}` : undefined} 
+            image3={data.component_data.images[2]?.image_ref ? `/${data.component_data.images[2].image_ref}` : undefined} 
+            image4={data.component_data.images[3]?.image_ref ? `/${data.component_data.images[3].image_ref}` : undefined}
+            longImage={data.component_data.images[4]?.image_ref ? `/${data.component_data.images[4].image_ref}` : undefined}
+            openModal={openModal}
+          />
+          <Modal isOpen={isModalOpen} handleClose={closeModal}>
+            <ImageCarousel 
+              imageRefList={data.component_data.images
+                .slice(0, 5)
+                .map((img: any) => img?.image_ref)
+                .filter(Boolean)}
+            />
+          </Modal>
+        </>
+      ) : (
+        <span className="mx-auto flex justify-center items-center text-center">
+          Inga bilder laddade
+        </span>
+    )}
+
+  </section>
   );  
 }
